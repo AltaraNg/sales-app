@@ -1,7 +1,7 @@
 {
-    "name": "altara",
-    "version": "3.0.0",
-    "description": "Altara 3.0",
+    "name": "altara-sale-tool",
+    "version": "1.0.0",
+    "description": "Altara Sale Tool",
     "license": "MIT",
     "scripts": {
         "serve": "vue-cli-service serve",

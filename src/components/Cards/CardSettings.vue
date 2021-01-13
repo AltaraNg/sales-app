@@ -11,34 +11,23 @@
       <form>
         <h6 class="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase"></h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                First Name
+                Name
               </label>
               <input
+                v-validate="'required'"
                 type="text"
+                v-model="customer.name"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               />
             </div>
           </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-              />
-            </div>
-          </div>
+
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label
@@ -49,6 +38,7 @@
               </label>
               <input
                 type="email"
+                v-model="customer.email"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               />
             </div>
@@ -66,6 +56,8 @@
               </label>
               <input
                 type="tel"
+                v-validate="'required'"
+                v-model="customer.phone"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               />
             </div>
@@ -79,7 +71,8 @@
                 Monthly Income
               </label>
               <input
-                type="email"
+                type="number"
+                v-model="customer.monthly_income"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 value="New York"
               />
@@ -99,10 +92,19 @@
               /> -->
 
               <select
+                v-model="customer.employment_status_id"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               >
-                <option>yui</option>
-                <option>yui</option>
+                <option disabled selected="selected">
+                  Selecet Employment Status
+                </option>
+                <option
+                  :value="type.id"
+                  :key="type.id"
+                  v-for="type in employmentStatus"
+                >
+                  {{ type.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -112,6 +114,7 @@
 
         <div class="text-center mt-6">
           <button
+            v-on:click="submitForm()"
             class="altaraBlue text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
             type="button"
           >
@@ -122,3 +125,64 @@
     </div>
   </div>
 </template>
+<script>
+import { get, post } from "../../utilities/api";
+
+export default {
+  data() {
+    return {
+      employmentStatus: [],
+      customer: {},
+      apiUrls: {
+        register: `/api/customer_contact`,
+        getEmploymentStatus: `/api/employment_status`,
+      },
+    };
+  },
+  async created() {
+    console.log("===>mounted<===");
+
+    await this.getEmploymentStatus();
+  },
+  methods: {
+    async getEmploymentStatus() {
+      try {
+        const fetchEmploymentStatus = await get(
+          this.apiUrls.getEmploymentStatus
+        );
+        this.employmentStatus = fetchEmploymentStatus.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+
+    async submitForm() {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.$LIPS(true);
+          post(this.apiUrls.register, this.customer)
+            .then(() => {
+              this.$LIPS(false);
+              this.$swal({
+                icon: "success",
+                title: "Customer registered Logged",
+              });
+            })
+            .catch(() => {
+              this.$LIPS(false);
+              this.$swal({
+                icon: "error",
+                title: "Customer Registration Failed",
+              });
+            });
+        } else {
+          this.$swal({
+            icon: "error",
+            title: "Kindly fill the form properly",
+          });
+        }
+      });
+    },
+  },
+};
+</script>

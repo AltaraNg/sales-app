@@ -52,7 +52,6 @@ Vue.prototype.$network = () => process.env.NODE_ENV === 'development' ? true : w
 
 /**throws custom error messages**/
 Vue.prototype.$networkErr = function(err = '', duration = 30000, msg = null) {
-    this.$scrollToTop();
     this.$LIPS(false);
     if (!msg) msg = 'No network access, try again later!';
     if (err === 'form') msg = 'Please ensure all the fields are filled correctly!';

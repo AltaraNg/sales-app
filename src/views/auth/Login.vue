@@ -50,19 +50,19 @@
               </div>
 
               <div class="text-center mt-6">
-                <!-- <button
+                <button
                   v-on:click="login()"
                   class="altaraBlue text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
                 >
                   Sign In
-                </button> -->
-                <router-link
+                </button>
+                <!-- <router-link
                   to="/admin"
                   class="altaraBlue text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                 >
                   Sign In
-                </router-link>
+                </router-link> -->
               </div>
             </form>
           </div>
@@ -83,6 +83,9 @@ export default {
       error: {},
     };
   },
+  async created() {
+    console.log("===>mounted<===");
+  },
   methods: {
     async login() {
       if (this.$network()) {
@@ -94,6 +97,7 @@ export default {
               Auth.set(data);
               Flash.setSuccess(data.message);
             }
+            this.$router.push("/admin");
           })
           .catch(({ response: { data } }) => {
             this.error = data.errors ? data.errors : data;

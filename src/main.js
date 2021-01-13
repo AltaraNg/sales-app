@@ -13,6 +13,7 @@ import Index from "@/views/Index.vue";
 import "./utilities/globalFunctions.js";
 import VueSweetalert2 from "vue-sweetalert2";
 import { store } from "./store/store";
+import VeeValidate from "vee-validate";
 
 const routes = [{
         path: "/admin",
@@ -59,6 +60,11 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes,
+});
+Vue.use(VeeValidate, {
+    events: "input|blur",
+    classes: true,
+    classNames: { invalid: "is-invalid" }
 });
 
 new Vue({

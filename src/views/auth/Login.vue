@@ -74,7 +74,7 @@
 <script>
 import Auth from "../../utilities/auth";
 import { post } from "../../utilities/api";
-import Flash from "../../utilities/flash";
+// import Flash from "../../utilities/flash";
 export default {
   data() {
     return {
@@ -95,15 +95,20 @@ export default {
           .then(({ data }) => {
             if (data.auth) {
               Auth.set(data);
-              Flash.setSuccess(data.message);
             }
+            this.$LIPS(false);
+
             this.$router.push("/admin");
           })
           .catch(({ response: { data } }) => {
             this.error = data.errors ? data.errors : data;
-            Flash.setError(data.message);
+            this.$LIPS(false);
+
+            this.$swal({
+              icon: "error",
+              title: "Incorrect Login Details",
+            });
           });
-        this.$LIPS(false);
       } else this.$networkErr();
     },
   },

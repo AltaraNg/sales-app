@@ -17,7 +17,7 @@
                 class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                Name
+                Name *
               </label>
               <input
                 v-validate="'required'"
@@ -52,7 +52,7 @@
                 class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                Phone Number
+                Phone Number *
               </label>
               <input
                 type="tel"
@@ -68,9 +68,10 @@
                 class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                Monthly Income
+                Monthly Income *
               </label>
               <input
+                maxlength="11"
                 type="number"
                 v-model="customer.monthly_income"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -84,7 +85,7 @@
                 class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                Employment Status
+                Employment Status *
               </label>
               <!-- <input
                 type="text"
@@ -157,6 +158,13 @@ export default {
     },
 
     async submitForm() {
+      console.log("===><===", this.customer.phone);
+      if (this.customer.phone.length > 11 || this.customer.phone.length < 11) {
+        return this.$swal({
+          icon: "error",
+          title: "Kindly enter a valid phone number",
+        });
+      }
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.$LIPS(true);
@@ -178,7 +186,7 @@ export default {
         } else {
           this.$swal({
             icon: "error",
-            title: "Kindly fill the form properly",
+            title: "Kindly enter the required inputs",
           });
         }
       });

@@ -46,9 +46,8 @@ Vue.prototype.$network = () => process.env.NODE_ENV === 'development' ? true : w
 
 
 /**currency formatter**/
-// const formatter = (new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 2 }));
-// Vue.prototype.$formatCurrency = price => !!price ? formatter.format(price) : price;
-
+const formatter = (new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 2 }));
+Vue.prototype.$formatCurrency = price => price ? formatter.format(price) : price;
 
 /**throws custom error messages**/
 Vue.prototype.$networkErr = function(err = '', duration = 30000, msg = null) {

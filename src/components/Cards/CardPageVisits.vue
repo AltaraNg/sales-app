@@ -6,7 +6,11 @@
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
           <h3 class="font-semibold text-base text-gray-800">
-            List of Regstered Customers
+            {{
+              usersList.length != 0
+                ? "List of Registered Customers"
+                : "You have no Registered Customer"
+            }}
           </h3>
         </div>
         <div
@@ -14,11 +18,16 @@
         ></div>
       </div>
     </div>
-    <div class="block w-full overflow-x-auto">
+    <div v-if="usersList.length != 0" class="block w-full overflow-x-auto">
       <!-- Projects table -->
       <table class="items-center w-full bg-transparent border-collapse">
         <thead>
           <tr>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Index
+            </th>
             <th
               class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
             >
@@ -52,119 +61,44 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr :key="index" v-for="(user, index) in usersList">
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
             >
-              /argon/
+              {{ index + 1 }}
+            </th>
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+            >
+              {{ user.name }}
             </th>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              4,569
+              {{ user.phone }}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              340
+              {{ user.email }}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              <i class="fas fa-arrow-up altaraBlueText mr-4"></i>
-              46,53%
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              /argon/index.html
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              3,985
+              {{ $formatCurrency(user.monthly_income) }}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              319
+              {{
+                employmentStatus.find((x) => x.id === user.employment_status_id)
+                  .name
+              }}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              <i class="fas fa-arrow-down text-orange-500 mr-4"></i>
-              46,53%
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              /argon/charts.html
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              3,513
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              294
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              <i class="fas fa-arrow-down text-orange-500 mr-4"></i>
-              36,49%
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              /argon/tables.html
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              2,050
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              147
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              <i class="fas fa-arrow-up altaraBlueText mr-4"></i>
-              50,87%
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              /argon/profile.html
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              1,795
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              190
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              <i class="fas fa-arrow-down text-red-500 mr-4"></i>
-              46,53%
+              {{ user.customer_stage_id }}
             </td>
           </tr>
         </tbody>
@@ -172,3 +106,52 @@
     </div>
   </div>
 </template>
+
+<script>
+import { get } from "../../utilities/api";
+
+export default {
+  data() {
+    return {
+      usersList: [],
+      employmentStatus: [],
+      apiUrls: {
+        getEmploymentStatus: `/api/employment_status`,
+        getusersList: `/api/customer_contact`,
+      },
+    };
+  },
+  async created() {
+    console.log("===>mounted<===");
+    await this.getEmploymentStatus();
+    await this.getUsersList();
+  },
+  methods: {
+    async getEmploymentStatus() {
+      try {
+        const fetchEmploymentStatus = await get(
+          this.apiUrls.getEmploymentStatus
+        );
+        this.employmentStatus = fetchEmploymentStatus.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+
+    async getUsersList() {
+      this.$LIPS(true);
+
+      try {
+        const fetchusersList = await get(this.apiUrls.getusersList);
+        this.usersList = fetchusersList.data.data.data;
+        this.$LIPS(false);
+        console.log("===> this.usersList <===", this.usersList);
+      } catch (err) {
+        this.$LIPS(false);
+
+        this.$displayErrorMessage(err);
+      }
+    },
+  },
+};
+</script>

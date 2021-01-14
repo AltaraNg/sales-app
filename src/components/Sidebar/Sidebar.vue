@@ -74,7 +74,7 @@
 
           <li class="items-center">
             <router-link
-              to="/admin/settings"
+              to="/admin/register"
               v-slot="{ href, route, navigate, isActive }"
             >
               <a
@@ -95,35 +95,31 @@
               </a>
             </router-link>
           </li>
+          <br />
+          <li class="absolute bottom-0">
+            <div v-on:click="logOut()">
+              <a
+                :href="href"
+                @click="navigate"
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'altaraBlueText hover:altaraBlueText'
+                    : 'text-gray-800 hover:text-gray-600',
+                ]"
+              >
+                <i
+                  class="fas fa-sign-out-alt mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                logout
+              </a>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
     <!-- Pin to bottom left corner -->
-    <div class="relative altaraBlue h-32 w-32 ...">
-      <div class="absolute bottom-0 left-0 h-16">
-        <router-link
-          to="/auth/login"
-          v-slot="{ href, route, navigate, isActive }"
-        >
-          <a
-            :href="href"
-            @click="navigate"
-            class="text-xs uppercase py-3 font-bold block"
-            :class="[
-              isActive
-                ? 'altaraBlueText hover:altaraBlueText'
-                : 'text-gray-800 hover:text-gray-600',
-            ]"
-          >
-            <i
-              class="fas fa-sign-out-alt mr-2 text-sm"
-              :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-            ></i>
-            logout
-          </a>
-        </router-link>
-      </div>
-    </div>
   </nav>
 </template>
 ); }
@@ -141,6 +137,11 @@ export default {
   methods: {
     toggleCollapseShow: function (classes) {
       this.collapseShow = classes;
+    },
+
+    logOut() {
+      localStorage.removeItem("api_token");
+      this.$router.push("/auth/login");
     },
   },
   components: {},

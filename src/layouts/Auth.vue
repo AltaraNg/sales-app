@@ -38,4 +38,18 @@ export default {
 .altaraBlue {
   background-color: #094a73;
 }
+select.is-invalid,
+input.is-invalid[type="text"],
+input.is-invalid[type="tel"],
+input.is-invalid[type="number"] {
+  border-color: #c81618 !important;
+  border-width: 1px;
+}
+small.text-muted,
+form small:not(.error-control) {
+  font-size: 1.1rem;
+  color: #c81618 !important;
+  float: left;
+  width: 100%;
+}
 </style>

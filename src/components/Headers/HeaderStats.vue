@@ -6,52 +6,104 @@
         <!-- Card stats -->
         <div class="flex flex-wrap">
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="Total Registered"
-              statTitle="350,897"
-              statArrow="up"
-              statPercent="3.48"
-              statPercentColor="text-green-500"
-              statDescripiron="Since last month"
-              statIconName="far fa-chart-bar"
-              statIconColor="bg-red-500"
-            />
+            <div
+              class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+            >
+              <div class="flex-auto p-4">
+                <div class="flex flex-wrap">
+                  <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 class="text-gray-500 uppercase font-bold text-xs">
+                      Total Contacted
+                    </h5>
+                    <span class="font-semibold text-xl text-gray-800">
+                      {{ totalContacted }}
+                    </span>
+                  </div>
+                  <div class="relative w-auto pl-4 flex-initial">
+                    <div
+                      class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500"
+                    >
+                      <i class="far fa-chart-bar"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="Total Employed"
-              statTitle="2,356"
-              statArrow="down"
-              statPercent="3.48"
-              statPercentColor="text-red-500"
-              statDescripiron="Since last week"
-              statIconName="fas fa-chart-pie"
-              statIconColor="bg-orange-500"
-            />
+            <div
+              class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+            >
+              <div class="flex-auto p-4">
+                <div class="flex flex-wrap">
+                  <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 class="text-gray-500 uppercase font-bold text-xs">
+                      Total Purchased
+                    </h5>
+                    <span class="font-semibold text-xl text-gray-800">
+                      {{ totalPurchased }}
+                    </span>
+                  </div>
+                  <div class="relative w-auto pl-4 flex-initial">
+                    <div
+                      class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500"
+                    >
+                      <i class="fas fa-chart-pie"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="Total unemployed"
-              statTitle="924"
-              statArrow="down"
-              statPercent="1.10"
-              statPercentColor="text-orange-500"
-              statDescripiron="Since yesterday"
-              statIconName="fas fa-users"
-              statIconColor="bg-pink-500"
-            />
+            <div
+              class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+            >
+              <div class="flex-auto p-4">
+                <div class="flex flex-wrap">
+                  <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 class="text-gray-500 uppercase font-bold text-xs">
+                      Total Affidavit
+                    </h5>
+                    <span class="font-semibold text-xl text-gray-800">
+                      {{ totalAffidavit }}
+                    </span>
+                  </div>
+                  <div class="relative w-auto pl-4 flex-initial">
+                    <div
+                      class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-pink-500"
+                    >
+                      <i class="fas fa-users"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="Total Contacted"
-              statTitle="49,65"
-              statArrow="up"
-              statPercent="12"
-              statPercentColor="text-green-500"
-              statDescripiron="Since last month"
-              statIconName="far fa-chart-bar"
-              statIconColor="bg-green-500"
-            />
+            <div
+              class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+            >
+              <div class="flex-auto p-4">
+                <div class="flex flex-wrap">
+                  <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 class="text-gray-500 uppercase font-bold text-xs">
+                      Total Registered
+                    </h5>
+                    <span class="font-semibold text-xl text-gray-800">
+                      {{ totalRegistered }}
+                    </span>
+                  </div>
+                  <div class="relative w-auto pl-4 flex-initial">
+                    <div
+                      class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-green-500"
+                    >
+                      <i class="fas fa-chart-bar"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -61,10 +113,82 @@
 
 <script>
 import CardStats from "@/components/Cards/CardStats.vue";
+import { get } from "../../utilities/api";
 
 export default {
   components: {
     CardStats,
+  },
+  data() {
+    return {
+      totalContacted: 0,
+      totalPurchased: 0,
+      totalAffidavit: 0,
+      totalRegistered: 0,
+      usersList: [],
+      employmentStatus: [],
+      customerStage: [],
+      apiUrls: {
+        getEmploymentStatus: `/api/employment_status`,
+        getusersList: `/api/customer_contact`,
+        getStage: `/api/customer_stage`,
+      },
+    };
+  },
+  async created() {
+    console.log("===>mounted<===");
+    // const employmentStatus = await this.getEmploymentStatus();
+    // const userStages = await this.getUserStage();
+    // const usersList = await this.getUsersList();
+    // const data = usersList.filter(
+    //   (x) =>
+    //     x.customer_stage_id ===
+    //     userStages.find((y) => y.name === "Registered").id
+    // ).length;
+    this.totalAffidavit = await this.getCardValue("Affidavit");
+    this.totalPurchased = await this.getCardValue("Purchased");
+    this.totalContacted = await this.getCardValue("Contacted");
+
+    // console.log("===>mounte this.totalContacted d<===", data);
+  },
+  methods: {
+    async getCardValue(query) {
+      const userStages = await this.getUserStage();
+      const usersList = await this.getUsersList();
+      const data = usersList.filter(
+        (x) =>
+          x.customer_stage_id === userStages.find((y) => y.name === query).id
+      ).length;
+      return data;
+    },
+    async getEmploymentStatus() {
+      try {
+        const fetchEmploymentStatus = await get(
+          this.apiUrls.getEmploymentStatus
+        );
+        return fetchEmploymentStatus.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+    async getUserStage() {
+      try {
+        const fetchUserStage = await get(this.apiUrls.getStage);
+        return fetchUserStage.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+
+    async getUsersList() {
+      try {
+        const fetchusersList = await get(this.apiUrls.getusersList);
+        this.totalRegistered = fetchusersList.data.data.data.length;
+        return fetchusersList.data.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
   },
 };
 </script>

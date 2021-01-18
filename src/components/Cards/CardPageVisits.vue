@@ -98,7 +98,9 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              {{ user.customer_stage_id }}
+              {{
+                customerStage.find((x) => x.id === user.customer_stage_id).name
+              }}
             </td>
           </tr>
         </tbody>
@@ -115,15 +117,18 @@ export default {
     return {
       usersList: [],
       employmentStatus: [],
+      customerStage: [],
       apiUrls: {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
+        getStage: `/api/customer_stage`,
       },
     };
   },
   async created() {
     console.log("===>mounted<===");
     await this.getEmploymentStatus();
+    await this.getUserStage();
     await this.getUsersList();
   },
   methods: {
@@ -133,6 +138,15 @@ export default {
           this.apiUrls.getEmploymentStatus
         );
         this.employmentStatus = fetchEmploymentStatus.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+    async getUserStage() {
+      try {
+        const fetchUserStage = await get(this.apiUrls.getStage);
+        this.customerStage = fetchUserStage.data.data;
+        console.log("===> this.fetchUserStage <===", this.customerStage);
       } catch (err) {
         this.$displayErrorMessage(err);
       }

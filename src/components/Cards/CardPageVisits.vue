@@ -15,7 +15,7 @@
             <select
               v-model="searchQuery.employment_status_id"
               name="employment status"
-              class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+              class="mx-input"
             >
               <option disabled selected="selected">
                 Select Employment Status
@@ -38,10 +38,7 @@
             >
               Customer Stage
             </label>
-            <select
-              v-model="searchQuery.stage"
-              class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-            >
+            <select v-model="searchQuery.stage" class="mx-input">
               <option disabled selected="selected">
                 Select Customer Stage
               </option>
@@ -66,7 +63,6 @@
             <div>
               <date-picker
                 valueType="format"
-                placeholder="Date"
                 v-model="searchQuery.startDate"
               ></date-picker>
             </div>
@@ -83,7 +79,6 @@
             <div>
               <date-picker
                 valueType="format"
-                placeholder="Date"
                 v-model="searchQuery.endDate"
               ></date-picker>
             </div>
@@ -94,6 +89,12 @@
           class="altaraBlue rounded h-10 mt-6 px-3 text-white"
         >
           Search
+        </button>
+        <button
+          v-on:click="resetSearch()"
+          class="altaraBlue rounded h-10 mt-6 px-3 text-white"
+        >
+          Reset
         </button>
       </div>
     </div>
@@ -107,7 +108,7 @@
             <h3 class="font-semibold text-base text-gray-800">
               {{
                 usersList.length != 0
-                  ? "List of Registered Customers"
+                  ? "List of contacted customers"
                   : "You have no Registered Customer"
               }}
             </h3>
@@ -127,12 +128,17 @@
               <th
                 class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
               >
-                Index
+                S/N
               </th>
               <th
                 class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
               >
                 Name
+              </th>
+              <th
+                class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+              >
+                Reg ID
               </th>
               <th
                 class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
@@ -172,6 +178,11 @@
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
                 {{ user.name }}
+              </th>
+              <th
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+              >
+                {{ user.reg_id }}
               </th>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
@@ -275,7 +286,9 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
-
+    resetSearch() {
+      this.searchQuery = {};
+    },
     async searchUsersList() {
       this.$LIPS(true);
 
@@ -297,3 +310,23 @@ export default {
   },
 };
 </script>
+
+<style >
+.mx-input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 34px;
+  padding: 6px 30px;
+  padding-left: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+</style>

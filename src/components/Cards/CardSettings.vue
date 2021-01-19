@@ -229,7 +229,9 @@ export default {
                   icon: "success",
                   title: "Customer registered Logged",
                 });
+                this.customer = {};
               })
+
               .catch(({ response: { data } }) => {
                 const errData = data.data.errors;
                 this.error = errData ? errData : data;

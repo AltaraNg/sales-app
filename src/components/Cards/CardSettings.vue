@@ -24,12 +24,17 @@
                 type="text"
                 v-model="customer.name"
                 name="name"
-                :class="[errors.first('name') ? 'is-invalid' : '']"
+                :class="[
+                  errors.first('name') || error.name ? 'is-invalid' : '',
+                ]"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               />
               <small class="error-control" v-if="errors.first('name')">
                 {{ errors.first("name") }}
               </small>
+              <small class="error-control" v-if="error.name">{{
+                error.name[0]
+              }}</small>
             </div>
           </div>
 
@@ -46,10 +51,14 @@
                 name="email"
                 v-model="customer.email"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                :class="[error.email ? 'is-invalid' : '']"
               />
               <small class="error-control" v-if="errors.first('email')">
                 {{ errors.first("email") }}
               </small>
+              <small class="error-control" v-if="error.email">{{
+                error.email[0]
+              }}</small>
             </div>
           </div>
         </div>
@@ -68,12 +77,17 @@
                 v-validate="'required'"
                 name="phone"
                 v-model="customer.phone"
-                :class="[errors.first('phone') ? 'is-invalid' : '']"
+                :class="[
+                  errors.first('phone') || error.phone ? 'is-invalid' : '',
+                ]"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               />
               <small class="error-control" v-if="errors.first('phone')">
                 {{ errors.first("phone") }}
               </small>
+              <small class="error-control" v-if="error.phone">{{
+                error.phone[0]
+              }}</small>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -89,7 +103,11 @@
                 type="number"
                 v-validate="'required'"
                 name="income"
-                :class="[errors.first('income') ? 'is-invalid' : '']"
+                :class="[
+                  errors.first('income') || error.monthly_income
+                    ? 'is-invalid'
+                    : '',
+                ]"
                 v-model="customer.monthly_income"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 value="New York"
@@ -97,6 +115,9 @@
               <small class="error-control" v-if="errors.first('income')">
                 {{ errors.first("income") }}
               </small>
+              <small class="error-control" v-if="error.monthly_income">{{
+                error.monthly_income[0]
+              }}</small>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -116,7 +137,12 @@
                 v-model="customer.employment_status_id"
                 v-validate="'required'"
                 name="employment status"
-                :class="[errors.first('employment status') ? 'is-invalid' : '']"
+                :class="[
+                  errors.first('employment status') ||
+                  error.employment_status_id
+                    ? 'is-invalid'
+                    : '',
+                ]"
                 class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               >
                 <option disabled selected="selected">
@@ -136,6 +162,9 @@
               >
                 {{ errors.first("employment status") }}
               </small>
+              <small class="error-control" v-if="error.employment_status_id">{{
+                error.employment_status_id[0]
+              }}</small>
             </div>
           </div>
         </div>
@@ -171,8 +200,6 @@ export default {
     };
   },
   async created() {
-    console.log("===>mounted<===");
-
     await this.getEmploymentStatus();
   },
   methods: {
@@ -188,50 +215,30 @@ export default {
     },
 
     async submitForm() {
-      // console.log("===><===", this.customer.phone);
-      // if (this.customer.phone.length > 11 || this.customer.phone.length < 11) {
-      //   return this.$swal({
-      //     icon: "error",
-      //     title: "Kindly enter a valid phone number",
-      //   });
-      // }
       const validate = await this.$validator.validateAll();
-      console.log(" <=+=>  --- validate --- <=+=>  ", validate);
       this.$validator
         .validateAll()
         .then((result) => {
-          console.log("===>e result e<===", result);
           if (result) {
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.register, this.customer)
-              .then(() => {
+              .then(({ data }) => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
                   title: "Customer registered Logged",
                 });
               })
-              .catch(() => {
+              .catch(({ response: { data } }) => {
+                const errData = data.data.errors;
+                this.error = errData ? errData : data;
+
                 this.$LIPS(false);
-                this.$swal({
-                  icon: "error",
-                  title: "Customer Registration Failed",
-                });
               });
           }
-
-          // else {
-          //   console.log("===>result result<===", result);
-          //   this.$swal({
-          //     icon: "error",
-          //     title: "Kindly enter the required inputs",
-          //   });
-          // }
         })
-        .catch((e) => {
-          console.log("===>eee<===", e);
-        });
+        .catch((e) => {});
     },
   },
 };

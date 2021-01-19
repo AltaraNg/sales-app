@@ -83,9 +83,7 @@ export default {
       error: {},
     };
   },
-  async created() {
-    console.log("===>mounted<===");
-  },
+  async created() {},
   methods: {
     async login() {
       if (this.$network()) {

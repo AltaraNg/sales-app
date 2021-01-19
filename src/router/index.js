@@ -17,41 +17,41 @@ const router = new VueRouter({
     linkActiveClass: "active",
     mode: "history",
     routes: [{
-            path: "/admin",
-            name: "admin",
-            redirect: "/admin/dashboard",
-            component: Admin,
-            meta: { requiresAuth: true },
-            children: [{
-                    path: "/admin/dashboard",
-                    component: Dashboard,
-                },
-                {
-                    path: "/admin/register",
-                    component: Settings,
-                },
-
-
-            ],
+        path: "/admin",
+        name: "admin",
+        redirect: "/admin/dashboard",
+        component: Admin,
+        meta: { requiresAuth: true },
+        children: [{
+            path: "/admin/dashboard",
+            component: Dashboard,
         },
         {
-            path: "/login",
-            redirect: "/auth/login",
-            component: Auth,
-            name: "login",
-            children: [{
-                path: "/auth/login",
-                component: Login,
-            }, ],
+            path: "/admin/register",
+            component: Settings,
         },
-        {
-            path: "/landing",
-            name: "landing",
-            component: Index,
-        },
-        { path: "/", redirect: { name: "landing" } },
 
-        { path: "*", redirect: "/" },
+
+        ],
+    },
+    {
+        path: "/login",
+        redirect: "/auth/login",
+        component: Auth,
+        name: "login",
+        children: [{
+            path: "/auth/login",
+            component: Login,
+        },],
+    },
+    {
+        path: "/landing",
+        name: "landing",
+        component: Index,
+    },
+    { path: "/", redirect: { name: "landing" } },
+
+    { path: "*", redirect: "/" },
     ]
 });
 // const router = new VueRouter({
@@ -70,7 +70,6 @@ router.beforeEach((to, from, next) => {
         .filter(Boolean)[0]
         .toUpperCase();
     const token = localStorage.getItem("api_token");
-    console.log('===>goingTo<=== ', goingTo);
     goingTo != "ADMIN" && token ? reRoute("admin") : next();
 
 

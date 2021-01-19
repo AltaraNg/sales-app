@@ -40,6 +40,7 @@ export default {
 }
 select.is-invalid,
 input.is-invalid[type="text"],
+input.is-invalid[type="email"],
 input.is-invalid[type="tel"],
 input.is-invalid[type="number"] {
   border-color: #c81618 !important;

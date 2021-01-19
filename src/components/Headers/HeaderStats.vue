@@ -136,20 +136,9 @@ export default {
     };
   },
   async created() {
-    console.log("===>mounted<===");
-    // const employmentStatus = await this.getEmploymentStatus();
-    // const userStages = await this.getUserStage();
-    // const usersList = await this.getUsersList();
-    // const data = usersList.filter(
-    //   (x) =>
-    //     x.customer_stage_id ===
-    //     userStages.find((y) => y.name === "Registered").id
-    // ).length;
     this.totalAffidavit = await this.getCardValue("Affidavit");
     this.totalPurchased = await this.getCardValue("Purchased");
     this.totalContacted = await this.getCardValue("Contacted");
-
-    // console.log("===>mounte this.totalContacted d<===", data);
   },
   methods: {
     async getCardValue(query) {

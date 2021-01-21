@@ -90,36 +90,7 @@
               }}</small>
             </div>
           </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Monthly Income *
-              </label>
-              <input
-                maxlength="11"
-                type="number"
-                v-validate="'required'"
-                name="income"
-                :class="[
-                  errors.first('income') || error.monthly_income
-                    ? 'is-invalid'
-                    : '',
-                ]"
-                v-model="customer.monthly_income"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="New York"
-              />
-              <small class="error-control" v-if="errors.first('income')">
-                {{ errors.first("income") }}
-              </small>
-              <small class="error-control" v-if="error.monthly_income">{{
-                error.monthly_income[0]
-              }}</small>
-            </div>
-          </div>
+
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label

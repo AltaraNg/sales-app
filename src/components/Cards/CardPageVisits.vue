@@ -150,11 +150,7 @@
               >
                 email
               </th>
-              <th
-                class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-              >
-                Monthly Income
-              </th>
+
               <th
                 class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
               >
@@ -168,11 +164,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr :key="index" v-for="(user, index) in usersList">
+            <tr :key="index" v-for="(user, index) in paginatedData">
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-                {{ index + 1 }}
+                {{ index + (pageNumber + 1) }}
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -194,11 +190,7 @@
               >
                 {{ user.email }}
               </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-              >
-                {{ $formatCurrency(user.monthly_income) }}
-              </td>
+
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
               >
@@ -220,6 +212,22 @@
           </tbody>
         </table>
       </div>
+      <div class="flex-1 flex justify-between sm:hidden">
+        <button
+          :disabled="pageNumber === 0"
+          @click="prevPage"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
+        >
+          Previous
+        </button>
+        <button
+          :disabled="pageNumber >= pageCount - 1"
+          @click="nextPage"
+          class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -234,8 +242,32 @@ export default {
   components: {
     DatePicker,
   },
+  props: {
+    usersList: {
+      type: Array,
+      required: true,
+    },
+    size: {
+      type: Number,
+      required: false,
+      default: 20,
+    },
+  },
+  computed: {
+    pageCount() {
+      let l = this.usersList.length,
+        s = this.size;
+      return Math.ceil(l / s);
+    },
+    paginatedData() {
+      const start = this.pageNumber * this.size,
+        end = start + this.size;
+      return this.usersList.slice(start, end);
+    },
+  },
   data() {
     return {
+      pageNumber: 0,
       searchQuery: {},
       searchFilter: {},
       usersList: [],
@@ -254,6 +286,12 @@ export default {
     await this.getUsersList();
   },
   methods: {
+    nextPage() {
+      this.pageNumber++;
+    },
+    prevPage() {
+      this.pageNumber--;
+    },
     async getEmploymentStatus() {
       try {
         const fetchEmploymentStatus = await get(

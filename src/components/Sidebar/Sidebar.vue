@@ -95,6 +95,29 @@
               </a>
             </router-link>
           </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/superadmin"
+              v-slot="{ href, route, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="navigate"
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'altaraBlueText hover:altaraBlueText'
+                    : 'text-gray-800 hover:text-gray-600',
+                ]"
+              >
+                <i
+                  class="fas fa-user-lock mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Super Admin
+              </a>
+            </router-link>
+          </li>
           <br />
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">

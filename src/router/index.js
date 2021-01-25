@@ -4,6 +4,7 @@ import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
+import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
 import { routerHistory, writeHistory } from "vue-router-back-button";
@@ -29,6 +30,9 @@ const router = new VueRouter({
         {
             path: "/admin/register",
             component: Settings,
+        }, {
+            path: "/admin/superadmin",
+            component: AdminDashboard,
         },
 
 

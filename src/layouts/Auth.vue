@@ -39,6 +39,7 @@ export default {
   background-color: #094a73;
 }
 select.is-invalid,
+textarea.is-invalid,
 input.is-invalid[type="text"],
 input.is-invalid[type="email"],
 input.is-invalid[type="tel"],

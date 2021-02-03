@@ -95,7 +95,7 @@
               </a>
             </router-link>
           </li>
-          <li class="items-center">
+          <!-- <li class="items-center">
             <router-link
               to="/admin/superadmin"
               v-slot="{ href, route, navigate, isActive }"
@@ -117,7 +117,7 @@
                 Super Admin
               </a>
             </router-link>
-          </li>
+          </li> -->
           <br />
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">

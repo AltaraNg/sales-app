@@ -179,13 +179,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr :key="index" v-for="(user, index) in paginatedData">
+              <tr :key="index" v-for="(user, index) in usersList">
                 <th
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
                 >
-                  {{ index + (pageNumber + 1) }}
+                  {{ index + pageNumber }}
                 </th>
                 <th
+                  v-on:click="viewUser(user)"
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
                 >
                   {{ user.name }}
@@ -244,16 +245,16 @@
             </tbody>
           </table>
         </div>
-        <div class="flex-1 flex justify-between sm:hidden">
+        <div class="flex-1 flex justify-between">
           <button
-            :disabled="pageNumber === 0"
+            v-if="prev_page_url"
             @click="prevPage"
             class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
           >
             Previous
           </button>
           <button
-            :disabled="pageNumber >= pageCount - 1"
+            v-if="next_page_url"
             @click="nextPage"
             class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
           >
@@ -263,9 +264,7 @@
       </div>
       <div v-if="feedbackModal" id="overlay">
         <div class="flex items-center justify-center bottom-0 w-full h-full">
-          <div
-            class="bg-white rounded-lg md:ml-56 py-4 h-500-px overflow-x-auto"
-          >
+          <div class="bg-white rounded-lg md:ml-56 py-4 md:h-full xl:h-500-px">
             <div class="relative w-full px-4 max-w-full flex justify-between">
               <h3 class="font-semibold text-base text-gray-800">
                 {{ customer.name }} - Feedbacks
@@ -274,7 +273,7 @@
             </div>
             <br />
             <div class="flex flex-wrap">
-              <div class="w-full md:w-6/12 overflow-x-auto px-4">
+              <!-- <div class="w-full md:w-6/12 h-420-px overflow-x-auto px-4">
                 <table
                   class="items-center w-full bg-transparent border-collapse"
                 >
@@ -307,7 +306,12 @@
                       <th
                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
                       >
-                        {{ data.data.feedback }}
+                        <div
+                          class="w-16 truncate"
+                          v-on:click="openPopup(data.data.feedback)"
+                        >
+                          {{ data.data.feedback }}
+                        </div>
                       </th>
                       <th
                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -317,7 +321,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
+              </div> -->
               <div class="w-full md:w-6/12 px-4">
                 <textarea
                   rows="8"
@@ -352,6 +356,22 @@
           </div>
         </div>
       </div>
+      <div v-if="feedbackPopup" id="overlay">
+        <div class="flex items-center justify-center bottom-0 w-full h-full">
+          <div class="bg-white rounded-lg md:ml-56 m-16 py-4 w-6/12 h-350-px">
+            <div class="relative w-full px-4 max-w-full flex justify-between">
+              <h3 class="font-semibold text-base text-gray-800">
+                {{ customer.name }} - Feedbacks
+              </h3>
+              <i class="fas fa-times-circle" v-on:click="closePopup()"></i>
+            </div>
+            <br />
+            <div class="px-4 h-290-px overflow-x-auto">
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -361,6 +381,7 @@ import { get, post } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
+import { eventBus } from "../../main";
 
 export default {
   components: {
@@ -377,27 +398,19 @@ export default {
       default: 20,
     },
   },
-  computed: {
-    pageCount() {
-      let l = this.usersList.length,
-        s = this.size;
-      return Math.ceil(l / s);
-    },
-    paginatedData() {
-      const start = this.pageNumber * this.size,
-        end = start + this.size;
-      return this.usersList.slice(start, end);
-    },
-  },
+  computed: {},
   data() {
     return {
-      pageNumber: 0,
+      pageNumber: 1,
       searchQuery: {},
       searchFilter: {},
       usersList: [],
       employmentStatus: [],
       customerStage: [],
       comments: [],
+      message: "",
+      prev_page_url: "",
+      next_page_url: "",
       apiUrls: {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
@@ -407,20 +420,25 @@ export default {
       feedback: "",
       customer: {},
       feedbackModal: false,
+      feedbackPopup: false,
       error: {},
     };
   },
   async created() {
+    eventBus.$emit("fireMethod");
+
     await this.getEmploymentStatus();
     await this.getUserStage();
-    await this.getUsersList();
+    await this.searchUsersList();
   },
   methods: {
     nextPage() {
       this.pageNumber++;
+      this.searchUsersList();
     },
     prevPage() {
       this.pageNumber--;
+      this.searchUsersList();
     },
     async getEmploymentStatus() {
       try {
@@ -461,10 +479,15 @@ export default {
       this.$LIPS(true);
 
       try {
+        const query = { ...this.searchQuery, page: this.pageNumber };
         const fetchusersList = await get(
-          this.apiUrls.getusersList + queryParam(this.searchQuery)
+          this.apiUrls.getusersList + queryParam(query)
         );
+        console.log("policeing", query);
+
         this.usersList = fetchusersList.data.data.data;
+        this.next_page_url = fetchusersList.data.data.next_page_url;
+        this.prev_page_url = fetchusersList.data.data.prev_page_url;
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
@@ -494,7 +517,7 @@ export default {
                   icon: "success",
                   title: "Feedback Logged Successfully",
                 });
-                this.getUsersList();
+                this.searchUsersList();
               })
 
               .catch(({ response: { data } }) => {
@@ -513,10 +536,25 @@ export default {
     openModal(data) {
       this.comments = data.notifications;
       this.customer = data;
-      data.notifications.length === 0 ? "" : (this.feedbackModal = true);
+      this.feedbackModal = true;
     },
     closeModal() {
       this.feedbackModal = false;
+    },
+    openPopup(data) {
+      this.message = data;
+      this.feedbackPopup = true;
+    },
+    closePopup() {
+      this.feedbackPopup = false;
+    },
+    viewUser(data) {
+      this.$router.push({
+        name: "userProfile",
+        params: {
+          customer: data,
+        },
+      });
     },
   },
 };

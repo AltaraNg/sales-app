@@ -17,6 +17,7 @@ Vue.use(VeeValidate, {
     classes: true,
     classNames: { invalid: "is-invalid" }
 });
+export const eventBus = new Vue(); // added line
 
 new Vue({
     router,

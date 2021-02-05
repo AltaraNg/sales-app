@@ -114,11 +114,13 @@
 <script>
 import CardStats from "@/components/Cards/CardStats.vue";
 import { get } from "../../utilities/api";
+import { eventBus } from "../../main";
 
 export default {
   components: {
     CardStats,
   },
+
   data() {
     return {
       totalContacted: 0,
@@ -136,11 +138,18 @@ export default {
     };
   },
   async created() {
-    this.totalAffidavit = await this.getCardValue("Affidavit");
-    this.totalPurchased = await this.getCardValue("Purchased");
-    this.totalContacted = await this.getCardValue("Contacted");
+    this.getCardValues();
+
+    eventBus.$on("fireMethod", () => {
+      this.getCardValues();
+    });
   },
   methods: {
+    async getCardValues() {
+      this.totalAffidavit = await this.getCardValue("Affidavit");
+      this.totalPurchased = await this.getCardValue("Purchased");
+      this.totalContacted = await this.getCardValue("Contacted");
+    },
     async getCardValue(query) {
       const userStages = await this.getUserStage();
       const usersList = await this.getUsersList();

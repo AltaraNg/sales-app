@@ -7,6 +7,8 @@ import Settings from "@/views/admin/Settings.vue";
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
+import UserProfile from "@/views/user/userProfile.vue";
+
 import { routerHistory, writeHistory } from "vue-router-back-button";
 import Flash from "@/utilities/flash";
 
@@ -26,6 +28,7 @@ const router = new VueRouter({
         children: [{
             path: "/admin/dashboard",
             component: Dashboard,
+            props: true
         },
         {
             path: "/admin/register",
@@ -52,6 +55,12 @@ const router = new VueRouter({
         path: "/landing",
         name: "landing",
         component: Index,
+    },
+    {
+        path: "/admin/userProfile",
+        name: "userProfile",
+        component: UserProfile,
+        props: true
     },
     { path: "/", redirect: { name: "landing" } },
 

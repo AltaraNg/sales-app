@@ -2010,8 +2010,14 @@ video {
     height: 70px;
 }
 
+.h-290-px {
+    height: 290px;
+}
 .h-350-px {
     height: 350px;
+}
+.h-420-px {
+    height: 420px;
 }
 
 .h-500-px {

@@ -157,6 +157,7 @@
 </template>
 <script>
 import { get, post } from "../../utilities/api";
+import { eventBus } from "../../main";
 
 export default {
   data() {
@@ -196,6 +197,8 @@ export default {
             post(this.apiUrls.register, this.customer)
               .then(({ data }) => {
                 this.$LIPS(false);
+                eventBus.$emit("fireMethod");
+
                 this.$swal({
                   icon: "success",
                   title: "Customer registered Logged",

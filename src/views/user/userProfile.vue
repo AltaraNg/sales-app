@@ -82,8 +82,30 @@
                 hidden: openTab !== 2,
                 block: openTab === 2,
               }"
+              class="px-5"
             >
-              <p>feedback</p>
+              <div
+                :key="index"
+                v-for="(data, index) in customer.notifications"
+                class="chatBox"
+              >
+                <div
+                  v-on:click="openPopup(data.data.feedback)"
+                  class="flex justify-between"
+                >
+                  <div class="flex">
+                    <div class="space0"></div>
+                    <div class="self-center w-80 truncate">
+                      {{ data.data.feedback }}
+                    </div>
+                  </div>
+                  <div class="flex flex-col">
+                    <div class="font-light text-xs">
+                      {{ data.data.date.split("T")[0] || "Not Available" }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               v-bind:class="{
@@ -91,7 +113,41 @@
                 block: openTab === 3,
               }"
             >
-              <p>todo</p>
+              <div class="mx-5">
+                <div class="customerTile">
+                  <div class="flex justify-between">
+                    <div class="flex items-stretch">
+                      <div class="self-center font-medium">test</div>
+                    </div>
+                    <div class="flex flex-col">
+                      <div class="avatarCircle">
+                        <input
+                          type="checkbox"
+                          class="form-checkbox h-5 w-5 text-gray-600"
+                          checked
+                        />
+                      </div>
+                      <div class="text-xs">2021-02-5</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="customerTile">
+                  <div class="flex justify-between">
+                    <div class="flex items-stretch">
+                      <div class="self-center font-medium">test 0</div>
+                    </div>
+                    <div class="flex flex-col">
+                      <div class="avatarCircle">
+                        <input
+                          type="checkbox"
+                          class="form-checkbox h-5 w-5 text-gray-600"
+                        />
+                      </div>
+                      <div class="text-xs">2021-02-5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -435,5 +491,20 @@ export default {
 };
 </script>
 
-
+<style>
+.chatBox {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 0px 10px 10px 10px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.space0 {
+  height: 45px;
+  /* background: #00e396; */
+}
+</style>
 

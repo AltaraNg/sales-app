@@ -2,110 +2,133 @@
   <div>
     <div>
       <div
-        class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
+        class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
       >
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-2/12 xl:w-3/12 px-2">
-            <div class="relative w-50 mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Employment Status
-              </label>
-              <select
-                v-model="searchQuery.employment_status_id"
-                name="employment status"
-                class="mx-input"
-              >
-                <option disabled selected="selected">
-                  Select Employment Status
-                </option>
-                <option
-                  :value="type.id"
-                  :key="type.id"
-                  v-for="type in employmentStatus"
+        <div class="flex-col">
+          <div class="flex flex-wrap">
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
                 >
-                  {{ type.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="w-full lg:w-2/12 xl:w-3/12 px-2">
-            <div class="relative w-50 mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Customer Stage
-              </label>
-              <select v-model="searchQuery.stage" class="mx-input">
-                <option disabled selected="selected">
-                  Select Customer Stage
-                </option>
-                <option
-                  :value="type.id"
-                  :key="type.id"
-                  v-for="type in customerStage"
+                  Employment Status
+                </label>
+                <select
+                  v-model="searchQuery.employment_status_id"
+                  name="employment status"
+                  class="mx-input"
                 >
-                  {{ type.name }}
-                </option>
-              </select>
+                  <option disabled selected="selected">
+                    Select Employment Status
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in employmentStatus"
+                  >
+                    {{ type.name }}
+                  </option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="w-full lg:w-2/12 xl:w-3/12 px-2">
-            <div class="relative w-50 mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                From Date
-              </label>
-              <div>
-                <date-picker
-                  valueType="format"
-                  v-model="searchQuery.startDate"
-                ></date-picker>
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Customer Stage
+                </label>
+                <select v-model="searchQuery.stage" class="mx-input">
+                  <option disabled selected="selected">
+                    Select Customer Stage
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in customerStage"
+                  >
+                    {{ type.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  From Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.startDate"
+                  ></date-picker>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  To Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.endDate"
+                  ></date-picker>
+                </div>
               </div>
             </div>
           </div>
-          <div class="w-full lg:w-2/12 xl:w-3/12 px-2">
-            <div class="relative w-50 mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                To Date
-              </label>
-              <div>
-                <date-picker
-                  valueType="format"
-                  v-model="searchQuery.endDate"
-                ></date-picker>
-              </div>
-            </div>
+        </div>
+        <div class="flex justify-between">
+          <div
+            v-on:click="searchUsersList()"
+            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+          >
+            Search
           </div>
-          <div class="px-2">
-            <button
-              v-on:click="searchUsersList()"
-              class="altaraBlue rounded h-10 mt-6 px-3 text-white"
-            >
-              Search
-            </button>
-          </div>
-          <div class="px-2">
-            <button
-              v-on:click="resetSearch()"
-              class="altaraBlue rounded h-10 mt-6 px-3 text-white"
-            >
-              Reset
-            </button>
+          <div
+            v-on:click="resetSearch()"
+            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+          >
+            Reset
           </div>
         </div>
       </div>
 
+      <div class="contents md:hidden relative">
+        <div class="text-center py-2 font-medium px-5">
+          List of contacted customers
+        </div>
+        <div :key="index" v-for="(user, index) in usersList">
+          <div v-on:click="viewUser(user)" class="customerTile">
+            <div class="flex justify-between">
+              <div class="flex items-stretch">
+                <div
+                  :style="{ background: generateRandomColor() }"
+                  class="avatarCircle"
+                >
+                  {{ user.name[0].toUpperCase() }}
+                </div>
+                <div class="self-center font-medium">{{ user.name }}</div>
+              </div>
+              <div class="flex flex-col">
+                <div class="font-bold">{{ user.reg_id }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
-        class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+        class="hidden md:contents relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
       >
         <div class="rounded-t mb-0 px-4 py-3 border-0">
           <div class="flex flex-wrap items-center">
@@ -475,6 +498,9 @@ export default {
     resetSearch() {
       this.searchQuery = {};
     },
+    generateRandomColor() {
+      return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    },
     async searchUsersList() {
       this.$LIPS(true);
 
@@ -618,5 +644,28 @@ export default {
   to {
     opacity: 0;
   }
+}
+
+.customerTile {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.13);
+  border-radius: 5px;
+  padding: 15px 10px;
+  margin-bottom: 13px;
+}
+.mx-datepicker {
+  width: 100%;
+}
+
+.avatarCircle {
+  width: 45px;
+  height: 45px;
+  /* background: #00e396; */
+  border-radius: 50px;
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  margin-right: 20px;
 }
 </style>

@@ -5,6 +5,7 @@ import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
+import DsaRatings from "@/components/Cards/DsaRatings.vue";
 import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
 import UserProfile from "@/views/user/userProfile.vue";
@@ -42,6 +43,10 @@ const router = new VueRouter({
         ],
     },
     {
+        path: "/admin/dsaratings",
+        component: DsaRatings,
+        name: "DsaRatings"
+    }, {
         path: "/login",
         redirect: "/auth/login",
         component: Auth,

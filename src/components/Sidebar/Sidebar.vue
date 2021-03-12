@@ -95,9 +95,9 @@
               </a>
             </router-link>
           </li>
-          <!-- <li class="items-center">
+          <li class="items-center">
             <router-link
-              to="/admin/superadmin"
+              to="/admin/dsaratings"
               v-slot="{ href, route, navigate, isActive }"
             >
               <a
@@ -111,13 +111,13 @@
                 ]"
               >
                 <i
-                  class="fas fa-user-lock mr-2 text-sm"
+                  class="fas fa-star-half-alt mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-gray-400']"
                 ></i>
-                Super Admin
+                Leaderboard
               </a>
             </router-link>
-          </li> -->
+          </li>
           <br />
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">

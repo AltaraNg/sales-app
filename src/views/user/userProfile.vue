@@ -82,8 +82,14 @@
                 hidden: openTab !== 2,
                 block: openTab === 2,
               }"
-              class="px-5"
+              class="px-5 relative"
             >
+              <div
+                v-on:click="logFeedbackPopup()"
+                class="absolute altaraBlue text-white bottom-0 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
+              >
+                +
+              </div>
               <div
                 :key="index"
                 v-for="(data, index) in customer.notifications"
@@ -155,132 +161,80 @@
     </div>
     <div class="hidden md:contents relative">
       <div class="md:ml-56 bg-white">
-        <div class="px-4 md:px-10 mx-auto">
+        <div class="px-4 md:px-10">
           <div class="flex flex-wrap">
             <div class="w-full md:w-4/12 bg-white w-full shadow-lg rounded p-4">
-              <img class="" :src="avatar" alt="..." />
+              <div
+                :style="{ background: generateRandomColor() }"
+                class="text-center text-white text-7xl rounded-full mt-11 mb-4 h-32 w-32 flex items-center justify-center mx-auto"
+              >
+                {{ customer.name[0].toUpperCase() }}
+              </div>
               <h2 class="text-xl font-bold text-center">{{ customer.name }}</h2>
-            </div>
-            <div
-              class="w-full md:w-8/12 bg-white w-full shadow-lg rounded p-4 h-420-px"
-            >
-              <div class="space-y-4">
+
+              <div class="space-y-4 px-5 shadow-xl color-white">
                 <div class="flow-root">
-                  <div class="my-4"><b>Name: </b> {{ customer.name }}</div>
+                  <div class="mt-5 mb-3">
+                    <b>Reg ID: </b> {{ customer.reg_id }}
+                  </div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-4"><b>Reg ID: </b> {{ customer.reg_id }}</div>
+                  <div class="my-3"><b>Phone: </b> {{ customer.phone }}</div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-4"><b>Phone: </b> {{ customer.phone }}</div>
+                  <div class="my-3"><b>Email: </b> {{ customer.email }}</div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-4"><b>Email: </b> {{ customer.email }}</div>
-                </div>
-                <div class="flow-root">
-                  <div class="my-4">
+                  <div class="my-3">
                     <b>Employment Status: </b>
                     {{ employmentStatus || "N/A" }}
                   </div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-4">
+                  <div class="my-3">
                     <b>Customer Stage: </b>
                     {{ customerStage || "N/A" }}
                   </div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-4">
+                  <div class="my-3">
                     <b>Feedbacks: </b>{{ customer.users.full_name }}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="px-4 md:px-10 mx-auto">
-          <div class="flex flex-wrap">
+
             <div
-              class="w-full md:w-8/12 bg-white w-full shadow-lg rounded p-4 h-420-px overflow-x-auto"
+              class="relative w-full overscroll-contain h-screen md:w-8/12 bg-white w-full shadow-lg rounded p-4 h-420-px"
             >
-              <table class="items-center w-full bg-transparent border-collapse">
-                <thead>
-                  <tr>
-                    <th
-                      class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                    >
-                      S/N
-                    </th>
-                    <th
-                      class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                    >
-                      Feedback
-                    </th>
-                    <th
-                      class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                    >
-                      Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    :key="index"
-                    v-for="(data, index) in customer.notifications"
-                  >
-                    <th
-                      class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                    >
-                      {{ index + 1 }}
-                    </th>
-                    <th
-                      class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                    >
-                      <div
-                        class="w-16 truncate"
-                        v-on:click="openPopup(data.data.feedback)"
-                      >
-                        {{ data.data.feedback }}
-                      </div>
-                    </th>
-                    <th
-                      class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                    >
-                      {{ data.data.date.split("T")[0] || "Not Available" }}
-                    </th>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="w-full md:w-4/12 bg-white w-full shadow-lg rounded p-4">
-              <textarea
-                rows="8"
-                cols="35"
-                type="text"
-                name="feedback"
-                placeholder="Enter Feedback..."
-                v-validate="'required'"
-                :class="[
-                  errors.first('feedback') || error.feedback
-                    ? 'is-invalid'
-                    : 'border',
-                ]"
-                v-model="customer.feedback"
-              />
-              <br />
-              <small class="error-control" v-if="errors.first('feedback')">
-                {{ errors.first("feedback") }}
-              </small>
-              <small class="error-control" v-if="error.feedback">{{
-                error.feedback[0]
-              }}</small>
-              <br /><br />
-              <button
-                v-on:click="postFeedbackComment(customer)"
-                class="altaraBlue rounded h-10 mt-6 px-3 text-white"
+              <div
+                v-on:click="logFeedbackPopup()"
+                class="absolute altaraBlue text-white bottom-10 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
               >
-                Log Feedback
-              </button>
+                +
+              </div>
+              <div
+                :key="index"
+                v-for="(data, index) in customer.notifications"
+                class="chatBox"
+              >
+                <div
+                  v-on:click="openPopup(data.data.feedback)"
+                  class="flex justify-between"
+                >
+                  <div class="flex">
+                    <div class="space0"></div>
+                    <div class="self-center w-80 truncate">
+                      {{ data.data.feedback }}
+                    </div>
+                  </div>
+                  <div class="flex flex-col">
+                    <div class="font-light text-xs">
+                      {{ data.data.date.split("T")[0] || "Not Available" }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -306,12 +260,62 @@
         </div>
       </div>
     </div>
+
+    <div v-if="logFeedbackPopupValue" id="overlay">
+      <div class="flex items-center justify-center bottom-0 h-full">
+        <div
+          class="bg-white rounded-lg md:ml-56 m-16 py-4 md:w-6/12 sm:w-8/12 h-350-px"
+        >
+          <div class="relative px-4 flex justify-between">
+            <h3 class="font-semibold text-base text-gray-800">
+              {{ customer.name }} - Log Feedback
+            </h3>
+            <i
+              class="fas fa-times-circle"
+              v-on:click="closeFeedbackPopup()"
+            ></i>
+          </div>
+          <br />
+          <div class="px-4 h-290-px overflow-x-auto">
+            <textarea
+              rows="8"
+              cols="40"
+              type="text"
+              name="feedback"
+              placeholder="Enter Feedback..."
+              v-validate="'required'"
+              :class="[
+                errors.first('feedback') || error.feedback
+                  ? 'is-invalid'
+                  : 'border',
+              ]"
+              v-model="customer.feedback"
+            />
+            <br />
+            <small class="error-control" v-if="errors.first('feedback')">
+              {{ errors.first("feedback") }}
+            </small>
+            <small class="error-control" v-if="error.feedback">{{
+              error.feedback[0]
+            }}</small>
+            <br /><br />
+            <button
+              v-on:click="postFeedbackComment(customer)"
+              class="altaraBlue rounded h-10 mt-6 px-3 text-white"
+            >
+              Log Feedback
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import Sidebar from "@/components/Sidebar/Sidebar.vue";
 import HeaderStats from "@/components/Headers/HeaderStats.vue";
 import avatar from "@/assets/img/avatar.png";
+import { post } from "@/utilities/api";
 
 export default {
   name: "UserProfile",
@@ -345,6 +349,7 @@ export default {
       openTab: 1,
       feedbackModal: false,
       feedbackPopup: false,
+      logFeedbackPopupValue: false,
       error: {},
     };
   },
@@ -432,13 +437,13 @@ export default {
         .validateAll()
         .then((result) => {
           if (result) {
-            this.feedbackModal = false;
+            this.closeFeedbackPopup();
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
               feedback: user.feedback,
             })
-              .then(({ data }) => {
+              .then(() => {
                 this.$LIPS(false);
                 user.feedback = "";
                 this.$swal({
@@ -472,6 +477,12 @@ export default {
     openPopup(data) {
       this.message = data;
       this.feedbackPopup = true;
+    },
+    logFeedbackPopup() {
+      this.logFeedbackPopupValue = true;
+    },
+    closeFeedbackPopup() {
+      this.logFeedbackPopupValue = false;
     },
     closePopup() {
       this.feedbackPopup = false;

@@ -4,90 +4,180 @@
       <div
         class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
       >
-        <div class="flex-col">
-          <div class="flex flex-wrap">
-            <div class="w-full lg:w-2/12 xl:w-3/12">
-              <div class="relative w-50 mb-3">
-                <label
-                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Employment Status
-                </label>
-                <select
-                  v-model="searchQuery.employment_status_id"
-                  name="employment status"
-                  class="mx-input"
-                >
-                  <option disabled selected="selected">
-                    Select Employment Status
-                  </option>
-                  <option
-                    :value="type.id"
-                    :key="type.id"
-                    v-for="type in employmentStatus"
+        <div class="hidden md:contents">
+          <div class="flex-col">
+            <div class="flex justify-between">
+              <div class="w-full lg:w-2/12 xl:w-2/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
                   >
-                    {{ type.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="w-full lg:w-2/12 xl:w-3/12">
-              <div class="relative w-50 mb-3">
-                <label
-                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Customer Stage
-                </label>
-                <select v-model="searchQuery.stage" class="mx-input">
-                  <option disabled selected="selected">
-                    Select Customer Stage
-                  </option>
-                  <option
-                    :value="type.id"
-                    :key="type.id"
-                    v-for="type in customerStage"
+                    Employment Status
+                  </label>
+                  <select
+                    v-model="searchQuery.employment_status_id"
+                    name="employment status"
+                    class="mx-input"
                   >
-                    {{ type.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="w-full lg:w-2/12 xl:w-3/12">
-              <div class="relative w-50 mb-3">
-                <label
-                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  From Date
-                </label>
-                <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.startDate"
-                  ></date-picker>
+                    <option disabled selected="selected">
+                      Select Employment Status
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in employmentStatus"
+                    >
+                      {{ type.name }}
+                    </option>
+                  </select>
                 </div>
               </div>
-            </div>
-            <div class="w-full lg:w-2/12 xl:w-3/12">
-              <div class="relative w-50 mb-3">
-                <label
-                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  To Date
-                </label>
-                <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.endDate"
-                  ></date-picker>
+              <div class="w-full lg:w-2/12 xl:w-2/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Customer Stage
+                  </label>
+                  <select v-model="searchQuery.stage" class="mx-input">
+                    <option disabled selected="selected">
+                      Select Customer Stage
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in customerStage"
+                    >
+                      {{ type.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="w-full lg:w-2/12 xl:w-2/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    From Date
+                  </label>
+                  <div>
+                    <date-picker
+                      valueType="format"
+                      v-model="searchQuery.startDate"
+                    ></date-picker>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full lg:w-2/12 xl:w-2/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    To Date
+                  </label>
+                  <div>
+                    <date-picker
+                      valueType="format"
+                      v-model="searchQuery.endDate"
+                    ></date-picker>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="contents md:hidden">
+          <div class="flex-col">
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-2/12 xl:w-3/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Employment Status
+                  </label>
+                  <select
+                    v-model="searchQuery.employment_status_id"
+                    name="employment status"
+                    class="mx-input"
+                  >
+                    <option disabled selected="selected">
+                      Select Employment Status
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in employmentStatus"
+                    >
+                      {{ type.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="w-full lg:w-2/12 xl:w-3/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Customer Stage
+                  </label>
+                  <select v-model="searchQuery.stage" class="mx-input">
+                    <option disabled selected="selected">
+                      Select Customer Stage
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in customerStage"
+                    >
+                      {{ type.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="w-full lg:w-2/12 xl:w-3/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    From Date
+                  </label>
+                  <div>
+                    <date-picker
+                      valueType="format"
+                      v-model="searchQuery.startDate"
+                    ></date-picker>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full lg:w-2/12 xl:w-3/12">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    To Date
+                  </label>
+                  <div>
+                    <date-picker
+                      valueType="format"
+                      v-model="searchQuery.endDate"
+                    ></date-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="flex justify-between">
           <div
             v-on:click="searchUsersList()"
@@ -154,62 +244,69 @@
             <thead>
               <tr>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   S/N
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Name
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Reg ID
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   phone
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   email
                 </th>
 
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Employment Status
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Customer Stage
                 </th>
                 <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Contacted By
-                </th>
-                <th
-                  class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                >
-                  Feedbacks
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr :key="index" v-for="(user, index) in usersList">
+              <tr
+                v-on:click="viewUser(user)"
+                :key="index"
+                v-for="(user, index) in usersList"
+                :style="
+                  index % 2 === 0
+                    ? { 'background-color': 'white' }
+                    : { 'background-color': '#F3F4F6' }
+                "
+              >
                 <th
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
                 >
-                  {{ index + pageNumber }}
+                  <div
+                    class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+                  >
+                    {{ index + pageNumber }}
+                  </div>
                 </th>
                 <th
-                  v-on:click="viewUser(user)"
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
                 >
                   {{ user.name }}
@@ -251,18 +348,6 @@
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{ user.users.full_name }}
-                </td>
-                <td
-                  v-on:click="openModal(user)"
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-                >
-                  <i
-                    :class="[
-                      user.notifications.length != 0
-                        ? 'fas fa-comment-dots'
-                        : 'fas fa-comment-slash',
-                    ]"
-                  ></i>
                 </td>
               </tr>
             </tbody>

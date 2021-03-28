@@ -1558,7 +1558,9 @@ video {
 .bg-red-100 {
     --tw-bg-opacity: 1;
     background-color: rgba(254, 226, 226, var(--tw-bg-opacity))
-}
+}.altaraBlue {
+    background-color: #094a73;
+  }
 .bg-red-200 {
     --tw-bg-opacity: 1;
     background-color: rgba(254, 202, 202, var(--tw-bg-opacity))

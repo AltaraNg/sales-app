@@ -49,70 +49,43 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
           <li class="items-center">
-            <router-link
-              to="/admin/dashboard"
-              v-slot="{ href, route, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
+            <router-link to="/admin/dashboard">
+              <div
                 class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'altaraBlueText hover:altaraBlueText'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
+                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-chart-line mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                  :class="['text-gray-400']"
                 ></i>
                 Dashboard
-              </a>
+              </div>
             </router-link>
           </li>
 
           <li class="items-center">
-            <router-link
-              to="/admin/register"
-              v-slot="{ href, route, navigate, isActive }"
-            >
+            <router-link to="/admin/register">
               <a
-                :href="href"
-                @click="navigate"
                 class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'altaraBlueText hover:altaraBlueText'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
+                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-user-plus mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                  :class="['text-gray-400']"
                 ></i>
                 Register Customer
               </a>
             </router-link>
           </li>
           <li class="items-center">
-            <router-link
-              to="/admin/dsaratings"
-              v-slot="{ href, route, navigate, isActive }"
-            >
+            <router-link to="/admin/dsaratings">
               <a
-                :href="href"
-                @click="navigate"
                 class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'altaraBlueText hover:altaraBlueText'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
+                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-star-half-alt mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                  :class="['text-gray-400']"
                 ></i>
                 Leaderboard
               </a>
@@ -122,18 +95,12 @@
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">
               <a
-                :href="href"
-                @click="navigate"
                 class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'altaraBlueText hover:altaraBlueText'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
+                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-sign-out-alt mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                  :class="['text-gray-400']"
                 ></i>
                 logout
               </a>

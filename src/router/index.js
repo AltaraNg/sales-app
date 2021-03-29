@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
-import Settings from "@/views/admin/Settings.vue";
+import NewUser from "@/views/admin/NewUser.vue";
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
-import DsaRatings from "@/components/Cards/DsaRatings.vue";
+import LeaderBoard from "@/views/admin/LeaderBoard.vue";
 import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
 import UserProfile from "@/views/user/userProfile.vue";
@@ -33,7 +33,7 @@ const router = new VueRouter({
         },
         {
             path: "/admin/register",
-            component: Settings,
+            component: NewUser,
         }, {
             path: "/admin/superadmin",
             component: AdminDashboard,
@@ -44,8 +44,8 @@ const router = new VueRouter({
     },
     {
         path: "/admin/dsaratings",
-        component: DsaRatings,
-        name: "DsaRatings"
+        component: LeaderBoard,
+        name: "LeaderBoard"
     }, {
         path: "/login",
         redirect: "/auth/login",

@@ -9,11 +9,11 @@
             :style="{ background: generateRandomColor() }"
             class="text-center text-white text-7xl rounded-full my-11 h-32 w-32 flex items-center justify-center"
           >
-            {{ customer.name[0].toUpperCase() || "" }}
+            {{ customer ? customer.name[0].toUpperCase() : "" }}
           </div>
         </div>
         <div class="mb-6 text-center text-xl text-white text-3xl text-white">
-          {{ customer.name || "" }}
+          {{ customer ? customer.name : "" }}
         </div>
         <div class="flex flex-wrap">
           <div class="w-full mx-2">
@@ -184,6 +184,51 @@
                       </div>
                     </div>
                   </div>
+                  <div class="w-full lg:w-12/12">
+                    <div class="relative w-full py-3">
+                      <label
+                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Customer Stage
+                      </label>
+
+                      <select
+                        v-model="customer.customer_stage_id"
+                        v-validate="'required'"
+                        name="customer stage"
+                        :class="[
+                          errors.first('customer stage') ||
+                          error.customer_stage_id
+                            ? 'is-invalid'
+                            : '',
+                        ]"
+                        class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      >
+                        <option disabled selected="selected">
+                          Selecet Customer Stage
+                        </option>
+                        <option
+                          :value="type.id"
+                          :key="type.id"
+                          v-for="type in customerStages"
+                        >
+                          {{ type.name }}
+                        </option>
+                      </select>
+                      <small
+                        class="error-control"
+                        v-if="errors.first('employment status')"
+                      >
+                        {{ errors.first("employment status") }}
+                      </small>
+                      <small
+                        class="error-control"
+                        v-if="error.employment_status_id"
+                        >{{ error.employment_status_id[0] }}</small
+                      >
+                    </div>
+                  </div>
                 </form>
               </div>
 
@@ -244,7 +289,7 @@
                 hidden: openTab !== 2,
                 block: openTab === 2,
               }"
-              class="px-5 relative"
+              class="px-5"
             >
               <div
                 v-on:click="logFeedbackPopup()"
@@ -261,16 +306,11 @@
                   v-on:click="openPopup(data.data.feedback)"
                   class="flex justify-between"
                 >
-                  <div class="flex">
-                    <div class="space0"></div>
-                    <div class="self-center w-80 truncate">
-                      {{ data.data.feedback }}
-                    </div>
+                  <div class="self-center w-70 truncate">
+                    {{ data.data.feedback }}
                   </div>
-                  <div class="">
-                    <div class="font-light text-xs">
-                      {{ data.data.date.split("T")[0] || "Not Available" }}
-                    </div>
+                  <div class="font-light text-xs">
+                    {{ data.data.date.split("T")[0] || "Not Available" }}
                   </div>
                 </div>
               </div>
@@ -299,6 +339,7 @@
                       <div class="flex flex-col">
                         <div class="avatarCircle">
                           <input
+                            @change="checkTodo(data)"
                             type="checkbox"
                             class="form-checkbox h-5 w-5 text-gray-600"
                             :checked="data.status === 'done' ? true : false"
@@ -450,6 +491,51 @@
                         >
                       </div>
                     </div>
+                    <div class="w-full lg:w-12/12">
+                      <div class="relative w-full py-3">
+                        <label
+                          class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Customer Stage
+                        </label>
+
+                        <select
+                          v-model="customer.customer_stage_id"
+                          v-validate="'required'"
+                          name="customer stage"
+                          :class="[
+                            errors.first('customer stage') ||
+                            error.customer_stage_id
+                              ? 'is-invalid'
+                              : '',
+                          ]"
+                          class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        >
+                          <option disabled selected="selected">
+                            Selecet Customer Stage
+                          </option>
+                          <option
+                            :value="type.id"
+                            :key="type.id"
+                            v-for="type in customerStages"
+                          >
+                            {{ type.name }}
+                          </option>
+                        </select>
+                        <small
+                          class="error-control"
+                          v-if="errors.first('employment status')"
+                        >
+                          {{ errors.first("employment status") }}
+                        </small>
+                        <small
+                          class="error-control"
+                          v-if="error.employment_status_id"
+                          >{{ error.employment_status_id[0] }}</small
+                        >
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -512,7 +598,7 @@
               class="w-full overflowTest h-screen md:w-8/12 bg-white w-full shadow-lg rounded p-4"
             >
               <div class="flex flex-wrap">
-                <div class="w-full mx-2">
+                <div class="w-full pointer mx-2">
                   <ul
                     class="flex mb-0 list-none flex-wrap pt-3 flex-row border-b-2 border-gray-600 mb-5"
                   >
@@ -604,6 +690,7 @@
                         <div class="flex flex-col">
                           <div class="avatarCircle">
                             <input
+                              @change="checkTodo(data)"
                               type="checkbox"
                               class="form-checkbox h-5 w-5 text-gray-600"
                               :checked="data.status === 'done' ? true : false"
@@ -625,10 +712,11 @@
     </div>
 
     <br />
-    <div v-if="feedbackPopup" id="overlay">
+    <div v-if="feedbackPopup" id="overlay" v-on:click="closePopup()">
       <div class="flex items-center justify-center bottom-0 w-full h-full">
         <div
-          class="bg-white rounded-lg md:ml-56 m-16 py-4 md:w-6/12 sm:w-8/12 h-350-px"
+          @click.stop
+          class="bg-white rounded-lg md:ml-56 m-8 py-4 md:w-6/12 sm:w-8/12 h-350-px"
         >
           <div class="relative w-full px-4 max-w-full flex justify-between">
             <h3 class="font-semibold text-base text-gray-800">
@@ -644,10 +732,15 @@
       </div>
     </div>
 
-    <div v-if="logFeedbackPopupValue" id="overlay">
+    <div
+      v-if="logFeedbackPopupValue"
+      v-on:click="closeFeedbackPopup()"
+      id="overlay"
+    >
       <div class="flex items-center justify-center bottom-0 h-full">
         <div
-          class="bg-white rounded-lg md:ml-56 m-16 py-4 md:w-6/12 sm:w-8/12 h-350-px"
+          @click.stop
+          class="bg-white rounded-lg md:ml-56 m-8 py-4 md:w-6/12 sm:w-8/12 h-350-px"
         >
           <div class="relative px-4 flex justify-between">
             <h3 class="font-semibold text-base text-gray-800">
@@ -659,6 +752,26 @@
             ></i>
           </div>
           <br />
+          <div class="px-4 w-full">
+            <div class="relative w-50 mb-3">
+              <label
+                class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-password"
+              >
+                Reason
+              </label>
+              <select
+                v-model="searchQuery.employment_status_id"
+                name="employment status"
+                class="mx-input"
+              >
+                <option disabled selected="selected">Select reason</option>
+                <option :value="type.id" :key="type.id" v-for="type in reasons">
+                  {{ type.reason || "" }}
+                </option>
+              </select>
+            </div>
+          </div>
           <div class="px-4 h-290-px overflow-x-auto">
             <textarea
               rows="8"
@@ -693,10 +806,11 @@
       </div>
     </div>
 
-    <div v-if="logTodoPopupValue" id="overlay">
+    <div v-if="logTodoPopupValue" id="overlay" v-on:click="closeTodoPopup()">
       <div class="flex items-center justify-center bottom-0 h-full">
         <div
-          class="bg-white rounded-lg md:ml-56 m-16 py-4 md:w-6/12 sm:w-8/12 h-350-px"
+          @click.stop
+          class="bg-white rounded-lg md:ml-56 m-8 py-4 md:w-6/12 sm:w-8/12 h-350-px"
         >
           <div class="relative px-4 flex justify-between">
             <h3 class="font-semibold text-base text-gray-800">
@@ -745,7 +859,7 @@
                   </div>
                 </div>
               </div>
-              <div class="w-full lg:w-4/12 xl:w-3/12">
+              <!-- <div class="w-full lg:w-4/12 xl:w-3/12">
                 <div class="relative mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -767,7 +881,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <textarea
               rows="8"
@@ -838,6 +952,7 @@ export default {
         postComment: `/api/contact_notification/`,
         postTodo: `/api/todo`,
         updateUser: `/api/customer_contact/`,
+        reasons: `/api/reason/`,
       },
       feedback: "",
       openTab: 1,
@@ -850,17 +965,48 @@ export default {
       editMode: false,
       employmentStatusList: [],
       todos: [],
+      reasons: [],
+      customerStages: [],
+      todo: {},
     };
   },
   async created() {
-    console.log("rtyui");
+    if (!this.customer) {
+      return this.$router.push({
+        name: "admin",
+      });
+    }
 
     await this.getEmploymentStatus();
     await this.getUserStage();
-    // await this.searchUsersList();
     await this.getTodos();
+
+    await this.getReasons();
+    // await this.searchUsersList();
   },
   methods: {
+    checkTodo(data) {
+      console.log("checker ", data);
+      this.$LIPS(true);
+      put(this.apiUrls.postTodo + "/" + data.id, {
+        status: data.status === "done" ? "not done" : "done",
+      })
+        .then(() => {
+          this.$LIPS(false);
+          this.$swal({
+            icon: "success",
+            title: "Todo Updated Successfully",
+          });
+          this.getTodos();
+        })
+
+        .catch(({ response: { data } }) => {
+          const errData = data.data.errors;
+          this.error = errData ? errData : data;
+
+          this.$LIPS(false);
+        });
+    },
     nextPage() {
       this.pageNumber++;
       this.searchUsersList();
@@ -879,7 +1025,16 @@ export default {
         this.employmentStatus = this.employmentStatusList.find(
           (x) => x.id === this.customer.employment_status_id
         ).name;
-        console.log("hello sucker", this.employmentStatus);
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+    async getReasons() {
+      console.log("getReasons");
+      try {
+        const fetchReasons = await get(this.apiUrls.reasons);
+        this.reasons = fetchReasons.data.data;
+        console.log("hello reasons", this.reasons);
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -894,7 +1049,7 @@ export default {
         const fetchTodos = await get(this.apiUrls.postTodo + queryParam(query));
         this.todos = fetchTodos.data.data.data;
 
-        console.log("hello sucker todos", this.todos);
+        console.log("hello  todos", this.todos);
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -902,6 +1057,7 @@ export default {
     async getUserStage() {
       try {
         const fetchUserStage = await get(this.apiUrls.getStage);
+        this.customerStages = fetchUserStage.data.data;
         this.customerStage = fetchUserStage.data.data.find(
           (x) => x.id === this.customer.customer_stage_id
         ).name;
@@ -917,6 +1073,7 @@ export default {
         phone: customer.phone,
         employment_status_id: customer.employment_status_id,
         email: customer.email,
+        customer_stage_id: customer.customer_stage_id,
       };
       this.$validator
         .validateAll()
@@ -1003,7 +1160,7 @@ export default {
                   icon: "success",
                   title: "Feedback Logged Successfully",
                 });
-                this.searchUsersList();
+                // this.searchUsersList();
                 this.customer.notifications.push({
                   data: { date: new Date().toJSON(), feedback: user.feedback },
                 });
@@ -1032,7 +1189,7 @@ export default {
               todo: user.todo,
               due_date: user.due_date,
               type: user.type,
-              status: user.status,
+              // status: user.status,
               customer_id: this.customer.id,
               user_id: localStorage.getItem("user_id"),
             })
@@ -1048,7 +1205,7 @@ export default {
                 user.todo = "";
                 user.due_date = "";
                 user.type = "";
-                user.status = "";
+                // user.status = "";
                 this.getTodos();
               })
 

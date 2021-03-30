@@ -761,7 +761,7 @@
                 Reason
               </label>
               <select
-                v-model="searchQuery.employment_status_id"
+                v-model="customer.reason"
                 name="employment status"
                 class="mx-input"
               >
@@ -952,7 +952,7 @@ export default {
         postComment: `/api/contact_notification/`,
         postTodo: `/api/todo`,
         updateUser: `/api/customer_contact/`,
-        reasons: `/api/reason/`,
+        reasons: `/api/reason`,
       },
       feedback: "",
       openTab: 1,
@@ -1033,7 +1033,7 @@ export default {
       console.log("getReasons");
       try {
         const fetchReasons = await get(this.apiUrls.reasons);
-        this.reasons = fetchReasons.data.data;
+        this.reasons = fetchReasons.data.reasons;
         console.log("hello reasons", this.reasons);
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -1153,6 +1153,7 @@ export default {
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
               feedback: user.feedback,
+              reason: user.reason,
             })
               .then(() => {
                 this.$LIPS(false);

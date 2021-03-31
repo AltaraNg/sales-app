@@ -665,6 +665,7 @@ export default {
         name: "userProfile",
         params: {
           customer: data,
+          id: data.id,
         },
       });
     },

@@ -115,7 +115,7 @@
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-                {{ todo.name || "Not Available" }}
+                {{ todo.customer || "Not Available" }}
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"

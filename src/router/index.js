@@ -69,7 +69,6 @@ const router = new VueRouter({
         path: "/admin/userProfile/:id",
         name: "userProfile",
         component: UserProfile,
-        props: true,
     },
     { path: "/", redirect: { name: "landing" } },
 

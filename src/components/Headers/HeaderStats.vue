@@ -13,7 +13,7 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-gray-500 uppercase font-bold text-xs">
-                      Total Contacted
+                      Contacted
                     </h5>
                     <span class="font-semibold text-xl text-gray-800">
                       {{ totalContacted }}
@@ -38,7 +38,7 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-gray-500 uppercase font-bold text-xs">
-                      Total Purchased
+                      Purchased
                     </h5>
                     <span class="font-semibold text-xl text-gray-800">
                       {{ totalPurchased }}
@@ -63,7 +63,7 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-gray-500 uppercase font-bold text-xs">
-                      Total Affidavit
+                      Paid Affidavit
                     </h5>
                     <span class="font-semibold text-xl text-gray-800">
                       {{ totalAffidavit }}
@@ -88,7 +88,7 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-gray-500 uppercase font-bold text-xs">
-                      Total Registered On Portal
+                      Registered On Portal
                     </h5>
                     <span class="font-semibold text-xl text-gray-800">
                       {{ totalRegistered }}
@@ -146,9 +146,9 @@ export default {
   },
   methods: {
     async getCardValues() {
-      this.totalAffidavit = await this.getCardValue("Affidavit");
+      this.totalAffidavit = await this.getCardValue("Paid Affidavit");
       this.totalPurchased = await this.getCardValue("Purchased");
-      this.totalContacted = await this.getCardValue("Contacted");
+      this.totalRegistered = await this.getCardValue("Registered On Portal");
     },
     async getCardValue(query) {
       const userStages = await this.getUserStage();
@@ -181,7 +181,7 @@ export default {
     async getUsersList() {
       try {
         const fetchusersList = await get(this.apiUrls.getusersList);
-        this.totalRegistered = fetchusersList.data.data.data.length;
+        this.totalContacted = fetchusersList.data.data.data.length;
         return fetchusersList.data.data.data;
       } catch (err) {
         this.$displayErrorMessage(err);

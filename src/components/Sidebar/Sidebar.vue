@@ -91,6 +91,20 @@
               </a>
             </router-link>
           </li>
+          <li class="items-center">
+            <router-link to="/admin/todos">
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="fas fa-clipboard-list mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+                Todos
+              </a>
+            </router-link>
+          </li>
           <br />
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">

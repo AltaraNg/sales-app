@@ -716,7 +716,7 @@
       <div class="flex items-center justify-center bottom-0 w-full h-full">
         <div
           @click.stop
-          class="bg-white rounded-lg md:ml-56 m-8 py-4 md:w-6/12 sm:w-8/12 h-350-px"
+          class="bg-white rounded-lg w-full md:ml-56 m-8 py-4 md:w-6/12 sm:w-8/12 h-350-px"
         >
           <div class="relative w-full px-4 max-w-full flex justify-between">
             <h3 class="font-semibold text-base text-gray-800">
@@ -956,6 +956,7 @@ export default {
       },
       feedback: "",
       openTab: 1,
+      customer: {},
       openBigTab: 1,
       feedbackModal: false,
       feedbackPopup: false,
@@ -971,22 +972,20 @@ export default {
     };
   },
   async created() {
-    if (!this.customer) {
-      return this.$router.push({
-        name: "admin",
-      });
-    }
-
+    // if (!this.customer) {
+    //   return this.$router.push({
+    //     name: "admin",
+    //   });
+    // }
+    await this.searchUsersList(this.$route.params.id);
     await this.getEmploymentStatus();
     await this.getUserStage();
     await this.getTodos();
 
     await this.getReasons();
-    // await this.searchUsersList();
   },
   methods: {
     checkTodo(data) {
-      console.log("checker ", data);
       this.$LIPS(true);
       put(this.apiUrls.postTodo + "/" + data.id, {
         status: data.status === "done" ? "not done" : "done",
@@ -1016,7 +1015,6 @@ export default {
       this.searchUsersList();
     },
     async getEmploymentStatus() {
-      console.log("getEmploymentStatus");
       try {
         const fetchEmploymentStatus = await get(
           this.apiUrls.getEmploymentStatus
@@ -1030,11 +1028,9 @@ export default {
       }
     },
     async getReasons() {
-      console.log("getReasons");
       try {
         const fetchReasons = await get(this.apiUrls.reasons);
         this.reasons = fetchReasons.data.reasons;
-        console.log("hello reasons", this.reasons);
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1048,8 +1044,6 @@ export default {
 
         const fetchTodos = await get(this.apiUrls.postTodo + queryParam(query));
         this.todos = fetchTodos.data.data.data;
-
-        console.log("hello  todos", this.todos);
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1119,24 +1113,23 @@ export default {
     resetSearch() {
       this.searchQuery = {};
     },
-    // async searchUsersList() {
-    //   this.$LIPS(true);
+    async searchUsersList(data) {
+      this.$LIPS(true);
 
-    //   try {
-    //     const query = { ...this.searchQuery, page: this.pageNumber };
-    //     const fetchusersList = await get(
-    //       this.apiUrls.getusersList + queryParam(query)
-    //     );
-    //     this.usersList = fetchusersList.data.data.data;
-    //     this.next_page_url = fetchusersList.data.data.next_page_url;
-    //     this.prev_page_url = fetchusersList.data.data.prev_page_url;
-    //     this.$LIPS(false);
-    //   } catch (err) {
-    //     this.$LIPS(false);
+      try {
+        // const query = { id: data };
+        const fetchusersList = await get(
+          this.apiUrls.getusersList + "/" + data
+        );
+        this.customer = fetchusersList.data.data.data;
 
-    //     this.$displayErrorMessage(err);
-    //   }
-    // },
+        this.$LIPS(false);
+      } catch (err) {
+        this.$LIPS(false);
+
+        this.$displayErrorMessage(err);
+      }
+    },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
     },

@@ -9,6 +9,7 @@ import LeaderBoard from "@/views/admin/LeaderBoard.vue";
 import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
 import UserProfile from "@/views/user/userProfile.vue";
+import Todo from "@/views/admin/Todo.vue";
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
 import Flash from "@/utilities/flash";
@@ -37,6 +38,9 @@ const router = new VueRouter({
         }, {
             path: "/admin/superadmin",
             component: AdminDashboard,
+        }, {
+            path: "/admin/todos",
+            component: Todo,
         },
 
 
@@ -62,10 +66,10 @@ const router = new VueRouter({
         component: Index,
     },
     {
-        path: "/admin/userProfile",
+        path: "/admin/userProfile/:id",
         name: "userProfile",
         component: UserProfile,
-        props: true
+        props: true,
     },
     { path: "/", redirect: { name: "landing" } },
 

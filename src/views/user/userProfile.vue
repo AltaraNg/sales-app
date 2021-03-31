@@ -6,6 +6,7 @@
       <div class="altaraBlue">
         <div class="flex justify-around">
           <div
+            v-if="customer.name"
             :style="{ background: generateRandomColor() }"
             class="text-center text-white text-7xl rounded-full my-11 h-32 w-32 flex items-center justify-center"
           >
@@ -237,7 +238,9 @@
                 class="space-y-4 px-5 bg-white mt-5 rounded-lg shadow-xl"
               >
                 <div class="flow-root">
-                  <div class="my-3"><b>Reg ID: </b> {{ customer.reg_id }}</div>
+                  <div class="my-3">
+                    <b>Reg ID: </b> {{ customer.reg_id || "" }}
+                  </div>
                 </div>
 
                 <div class="flow-root">
@@ -258,7 +261,7 @@
                     {{ customerStage || "N/A" }}
                   </div>
                 </div>
-                <div class="flow-root">
+                <div v-if="customer.users" class="flow-root">
                   <div class="my-3">
                     <b>Feedbacks: </b>{{ customer.users.full_name }}
                   </div>
@@ -366,6 +369,7 @@
               class="w-full md:w-4/12 altaraBlue w-full shadow-lg rounded p-4"
             >
               <div
+                v-if="customer.name"
                 :style="{ background: generateRandomColor() }"
                 class="text-center text-white text-7xl rounded-full mt-11 mb-4 h-32 w-32 flex items-center justify-center mx-auto"
               >
@@ -545,7 +549,9 @@
                 class="space-y-4 px-5 bg-white mt-5 rounded-lg shadow-xl"
               >
                 <div class="flow-root">
-                  <div class="my-3"><b>Reg ID: </b> {{ customer.reg_id }}</div>
+                  <div class="my-3">
+                    <b>Reg ID: </b> {{ customer.reg_id || "" }}
+                  </div>
                 </div>
 
                 <div class="flow-root">
@@ -566,7 +572,7 @@
                     {{ customerStage || "N/A" }}
                   </div>
                 </div>
-                <div class="flow-root">
+                <div v-if="customer.users" class="flow-root">
                   <div class="my-3">
                     <b>Feedbacks: </b>{{ customer.users.full_name }}
                   </div>
@@ -925,7 +931,6 @@ import queryParam from "../../utilities/queryParam";
 
 export default {
   name: "UserProfile",
-  props: ["customer"],
 
   components: {
     Sidebar,
@@ -1121,13 +1126,15 @@ export default {
         const fetchusersList = await get(
           this.apiUrls.getusersList + "/" + data
         );
-        this.customer = fetchusersList.data.data.data;
-
+        this.customer = fetchusersList.data.data;
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
 
         this.$displayErrorMessage(err);
+        return this.$router.push({
+          name: "admin",
+        });
       }
     },
     customFormatter(date) {

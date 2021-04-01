@@ -17,7 +17,7 @@
                 <div>
                   <date-picker
                     valueType="format"
-                    v-model="searchQuery.startDate"
+                    v-model="searchQuery.fromDate"
                   ></date-picker>
                 </div>
               </div>
@@ -33,7 +33,7 @@
                 <div>
                   <date-picker
                     valueType="format"
-                    v-model="searchQuery.endDate"
+                    v-model="searchQuery.toDate"
                   ></date-picker>
                 </div>
               </div>
@@ -115,7 +115,7 @@
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-                {{ todo.customer || "Not Available" }}
+                {{ todo.customer.name || "Not Available" }}
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -162,7 +162,7 @@
                 <div>
                   <date-picker
                     valueType="format"
-                    v-model="searchQuery.startDate"
+                    v-model="searchQuery.fromDate"
                   ></date-picker>
                 </div>
               </div>
@@ -178,7 +178,7 @@
                 <div>
                   <date-picker
                     valueType="format"
-                    v-model="searchQuery.endDate"
+                    v-model="searchQuery.toDate"
                   ></date-picker>
                 </div>
               </div>

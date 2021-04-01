@@ -954,7 +954,7 @@ export default {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
         getStage: `/api/customer_stage`,
-        postComment: `/api/contact_notification/`,
+        postComment: `/api/feedback`,
         postTodo: `/api/todo`,
         updateUser: `/api/customer_contact/`,
         reasons: `/api/reason`,
@@ -1151,9 +1151,12 @@ export default {
             this.closeFeedbackPopup();
             this.$LIPS(true);
             this.error = {};
-            post(this.apiUrls.postComment + user.id, {
-              feedback: user.feedback,
-              reason: user.reason,
+            post(this.apiUrls.postComment, {
+              notes: user.feedback,
+              reason_id: user.reason,
+              customer_id: this.customer.id,
+              user_id: localStorage.getItem("user_id")
+              
             })
               .then(() => {
                 this.$LIPS(false);

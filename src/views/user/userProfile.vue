@@ -302,18 +302,18 @@
               </div>
               <div
                 :key="index"
-                v-for="(data, index) in customer.notifications"
+                v-for="(data, index) in customer.feedback"
                 class="chatBox"
               >
                 <div
-                  v-on:click="openPopup(data.data.feedback)"
+                  v-on:click="openPopup(data)"
                   class="flex justify-between"
                 >
                   <div class="self-center w-70 truncate">
-                    {{ data.data.feedback }}
+                    {{ data.notes }}
                   </div>
                   <div class="font-light text-xs">
-                    {{ data.data.date.split("T")[0] || "Not Available" }}
+                    {{ data.created || "Not Available" }}
                   </div>
                 </div>
               </div>
@@ -650,26 +650,31 @@
                   </div>
                   <div
                     :key="index"
-                    v-for="(data, index) in customer.notifications"
+                    v-for="(data, index) in customer.feedback"
                     class="chatBox"
                   >
+                  
                     <div
-                      v-on:click="openPopup(data.data.feedback)"
+                      v-on:click="openPopup(data.notes)"
                       class="flex justify-between"
                     >
                       <div class="flex">
                         <div class="space0"></div>
                         <div class="self-center w-80 truncate">
-                          {{ data.data.feedback }}
+                          <!-- <h2 class="font-bold">{{data.reason === null? '' : data.reason.reason}}</h2> -->
+                          {{ data.notes }}
                         </div>
                       </div>
                       <div class="flex flex-col">
                         <div class="font-light text-xs">
-                          {{ data.data.date.split("T")[0] || "Not Available" }}
+                          {{ data.created_at.split("T")[0] || "Not Available" }}
                         </div>
                       </div>
                     </div>
                   </div>
+                  <div v-if="customer.feedback && !customer.feedback.length" class="chatBox">
+  No Feedbacks Available
+</div>
                 </div>
               </div>
               <div
@@ -709,6 +714,9 @@
                       </div>
                     </div>
                   </div>
+                  <div v-if="todo.length === 0" class="chatBox">
+  No Todos Available
+</div>
                 </div>
               </div>
             </div>
@@ -791,7 +799,7 @@
                   ? 'is-invalid'
                   : 'border',
               ]"
-              v-model="customer.feedback"
+              v-model="customer.notes"
             />
             <br />
             <small class="error-control" v-if="errors.first('feedback')">
@@ -1152,23 +1160,21 @@ export default {
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment, {
-              notes: user.feedback,
+              notes: user.notes,
               reason_id: user.reason,
               customer_id: this.customer.id,
               user_id: localStorage.getItem("user_id")
               
             })
-              .then(() => {
+              .then((result) => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
                   title: "Feedback Logged Successfully",
                 });
                 // this.searchUsersList();
-                this.customer.notifications.push({
-                  data: { date: new Date().toJSON(), feedback: user.feedback },
-                });
-                user.feedback = "";
+                this.customer.feedback.push(result.data.data);
+                
               })
 
               .catch(({ response: { data } }) => {
@@ -1203,9 +1209,9 @@ export default {
                   icon: "success",
                   title: "Todo Logged Successfully",
                 });
-                this.customer.notifications.push({
-                  data: { date: new Date().toJSON(), feedback: user.feedback },
-                });
+                // this.customer.notifications.push({
+                //   data: { date: new Date().toJSON(), feedback: user.feedback },
+                // });
                 user.todo = "";
                 user.due_date = "";
                 user.type = "";
@@ -1227,9 +1233,9 @@ export default {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
     },
     openModal(data) {
-      this.comments = data.notifications;
+      this.comments = data.feedback;
       this.customer = data;
-      data.notifications.length === 0 ? "" : (this.feedbackModal = true);
+      data.feedback.length === 0 ? "" : (this.feedbackModal = true);
     },
     closeModal() {
       this.feedbackModal = false;

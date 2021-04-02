@@ -1173,7 +1173,7 @@ export default {
                   title: "Feedback Logged Successfully",
                 });
                 // this.searchUsersList();
-                this.customer.feedback.push(result.data.data);
+                this.customer.feedback.unshift(result.data.data);
                 
               })
 

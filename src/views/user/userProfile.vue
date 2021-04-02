@@ -161,7 +161,7 @@
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
                           <option disabled selected="selected">
-                            Selecet Employment Status
+                            Select Employment Status
                           </option>
                           <option
                             :value="type.id"
@@ -661,7 +661,7 @@
                       <div class="flex">
                         <div class="space0"></div>
                         <div class="self-center w-80 truncate">
-                          <!-- <h2 class="font-bold">{{data.reason === null? '' : data.reason.reason}}</h2> -->
+                          <h2 class="font-bold">{{data.reason === null? '' : data.reason.reason}}</h2>
                           {{ data.notes }}
                         </div>
                       </div>
@@ -714,7 +714,7 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="todo.length === 0" class="chatBox">
+                  <div v-if="todos.length === 0" class="chatBox">
   No Todos Available
 </div>
                 </div>

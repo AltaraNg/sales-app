@@ -77,7 +77,7 @@
               </a>
             </router-link>
           </li>
-          <li class="items-center">
+          <!-- <li class="items-center">
             <router-link to="/admin/dsaratings">
               <a
                 class="text-xs uppercase py-3 font-bold block"
@@ -90,7 +90,7 @@
                 Leaderboard
               </a>
             </router-link>
-          </li>
+          </li> -->
           <li class="items-center">
             <router-link to="/admin/todos">
               <a
@@ -151,3 +151,8 @@ export default {
   components: {},
 };
 </script>
+<style>
+.active{
+  background: blueviolet;
+}
+</style>

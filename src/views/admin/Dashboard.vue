@@ -16,7 +16,7 @@
                     Employment Status
                   </label>
                   <select
-                    v-model="searchQuery.employment_status_id"
+                    v-model="searchQuery.employmentStatus"
                     name="employment status"
                     class="mx-input"
                   >
@@ -103,7 +103,7 @@
                     Employment Status
                   </label>
                   <select
-                    v-model="searchQuery.employment_status_id"
+                    v-model="searchQuery.employmentStatus"
                     name="employment status"
                     class="mx-input"
                   >

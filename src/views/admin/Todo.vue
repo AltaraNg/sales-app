@@ -115,7 +115,9 @@
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
+              <router-link :to="{ name: 'userProfile', params: {customer: todo.customer, id: todo.customer.id } }"> 
                 {{ todo.customer.name || "Not Available" }}
+              </router-link>
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -142,6 +144,11 @@
                   class="form-checkbox h-5 w-5 text-gray-600"
                   :checked="todo.status === 'done' ? true : false"
                 />
+              </td>
+            </tr>
+            <tr v-if="todos.length === 0">
+              <td colspan="6"  class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex ">
+                You currently have no todos
               </td>
             </tr>
           </tbody>

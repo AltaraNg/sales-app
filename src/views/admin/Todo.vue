@@ -38,6 +38,20 @@
                 </div>
               </div>
             </div>
+
+            <div class="w-full lg:w-2/12 xl:w-2/12">
+              <div class="relative w-50 mb-3 ">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2 px-3"
+                  htmlFor="grid-password"
+                >
+                  Name
+                </label>
+                <div class="mx-input-wrapper px-3">
+                  <input class="mx-input" v-model="searchQuery.name"/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

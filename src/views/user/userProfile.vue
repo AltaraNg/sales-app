@@ -13,7 +13,7 @@
             {{ customer ? customer.name[0].toUpperCase() : "" }}
           </div>
         </div>
-        <div class="mb-6 text-center text-xl text-white text-3xl text-white">
+        <div class="mb-6 text-center text-3xl text-white">
           {{ customer ? customer.name : "" }}
         </div>
         <div class="flex flex-wrap">
@@ -207,7 +207,7 @@
                         class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                       >
                         <option disabled selected="selected">
-                          Selecet Customer Stage
+                          Select Customer Stage
                         </option>
                         <option
                           :value="type.id"
@@ -366,7 +366,7 @@
         <div class="px-4 md:px-10">
           <div class="flex flex-wrap">
             <div
-              class="w-full md:w-4/12 altaraBlue w-full shadow-lg rounded p-4"
+              class="w-full md:w-4/12 altaraBlue shadow-lg rounded p-4"
             >
               <div
                 v-if="customer.name"
@@ -472,7 +472,7 @@
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
                           <option disabled selected="selected">
-                            Selecet Employment Status
+                            Select Employment Status
                           </option>
                           <option
                             :value="type.id"
@@ -601,12 +601,12 @@
             </div>
 
             <div
-              class="w-full overflowTest h-screen md:w-8/12 bg-white w-full shadow-lg rounded p-4"
+              class="w-full overflowTest h-screen md:w-8/12 bg-white shadow-lg rounded p-4"
             >
               <div class="flex flex-wrap">
                 <div class="w-full pointer mx-2">
                   <ul
-                    class="flex mb-0 list-none flex-wrap pt-3 flex-row border-b-2 border-gray-600 mb-5"
+                    class="flex list-none flex-wrap pt-3 flex-row border-b-2 border-gray-600 mb-5"
                   >
                     <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
                       <a
@@ -1091,13 +1091,20 @@ export default {
             put(this.apiUrls.updateUser + this.customer.id, {
               ...userInfo,
             })
-              .then(() => {
+              .then((response) => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
                   title: "User Updated Successfully",
                 });
                 this.editMode = false;
+                this.customer = response.data.data;
+                this.employmentStatus = this.employmentStatusList.find(
+          (x) => x.id === this.customer.employment_status_id
+        ).name;
+                this.customerStage = this.customerStages.find(
+          (x) => x.id === this.customer.customer_stage_id
+        ).name;
               })
 
               .catch(({ response: { data } }) => {

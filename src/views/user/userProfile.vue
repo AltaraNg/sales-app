@@ -207,7 +207,7 @@
                         class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                       >
                         <option disabled selected="selected">
-                          Selecet Customer Stage
+                          Select Customer Stage
                         </option>
                         <option
                           :value="type.id"
@@ -472,7 +472,7 @@
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
                           <option disabled selected="selected">
-                            Selecet Employment Status
+                            Select Employment Status
                           </option>
                           <option
                             :value="type.id"
@@ -1091,13 +1091,20 @@ export default {
             put(this.apiUrls.updateUser + this.customer.id, {
               ...userInfo,
             })
-              .then(() => {
+              .then((response) => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
                   title: "User Updated Successfully",
                 });
                 this.editMode = false;
+                this.customer = response.data.data;
+                this.employmentStatus = this.employmentStatusList.find(
+          (x) => x.id === this.customer.employment_status_id
+        ).name;
+                this.customerStage = this.customerStages.find(
+          (x) => x.id === this.customer.customer_stage_id
+        ).name;
               })
 
               .catch(({ response: { data } }) => {

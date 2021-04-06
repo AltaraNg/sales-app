@@ -13,7 +13,7 @@
             {{ customer ? customer.name[0].toUpperCase() : "" }}
           </div>
         </div>
-        <div class="mb-6 text-center text-xl text-white text-3xl text-white">
+        <div class="mb-6 text-center text-3xl text-white">
           {{ customer ? customer.name : "" }}
         </div>
         <div class="flex flex-wrap">
@@ -366,7 +366,7 @@
         <div class="px-4 md:px-10">
           <div class="flex flex-wrap">
             <div
-              class="w-full md:w-4/12 altaraBlue w-full shadow-lg rounded p-4"
+              class="w-full md:w-4/12 altaraBlue shadow-lg rounded p-4"
             >
               <div
                 v-if="customer.name"
@@ -601,7 +601,7 @@
             </div>
 
             <div
-              class="w-full overflowTest h-screen md:w-8/12 bg-white w-full shadow-lg rounded p-4"
+              class="w-full overflowTest h-screen md:w-8/12 bg-white shadow-lg rounded p-4"
             >
               <div class="flex flex-wrap">
                 <div class="w-full pointer mx-2">

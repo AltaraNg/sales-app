@@ -606,7 +606,7 @@
               <div class="flex flex-wrap">
                 <div class="w-full pointer mx-2">
                   <ul
-                    class="flex mb-0 list-none flex-wrap pt-3 flex-row border-b-2 border-gray-600 mb-5"
+                    class="flex list-none flex-wrap pt-3 flex-row border-b-2 border-gray-600 mb-5"
                   >
                     <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
                       <a

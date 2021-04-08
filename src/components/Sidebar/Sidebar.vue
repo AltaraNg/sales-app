@@ -135,24 +135,24 @@ export default {
   data() {
     return {
       collapseShow: "hidden",
-      altaraLogo,
+      altaraLogo
     };
   },
   methods: {
-    toggleCollapseShow: function (classes) {
+    toggleCollapseShow: function(classes) {
       this.collapseShow = classes;
     },
 
     logOut() {
       localStorage.removeItem("api_token");
       this.$router.push("/auth/login");
-    },
+    }
   },
-  components: {},
+  components: {}
 };
 </script>
 <style>
-.active{
+.active {
   background: blueviolet;
 }
 </style>

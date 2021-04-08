@@ -48,7 +48,7 @@
                   Name
                 </label>
                 <div class="mx-input-wrapper px-3">
-                  <input class="mx-input" v-model="searchQuery.name"/>
+                  <input class="mx-input" v-model="searchQuery.name" />
                 </div>
               </div>
             </div>
@@ -129,9 +129,14 @@
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-              <router-link :to="{ name: 'userProfile', params: {customer: todo.customer, id: todo.customer.id } }"> 
-                {{ todo.customer.name || "Not Available" }}
-              </router-link>
+                <router-link
+                  :to="{
+                    name: 'userProfile',
+                    params: { customer: todo.customer, id: todo.customer.id }
+                  }"
+                >
+                  {{ todo.customer.name || "Not Available" }}
+                </router-link>
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -161,7 +166,10 @@
               </td>
             </tr>
             <tr v-if="todos.length === 0">
-              <td colspan="6"  class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex ">
+              <td
+                colspan="6"
+                class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex "
+              >
                 You currently have no todos
               </td>
             </tr>
@@ -256,15 +264,15 @@ import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
 export default {
   components: {
-    DatePicker,
+    DatePicker
   },
   data() {
     return {
       todos: [],
       apiUrls: {
-        getTodos: `/api/todo`,
+        getTodos: `/api/todo`
       },
-      searchQuery: {},
+      searchQuery: {}
     };
   },
   async created() {
@@ -277,7 +285,7 @@ export default {
       try {
         const query = {
           user: localStorage.getItem("user_id"),
-          ...this.searchQuery,
+          ...this.searchQuery
         };
 
         const fetchTodos = await get(this.apiUrls.getTodos + queryParam(query));
@@ -292,13 +300,13 @@ export default {
     checkTodo(data) {
       this.$LIPS(true);
       put(this.apiUrls.getTodos + "/" + data.id, {
-        status: data.status === "done" ? "not done" : "done",
+        status: data.status === "done" ? "not done" : "done"
       })
         .then(() => {
           this.$LIPS(false);
           this.$swal({
             icon: "success",
-            title: "Todo Updated Successfully",
+            title: "Todo Updated Successfully"
           });
           this.getTodos();
         })
@@ -312,10 +320,9 @@ export default {
     },
     resetSearch() {
       this.searchQuery = {};
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

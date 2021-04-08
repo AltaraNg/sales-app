@@ -25,7 +25,7 @@
                   v-on:click="toggleTabs(1)"
                   v-bind:class="{
                     'text-white': openTab !== 1,
-                    'bg-white': openTab === 1,
+                    'bg-white': openTab === 1
                   }"
                 >
                   Basic Info
@@ -37,7 +37,7 @@
                   v-on:click="toggleTabs(2)"
                   v-bind:class="{
                     'text-white': openTab !== 2,
-                    'bg-white': openTab === 2,
+                    'bg-white': openTab === 2
                   }"
                 >
                   Feedbacks
@@ -49,7 +49,7 @@
                   v-on:click="toggleTabs(3)"
                   v-bind:class="{
                     'text-white': openTab !== 3,
-                    ' bg-white': openTab === 3,
+                    ' bg-white': openTab === 3
                   }"
                 >
                   Todo
@@ -65,7 +65,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 1,
-                block: openTab === 1,
+                block: openTab === 1
               }"
             >
               <div
@@ -122,7 +122,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -156,7 +156,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -202,7 +202,7 @@
                           errors.first('customer stage') ||
                           error.customer_stage_id
                             ? 'is-invalid'
-                            : '',
+                            : ''
                         ]"
                         class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                       >
@@ -290,7 +290,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 2,
-                block: openTab === 2,
+                block: openTab === 2
               }"
               class="px-5"
             >
@@ -305,10 +305,7 @@
                 v-for="(data, index) in customer.feedback"
                 class="chatBox"
               >
-                <div
-                  v-on:click="openPopup(data)"
-                  class="flex justify-between"
-                >
+                <div v-on:click="openPopup(data)" class="flex justify-between">
                   <div class="self-center w-70 truncate">
                     {{ data.notes }}
                   </div>
@@ -321,7 +318,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 3,
-                block: openTab === 3,
+                block: openTab === 3
               }"
             >
               <div
@@ -433,7 +430,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -467,7 +464,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -512,7 +509,7 @@
                             errors.first('customer stage') ||
                             error.customer_stage_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -614,7 +611,7 @@
                         v-on:click="toggleBigTabs(1)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 1,
-                          'altaraBlue text-white': openBigTab === 1,
+                          'altaraBlue text-white': openBigTab === 1
                         }"
                       >
                         Feedbacks
@@ -626,7 +623,7 @@
                         v-on:click="toggleBigTabs(2)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 2,
-                          'altaraBlue text-white': openBigTab === 2,
+                          'altaraBlue text-white': openBigTab === 2
                         }"
                       >
                         Todo
@@ -639,7 +636,7 @@
                 <div
                   v-bind:class="{
                     hidden: openBigTab !== 1,
-                    block: openBigTab === 1,
+                    block: openBigTab === 1
                   }"
                 >
                   <div
@@ -653,7 +650,6 @@
                     v-for="(data, index) in customer.feedback"
                     class="chatBox"
                   >
-                  
                     <div
                       v-on:click="openPopup(data.notes)"
                       class="flex justify-between"
@@ -661,7 +657,9 @@
                       <div class="flex">
                         <div class="space0"></div>
                         <div class="self-center w-80 truncate">
-                          <h2 class="font-bold">{{data.reason === null? '' : data.reason.reason}}</h2>
+                          <h2 class="font-bold">
+                            {{ data.reason === null ? "" : data.reason.reason }}
+                          </h2>
                           {{ data.notes }}
                         </div>
                       </div>
@@ -672,15 +670,18 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="customer.feedback && !customer.feedback.length" class="chatBox">
-  No Feedbacks Available
-</div>
+                  <div
+                    v-if="customer.feedback && !customer.feedback.length"
+                    class="chatBox"
+                  >
+                    No Feedbacks Available
+                  </div>
                 </div>
               </div>
               <div
                 v-bind:class="{
                   hidden: openBigTab !== 2,
-                  block: openBigTab === 2,
+                  block: openBigTab === 2
                 }"
               >
                 <div
@@ -715,8 +716,8 @@
                     </div>
                   </div>
                   <div v-if="todos.length === 0" class="chatBox">
-  No Todos Available
-</div>
+                    No Todos Available
+                  </div>
                 </div>
               </div>
             </div>
@@ -797,7 +798,7 @@
               :class="[
                 errors.first('feedback') || error.feedback
                   ? 'is-invalid'
-                  : 'border',
+                  : 'border'
               ]"
               v-model="customer.notes"
             />
@@ -866,7 +867,7 @@
                       name="type"
                       v-model="customer.type"
                       :class="[
-                        errors.first('type') || error.type ? 'is-invalid' : '',
+                        errors.first('type') || error.type ? 'is-invalid' : ''
                       ]"
                       class="mx-input"
                     />
@@ -905,7 +906,7 @@
               placeholder="Enter todo..."
               v-validate="'required'"
               :class="[
-                errors.first('todo') || error.todo ? 'is-invalid' : 'border',
+                errors.first('todo') || error.todo ? 'is-invalid' : 'border'
               ]"
               v-model="customer.todo"
             />
@@ -943,7 +944,7 @@ export default {
   components: {
     Sidebar,
     HeaderStats,
-    DatePicker,
+    DatePicker
   },
   data() {
     return {
@@ -965,7 +966,7 @@ export default {
         postComment: `/api/feedback`,
         postTodo: `/api/todo`,
         updateUser: `/api/customer_contact/`,
-        reasons: `/api/reason`,
+        reasons: `/api/reason`
       },
       feedback: "",
       openTab: 1,
@@ -981,7 +982,7 @@ export default {
       todos: [],
       reasons: [],
       customerStages: [],
-      todo: {},
+      todo: {}
     };
   },
   async created() {
@@ -1001,13 +1002,13 @@ export default {
     checkTodo(data) {
       this.$LIPS(true);
       put(this.apiUrls.postTodo + "/" + data.id, {
-        status: data.status === "done" ? "not done" : "done",
+        status: data.status === "done" ? "not done" : "done"
       })
         .then(() => {
           this.$LIPS(false);
           this.$swal({
             icon: "success",
-            title: "Todo Updated Successfully",
+            title: "Todo Updated Successfully"
           });
           this.getTodos();
         })
@@ -1034,7 +1035,7 @@ export default {
         );
         this.employmentStatusList = fetchEmploymentStatus.data.data;
         this.employmentStatus = this.employmentStatusList.find(
-          (x) => x.id === this.customer.employment_status_id
+          x => x.id === this.customer.employment_status_id
         ).name;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -1052,7 +1053,7 @@ export default {
       try {
         const query = {
           customer: this.customer.id,
-          user: localStorage.getItem("user_id"),
+          user: localStorage.getItem("user_id")
         };
 
         const fetchTodos = await get(this.apiUrls.postTodo + queryParam(query));
@@ -1066,7 +1067,7 @@ export default {
         const fetchUserStage = await get(this.apiUrls.getStage);
         this.customerStages = fetchUserStage.data.data;
         this.customerStage = fetchUserStage.data.data.find(
-          (x) => x.id === this.customer.customer_stage_id
+          x => x.id === this.customer.customer_stage_id
         ).name;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -1080,22 +1081,22 @@ export default {
         phone: customer.phone,
         employment_status_id: customer.employment_status_id,
         email: customer.email,
-        customer_stage_id: customer.customer_stage_id,
+        customer_stage_id: customer.customer_stage_id
       };
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.$LIPS(true);
             this.error = {};
             put(this.apiUrls.updateUser + this.customer.id, {
-              ...userInfo,
+              ...userInfo
             })
               .then(() => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "User Updated Successfully",
+                  title: "User Updated Successfully"
                 });
                 this.editMode = false;
               })
@@ -1108,7 +1109,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     async getUsersList() {
       this.$LIPS(true);
@@ -1141,7 +1142,7 @@ export default {
 
         this.$displayErrorMessage(err);
         return this.$router.push({
-          name: "admin",
+          name: "admin"
         });
       }
     },
@@ -1154,7 +1155,7 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.closeFeedbackPopup();
             this.$LIPS(true);
@@ -1164,17 +1165,15 @@ export default {
               reason_id: user.reason,
               customer_id: this.customer.id,
               user_id: localStorage.getItem("user_id")
-              
             })
-              .then((result) => {
+              .then(result => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 // this.searchUsersList();
                 this.customer.feedback.unshift(result.data.data);
-                
               })
 
               .catch(({ response: { data } }) => {
@@ -1185,12 +1184,12 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     async postTodoComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.closeTodoPopup();
             this.$LIPS(true);
@@ -1201,13 +1200,13 @@ export default {
               type: user.type,
               // status: user.status,
               customer_id: this.customer.id,
-              user_id: localStorage.getItem("user_id"),
+              user_id: localStorage.getItem("user_id")
             })
               .then(() => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "Todo Logged Successfully",
+                  title: "Todo Logged Successfully"
                 });
                 // this.customer.notifications.push({
                 //   data: { date: new Date().toJSON(), feedback: user.feedback },
@@ -1227,7 +1226,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -1264,17 +1263,17 @@ export default {
       this.$router.push({
         name: "userProfile",
         params: {
-          customer: data,
-        },
+          customer: data
+        }
       });
     },
-    toggleTabs: function (tabNumber) {
+    toggleTabs: function(tabNumber) {
       this.openTab = tabNumber;
     },
-    toggleBigTabs: function (tabNumber) {
+    toggleBigTabs: function(tabNumber) {
       this.openBigTab = tabNumber;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -1297,4 +1296,3 @@ export default {
   overflow: scroll;
 }
 </style>
-

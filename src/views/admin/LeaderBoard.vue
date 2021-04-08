@@ -60,7 +60,7 @@
             </div>
           </div>
 
-          <div class="text-center mt-5 mb-10 text-white text-base text-white">
+          <div class="text-center mt-5 mb-10 text-white text-base">
             Total Registered : 517
           </div>
 
@@ -179,7 +179,7 @@
               </div>
 
               <div
-                class="text-center mt-5 mb-10 text-white text-base text-white"
+                class="text-center mt-5 mb-10 text-white text-base"
               >
                 Total Registered : 517
               </div>

@@ -126,7 +126,7 @@
     <!-- Pin to bottom left corner -->
   </nav>
 </template>
-); }
+
 
 <script>
 import altaraLogo from "@/assets/img/altaraLogo.png";

@@ -10,7 +10,6 @@ const permissions = {
   },
   methods: {
     canDo(role) {
-        console.log(role.includes(this.role_id));
       return role.includes(this.role_id);
     }
   }

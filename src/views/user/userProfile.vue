@@ -263,7 +263,7 @@
                 </div>
                 <div v-if="customer.users" class="flow-root">
                   <div class="my-3">
-                    <b>Feedbacks: </b>{{ customer.users.full_name }}
+                    <b>Registered by: </b>{{ customer.users.full_name }}
                   </div>
                 </div>
               </div>
@@ -495,6 +495,56 @@
                         >
                       </div>
                     </div>
+
+                      <div class="w-full lg:w-12/12" v-if="!canDo(DSA)">
+                      <div class="relative w-full py-3">
+                        <label
+                          class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Assign to
+                        </label>
+
+                        <select
+                          v-model="customer.user_id"
+                          v-validate="'required'"
+                          name="agent"
+                          :class="[
+                            errors.first('agent') ||
+                            error.user_id
+                              ? 'is-invalid'
+                              : '',
+                          ]"
+                          class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        >
+                          <option disabled selected="selected">
+                            Select DSA
+                          </option>
+                          <option
+                            :value="type.id"
+                            :key="type.id"
+                            v-for="type in agents"
+                          >
+                            {{ type.full_name }}
+                          </option>
+                        </select>
+                        <small
+                          class="error-control"
+                          v-if="errors.first('agent')"
+                        >
+                          {{ errors.first("agent") }}
+                        </small>
+                        <small
+                          class="error-control"
+                          v-if="error.user_id"
+                          >{{ error.user_id[0] }}</small
+                        >
+                      </div>
+                    </div>
+
+
+
+
                     <div class="w-full lg:w-12/12">
                       <div class="relative w-full py-3">
                         <label
@@ -574,7 +624,7 @@
                 </div>
                 <div v-if="customer.users" class="flow-root">
                   <div class="my-3">
-                    <b>Feedbacks: </b>{{ customer.users.full_name }}
+                    <b>Registered by: </b>{{ customer.users.full_name }}
                   </div>
                 </div>
               </div>
@@ -936,9 +986,13 @@ import avatar from "@/assets/img/avatar.png";
 import { get, post, put } from "@/utilities/api";
 import DatePicker from "vue2-datepicker";
 import queryParam from "../../utilities/queryParam";
+import permissions from "../../components/mixins/permissions.js";
+
 
 export default {
   name: "UserProfile",
+  mixins: [permissions],
+
 
   components: {
     Sidebar,
@@ -952,6 +1006,7 @@ export default {
       searchQuery: {},
       searchFilter: {},
       usersList: [],
+      agents: [],
       employmentStatus: "",
       customerStage: "",
       comments: [],
@@ -966,6 +1021,7 @@ export default {
         postTodo: `/api/todo`,
         updateUser: `/api/customer_contact/`,
         reasons: `/api/reason`,
+        getDSAs: `/api/get-users?role=18`
       },
       feedback: "",
       openTab: 1,
@@ -991,11 +1047,13 @@ export default {
     //   });
     // }
     await this.searchUsersList(this.$route.params.id);
+    await this.getAgents();
     await this.getEmploymentStatus();
     await this.getUserStage();
     await this.getTodos();
 
     await this.getReasons();
+    
   },
   methods: {
     checkTodo(data) {
@@ -1048,6 +1106,16 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
+
+    async getAgents(){
+      try {
+        const agents = await get(this.apiUrls.getDSAs);
+        this.agents = agents.data.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+
     async getTodos() {
       try {
         const query = {

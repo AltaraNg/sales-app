@@ -338,7 +338,7 @@
                 >
                   {{
                     employmentStatus.find(
-                      (x) => x.id === user.employment_status_id
+                      x => x.id === user.employment_status_id
                     ).name || ""
                   }}
                 </td>
@@ -347,7 +347,7 @@
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{
-                    customerStage.find((x) => x.id === user.customer_stage_id)
+                    customerStage.find(x => x.id === user.customer_stage_id)
                       .name || ""
                   }}
                 </td>
@@ -448,7 +448,7 @@
                   :class="[
                     errors.first('feedback') || error.feedback
                       ? 'is-invalid'
-                      : 'border',
+                      : 'border'
                   ]"
                   v-model="customer.feedback"
                 />
@@ -500,14 +500,15 @@ import { eventBus } from "../../main";
 
 export default {
   components: {
-    DatePicker,
+    DatePicker
   },
+
   props: {
     size: {
       type: Number,
       required: false,
-      default: 20,
-    },
+      default: 20
+    }
   },
   computed: {},
   data() {
@@ -526,14 +527,13 @@ export default {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
         getStage: `/api/customer_stage`,
-        postComment: `/api/feedback`,
-        
+        postComment: `/api/feedback`
       },
       feedback: "",
       customer: {},
       feedbackModal: false,
       feedbackPopup: false,
-      error: {},
+      error: {}
     };
   },
   async created() {
@@ -615,20 +615,20 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.feedbackModal = false;
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
-              feedback: user.feedback,
+              feedback: user.feedback
             })
               .then(({ data }) => {
                 this.$LIPS(false);
                 user.feedback = "";
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 this.searchUsersList();
               })
@@ -641,7 +641,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -666,15 +666,15 @@ export default {
         name: "userProfile",
         params: {
           customer: data,
-          id: data.id,
-        },
+          id: data.id
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style >
+<style>
 .mx-input {
   display: inline-block;
   -webkit-box-sizing: border-box;

@@ -55,6 +55,30 @@
                   </select>
                 </div>
               </div>
+
+              <div class="w-full lg:w-2/12 xl:w-2/12" v-if="canDo(Manager) || canDo(Coordinator)">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Branch
+                  </label>
+                  <select v-model="searchQuery.branch" class="mx-input">
+                    <option disabled selected="selected">
+                      Select Branch
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in branches"
+                    >
+                      {{ type.name || "" }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
               <div class="w-full lg:w-2/12 xl:w-2/12">
                 <div class="relative w-50 mb-3">
                   <label
@@ -497,8 +521,11 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
 import { eventBus } from "../../main";
+import permissions from "../../components/mixins/permissions.js";
+
 
 export default {
+  mixins: [permissions],
   components: {
     DatePicker
   },
@@ -520,6 +547,7 @@ export default {
       employmentStatus: [],
       customerStage: [],
       comments: [],
+      branches: [],
       message: "",
       prev_page_url: "",
       next_page_url: "",
@@ -538,6 +566,7 @@ export default {
   },
   async created() {
     eventBus.$emit("fireMethod");
+    await this.getBranches();
     await this.searchUsersList();
     await this.getEmploymentStatus();
     await this.getUserStage();
@@ -583,6 +612,15 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
+    async getBranches() {
+      try {
+        const branches = await get('/api/branches');
+        this.branches = branches.data.branches;
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      }
+    },
+
     resetSearch() {
       this.searchQuery = {};
     },

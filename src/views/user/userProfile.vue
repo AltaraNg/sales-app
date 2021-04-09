@@ -1149,6 +1149,7 @@ export default {
         employment_status_id: customer.employment_status_id,
         email: customer.email,
         customer_stage_id: customer.customer_stage_id,
+        user_id: customer.user_id,
       };
       this.$validator
         .validateAll()

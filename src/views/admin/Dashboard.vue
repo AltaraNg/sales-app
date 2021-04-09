@@ -55,6 +55,30 @@
                   </select>
                 </div>
               </div>
+
+              <div class="w-full lg:w-2/12 xl:w-2/12" v-if="canDo(Manager) || canDo(Coordinator)">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Branch
+                  </label>
+                  <select v-model="searchQuery.branch" class="mx-input">
+                    <option disabled selected="selected">
+                      Select Branch
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in branches"
+                    >
+                      {{ type.name || "" }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
               <div class="w-full lg:w-2/12 xl:w-2/12">
                 <div class="relative w-50 mb-3">
                   <label
@@ -338,7 +362,7 @@
                 >
                   {{
                     employmentStatus.find(
-                      (x) => x.id === user.employment_status_id
+                      x => x.id === user.employment_status_id
                     ).name || ""
                   }}
                 </td>
@@ -347,7 +371,7 @@
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{
-                    customerStage.find((x) => x.id === user.customer_stage_id)
+                    customerStage.find(x => x.id === user.customer_stage_id)
                       .name || ""
                   }}
                 </td>
@@ -448,7 +472,7 @@
                   :class="[
                     errors.first('feedback') || error.feedback
                       ? 'is-invalid'
-                      : 'border',
+                      : 'border'
                   ]"
                   v-model="customer.feedback"
                 />
@@ -497,17 +521,21 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
 import { eventBus } from "../../main";
+import permissions from "../../components/mixins/permissions.js";
+
 
 export default {
+  mixins: [permissions],
   components: {
-    DatePicker,
+    DatePicker
   },
+
   props: {
     size: {
       type: Number,
       required: false,
-      default: 20,
-    },
+      default: 20
+    }
   },
   computed: {},
   data() {
@@ -519,6 +547,7 @@ export default {
       employmentStatus: [],
       customerStage: [],
       comments: [],
+      branches: [],
       message: "",
       prev_page_url: "",
       next_page_url: "",
@@ -526,18 +555,18 @@ export default {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
         getStage: `/api/customer_stage`,
-        postComment: `/api/feedback`,
-        
+        postComment: `/api/feedback`
       },
       feedback: "",
       customer: {},
       feedbackModal: false,
       feedbackPopup: false,
-      error: {},
+      error: {}
     };
   },
   async created() {
     eventBus.$emit("fireMethod");
+    await this.getBranches();
     await this.searchUsersList();
     await this.getEmploymentStatus();
     await this.getUserStage();
@@ -583,6 +612,15 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
+    async getBranches() {
+      try {
+        const branches = await get('/api/branches');
+        this.branches = branches.data.branches;
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      }
+    },
+
     resetSearch() {
       this.searchQuery = {};
     },
@@ -615,20 +653,20 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.feedbackModal = false;
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
-              feedback: user.feedback,
+              feedback: user.feedback
             })
               .then(({ data }) => {
                 this.$LIPS(false);
                 user.feedback = "";
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 this.searchUsersList();
               })
@@ -641,7 +679,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -666,15 +704,15 @@ export default {
         name: "userProfile",
         params: {
           customer: data,
-          id: data.id,
-        },
+          id: data.id
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style >
+<style>
 .mx-input {
   display: inline-block;
   -webkit-box-sizing: border-box;

@@ -79,6 +79,29 @@
                 </div>
               </div>
 
+              <div class="w-full lg:w-2/12 xl:w-2/12" v-if="!canDo(DSA)">
+                <div class="relative w-50 mb-3">
+                  <label
+                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    DSA
+                  </label>
+                  <select v-model="searchQuery.dsa" class="mx-input">
+                    <option disabled selected="selected">
+                      Select DSA
+                    </option>
+                    <option
+                      :value="type.id"
+                      :key="type.id"
+                      v-for="type in agents"
+                    >
+                      {{ type.full_name || "" }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
               <div class="w-full lg:w-2/12 xl:w-2/12">
                 <div class="relative w-50 mb-3">
                   <label
@@ -548,6 +571,7 @@ export default {
       customerStage: [],
       comments: [],
       branches: [],
+      agents: [],
       message: "",
       prev_page_url: "",
       next_page_url: "",
@@ -555,7 +579,8 @@ export default {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
         getStage: `/api/customer_stage`,
-        postComment: `/api/feedback`
+        postComment: `/api/feedback`,
+        getDSAs: `/api/get-users?role=18`
       },
       feedback: "",
       customer: {},
@@ -567,6 +592,7 @@ export default {
   async created() {
     eventBus.$emit("fireMethod");
     await this.getBranches();
+    await this.getAgents();
     await this.searchUsersList();
     await this.getEmploymentStatus();
     await this.getUserStage();
@@ -594,6 +620,15 @@ export default {
       try {
         const fetchUserStage = await get(this.apiUrls.getStage);
         this.customerStage = fetchUserStage.data.data;
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+
+    async getAgents(){
+      try {
+        const agents = await get(this.apiUrls.getDSAs);
+        this.agents = agents.data.data.data;
       } catch (err) {
         this.$displayErrorMessage(err);
       }

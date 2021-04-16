@@ -3,7 +3,7 @@ const permissions = {
     return {
       DSA: [18],
       DSACaptain: [17],
-      Coordinator: [],
+      Coordinator: [32],
       Manager: [1, 2, 8, 9],
       role_id: parseInt(localStorage.getItem("role"))
     };

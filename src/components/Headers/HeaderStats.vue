@@ -120,9 +120,11 @@ export default {
   components: {
     CardStats,
   },
+ 
 
   data() {
     return {
+      anotherStats: {},
       totalContacted: 0,
       totalPurchased: 0,
       totalAffidavit: 0,
@@ -137,28 +139,21 @@ export default {
       },
     };
   },
-  async created() {
-    this.getCardValues();
-
-    eventBus.$on("fireMethod", () => {
+  async mounted() {
+    
+    eventBus.$on("userStats", (data) => {
+      this.anotherStats = data
       this.getCardValues();
     });
   },
   methods: {
-    async getCardValues() {
-      this.totalAffidavit = await this.getCardValue("Paid Affidavit");
-      this.totalPurchased = await this.getCardValue("Purchased");
-      this.totalRegistered = await this.getCardValue("Registered On Portal");
+    getCardValues() {
+      this.totalContacted= this.anotherStats.contacted;
+      this.totalAffidavit = this.anotherStats.Affidavit;
+      this.totalPurchased = this.anotherStats.Purchased;
+      this.totalRegistered = this.anotherStats.registered
     },
-    async getCardValue(query) {
-      const userStages = await this.getUserStage();
-      const usersList = await this.getUsersList();
-      const data = usersList.filter(
-        (x) =>
-          x.customer_stage_id === userStages.find((y) => y.name === query).id
-      ).length;
-      return data;
-    },
+    
     async getEmploymentStatus() {
       try {
         const fetchEmploymentStatus = await get(
@@ -178,15 +173,7 @@ export default {
       }
     },
 
-    async getUsersList() {
-      try {
-        const fetchusersList = await get(this.apiUrls.getusersList);
-        this.totalContacted = fetchusersList.data.data.data.length;
-        return fetchusersList.data.data.data;
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
+    
   },
 };
 </script>

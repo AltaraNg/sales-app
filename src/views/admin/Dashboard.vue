@@ -378,23 +378,18 @@
                   {{ user.email || "" }}
                 </td>
 
-                <td
-                  v-if="employmentStatus.length > 0"
+                <td                  
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{
-                    employmentStatus.find(
-                      (x) => x.id === user.employment_status_id
-                    ).name || ""
+                   user.employment_status.name || ""
                   }}
                 </td>
                 <td
-                  v-if="customerStage.length > 0"
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{
-                    customerStage.find((x) => x.id === user.customer_stage_id)
-                      .name || ""
+                    user.customer_stage.name || ""
                   }}
                 </td>
                 <td
@@ -406,22 +401,9 @@
             </tbody>
           </table>
         </div>
-        <div class="flex-1 flex justify-between">
-          <button
-            v-if="prev_page_url"
-            @click="prevPage"
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-          >
-            Previous
-          </button>
-          <button
-            v-if="next_page_url"
-            @click="nextPage"
-            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-          >
-            Next
-          </button>
-        </div>
+        <!-- <div class="flex-1 flex justify-between">
+          <base-pagination :pageParam='pageParam' @fetchData='searchUsersList()'/>
+        </div> -->
       </div>
       <div v-if="feedbackModal" id="overlay">
         <div class="flex items-center justify-center bottom-0 w-full h-full">
@@ -434,55 +416,7 @@
             </div>
             <br />
             <div class="flex flex-wrap">
-              <!-- <div class="w-full md:w-6/12 h-420-px overflow-x-auto px-4">
-                <table
-                  class="items-center w-full bg-transparent border-collapse"
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                      >
-                        S/N
-                      </th>
-                      <th
-                        class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                      >
-                        Feedback
-                      </th>
-                      <th
-                        class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-                      >
-                        Date
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr :key="index" v-for="(data, index) in comments">
-                      <th
-                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                      >
-                        {{ index + 1 }}
-                      </th>
-                      <th
-                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                      >
-                        <div
-                          class="w-16 truncate"
-                          v-on:click="openPopup(data.data.feedback)"
-                        >
-                          {{ data.data.feedback }}
-                        </div>
-                      </th>
-                      <th
-                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                      >
-                        {{ data.data.date.split("T")[0] || "Not Available" }}
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div> -->
+              
               <div class="w-full md:w-6/12 px-4">
                 <textarea
                   rows="8"
@@ -544,11 +478,15 @@ import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
 import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
+ import BasePagination from "../../components/BasePagination";
+
+
 
 export default {
   mixins: [permissions],
   components: {
     DatePicker,
+    BasePagination
   },
 
   props: {
@@ -562,6 +500,7 @@ export default {
   data() {
     return {
       pageNumber: 1,
+      pageParam: {},
       searchQuery: {},
       searchFilter: {},
       usersList: [],
@@ -589,13 +528,10 @@ export default {
     };
   },
   async created() {
-    
-    await this.getUsersList();
+    await this.searchUsersList();    
     await this.getBranches();
     await this.getAgents();
-    await this.searchUsersList();
-    await this.getEmploymentStatus();
-    await this.getUserStage();
+    
   },
   methods: {
     nextPage() {
@@ -634,21 +570,7 @@ export default {
       }
     },
 
-    async getUsersList() {
-      this.$LIPS(true);
-
-      try {
-        const fetchusersList = await get(this.apiUrls.getusersList);
-        this.usersList = fetchusersList.data.data[0].data;
-        this.userMeta = fetchusersList.data.data.meta;
-        eventBus.$emit("userStats", this.userMeta);
-        this.$LIPS(false);
-      } catch (err) {
-        this.$LIPS(false);
-
-        this.$displayErrorMessage(err);
-      }
-    },
+    
     async getBranches() {
       try {
         const branches = await get("/api/branches");
@@ -665,9 +587,9 @@ export default {
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
+
     async searchUsersList() {
       this.$LIPS(true);
-
       try {
         const query = { ...this.searchQuery, page: this.pageNumber };
         const fetchusersList = await get(
@@ -675,6 +597,8 @@ export default {
         );
 
         this.usersList = fetchusersList.data.data[0].data;
+        this.userMeta = fetchusersList.data.data.meta;
+        eventBus.$emit("userStats", this.userMeta);
         this.next_page_url = fetchusersList.data.data[0].next_page_url;
         this.prev_page_url = fetchusersList.data.data[0].prev_page_url;
         this.$LIPS(false);

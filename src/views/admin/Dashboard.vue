@@ -8,7 +8,7 @@
           <div class="flex-col">
             <div class="flex justify-between">
               <div class="w-full lg:w-2/12 xl:w-2/12">
-                <div class="relative w-50 mb-3">
+                <div class="relative w-50 mb-3 p-1">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -33,7 +33,7 @@
                   </select>
                 </div>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12">
+              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -57,7 +57,7 @@
               </div>
 
               <div
-                class="w-full lg:w-2/12 xl:w-2/12"
+                class="w-full lg:w-2/12 xl:w-2/12 p-1"
                 v-if="canDo(Manager) || canDo(Coordinator)"
               >
                 <div class="relative w-50 mb-3">
@@ -80,7 +80,7 @@
                 </div>
               </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12" v-if="!canDo(DSA)">
+              <div class="w-full lg:w-2/12 xl:w-2/12 p-1" v-if="!canDo(DSA)">
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -101,7 +101,7 @@
                 </div>
               </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12">
+              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -117,7 +117,7 @@
                   </div>
                 </div>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12">
+              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -531,6 +531,8 @@ export default {
     await this.searchUsersList();    
     await this.getBranches();
     await this.getAgents();
+    await this.getUserStage();
+    await this.getEmploymentStatus();
     
   },
   methods: {

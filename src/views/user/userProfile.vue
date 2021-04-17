@@ -1119,7 +1119,7 @@ export default {
     async getTodos() {
       try {
         const query = {
-          customer: this.customer.id,
+          customerId: this.customer.id,
           user: localStorage.getItem("user_id"),
         };
 

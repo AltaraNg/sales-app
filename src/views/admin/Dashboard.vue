@@ -354,7 +354,7 @@
                   <div
                     class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
                   >
-                    {{ index + pageNumber || "" }}
+                    {{ index + OId || "" }}
                   </div>
                 </th>
                 <th
@@ -401,9 +401,10 @@
             </tbody>
           </table>
         </div>
-        <!-- <div class="flex-1 flex justify-between">
-          <base-pagination :pageParam='pageParam' @fetchData='searchUsersList()'/>
-        </div> -->
+        
+      </div>
+      <div class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded">
+          <base-pagination :pageParam='pageParams' @fetchData='searchUsersList()'/>
       </div>
       <div v-if="feedbackModal" id="overlay">
         <div class="flex items-center justify-center bottom-0 w-full h-full">
@@ -500,7 +501,8 @@ export default {
   data() {
     return {
       pageNumber: 1,
-      pageParam: {},
+      pageParams: {},
+      OId: 0,
       searchQuery: {},
       searchFilter: {},
       usersList: [],
@@ -510,8 +512,7 @@ export default {
       branches: [],
       agents: [],
       message: "",
-      prev_page_url: "",
-      next_page_url: "",
+     page: 1,
       apiUrls: {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
@@ -535,15 +536,7 @@ export default {
     await this.getEmploymentStatus();
     
   },
-  methods: {
-    nextPage() {
-      this.pageNumber++;
-      this.searchUsersList();
-    },
-    prevPage() {
-      this.pageNumber--;
-      this.searchUsersList();
-    },
+  methods: {   
     async getEmploymentStatus() {
       try {
         const fetchEmploymentStatus = await get(
@@ -584,7 +577,7 @@ export default {
 
     resetSearch() {
       this.searchQuery = {};
-      this.getUsersList();
+      this.searchUsersList();
     },
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -593,16 +586,19 @@ export default {
     async searchUsersList() {
       this.$LIPS(true);
       try {
-        const query = { ...this.searchQuery, page: this.pageNumber };
+        const query = { ...this.searchQuery, page: this.pageParams.page,limit: this.pageParams.limit, };
         const fetchusersList = await get(
           this.apiUrls.getusersList + queryParam(query)
         );
+       let {current_page, first_page_url, from, last_page, last_page_url, data, per_page, next_page_url, to, total, prev_page_url} = fetchusersList.data.data[0];
+       this.pageParams = Object.assign({}, this.pageParams, {current_page, first_page_url, from, last_page, last_page_url, per_page, next_page_url, to, total, prev_page_url});        
 
-        this.usersList = fetchusersList.data.data[0].data;
+
+        this.usersList = data;
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
-        this.next_page_url = fetchusersList.data.data[0].next_page_url;
-        this.prev_page_url = fetchusersList.data.data[0].prev_page_url;
+        this.OId = from;
+       
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);

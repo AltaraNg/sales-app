@@ -1,29 +1,29 @@
 <template>
-  <div class="mb-5 px-0 row align-items-center">
-    <div class="w-100 mb-4 mt-5 mx-0 hr"></div>
-    <div class="clearfix w-100 mt-4 d-flex bd-highlight">
-      <div class="col d-flex justify-content-start align-items-center pl-0">
-        <strong class="light-heading float-left">
+  <div class="container mx-auto text-xs divide-y my-1 py-2">
+    <div class="clearfix"></div>
+    <div class="flex justify-between flex-row pt-2">
+      <div class="">
+        <strong class="box-border border-solid">
           Displaying: {{ pageParam.from }} - {{ pageParam.to }} of
           {{ pageParam.total }}
         </strong>
       </div>
 
-      <div class="col d-flex justify-content-center align-items-center">
-        <div class="mr-5">
-          <span class="d-inline light-heading mr-2">set current Page</span>
+      <div class="flex flex-row divide-x">
+        <div class="px-2">
+          <span class="">set current Page: </span>
           <input
-            class="d-inline form-control"
+            class="input bg-gray-300 text-center"
             type="number"
             v-model="pageParam.page"
             style="max-width: 50px"
             @keyup.enter="fetchData(pageParam.page)"
           />
         </div>
-        <div class="ml-5">
-          <span class="d-inline light-heading mr-2">set page-size</span>
+        <div class="px-2">
+          <span class="">set page-size: </span>
           <input
-            class="d-inline form-control"
+            class="input bg-gray-300 text-center"
             type="number"
             v-model="pageParam.limit"
             style="max-width: 50px"
@@ -32,29 +32,29 @@
         </div>
       </div>
 
-      <nav class="col d-flex justify-content-end align-items-center pr-0">
-        <ul class="pagination pagination-lg mb-0">
+      <nav class="content-start">
+        <ul class="flex flex-row divide-x">
           <!---->
           <li
             :class="{ disabled: !pageParam.first_page_url }"
-            class="page-item"
+            class="px-1"
           >
             <a href="javascript:" @click="prev(1)" class="page-link">First</a>
           </li>
-          <li :class="{ disabled: !pageParam.prev_page_url }" class="page-item">
-            <a href="javascript:" @click="prev()" class="page-link">Prev</a>
+          <li :class="{ disabled: !pageParam.prev_page_url }" class="px-1">
+                      <a href="javascript:" @click="prev()" class="page-link">Prev</a>
           </li>
           <!---->
-          <li class="page-item">
+          <li class="px-1">
             <span class="page-link w-100"
               >page:{{ pageParam.current_page }}</span
             >
           </li>
           <!---->
-          <li :class="{ disabled: !pageParam.next_page_url }" class="page-item">
+          <li :class="{ disabled: !pageParam.next_page_url }" class="px-1">
             <a href="javascript:" @click="next()" class="page-link">Next</a>
           </li>
-          <li :class="{ disabled: !pageParam.last_page_url }" class="page-item">
+          <li :class="{ disabled: !pageParam.last_page_url }" class="px-1">
             <a
               href="javascript:"
               @click="next(pageParam.last_page)"

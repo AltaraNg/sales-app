@@ -38,7 +38,7 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-gray-500 uppercase font-bold text-xs">
-                      Purchased
+                      Purchased and Pickup
                     </h5>
                     <span class="font-semibold text-xl text-gray-800">
                       {{ totalPurchased }}

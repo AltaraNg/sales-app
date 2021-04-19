@@ -40,7 +40,7 @@
                     'bg-white': openTab === 2,
                   }"
                 >
-                  Feedbacks
+                  Customer Feedbacks
                 </a>
               </li>
               <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -250,15 +250,15 @@
                   <div class="my-3"><b>Email: </b> {{ customer.email }}</div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-3">
+                  <div class="my-3" v-if="customer.employment_status">
                     <b>Employment Status: </b>
-                    {{ employmentStatus || "N/A" }}
+                    {{ customer.employment_status.name || "N/A" }}
                   </div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-3">
+                  <div class="my-3" v-if="customer.customer_stage">
                     <b>Customer Stage: </b>
-                    {{ customerStage || "N/A" }}
+                    {{ customer.customer_stage.name || "N/A" }}
                   </div>
                 </div>
                 <div v-if="customer.users" class="flow-root">
@@ -611,15 +611,15 @@
                   <div class="my-3"><b>Email: </b> {{ customer.email }}</div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-3">
+                  <div class="my-3" v-if="customer.employment_status">
                     <b>Employment Status: </b>
-                    {{ employmentStatus || "N/A" }}
+                    {{ customer.employment_status.name || "N/A" }}
                   </div>
                 </div>
                 <div class="flow-root">
-                  <div class="my-3">
+                  <div class="my-3" v-if="customer.customer_stage">
                     <b>Customer Stage: </b>
-                    {{ customerStage || "N/A" }}
+                    {{ customer.customer_stage.name || "N/A" }}
                   </div>
                 </div>
                 <div v-if="customer.users" class="flow-root">
@@ -667,7 +667,7 @@
                           'altaraBlue text-white': openBigTab === 1,
                         }"
                       >
-                        Feedbacks
+                        Customer Feedbacks
                       </a>
                     </li>
                     <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -842,7 +842,7 @@
               cols="40"
               type="text"
               name="feedback"
-              placeholder="Enter Feedback..."
+              placeholder="Enter reason why the customer did not end up buying from Altara..."
               v-validate="'required'"
               :class="[
                 errors.first('feedback') || error.feedback
@@ -923,29 +923,7 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="w-full lg:w-4/12 xl:w-3/12">
-                <div class="relative mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Status
-                  </label>
-                  <div>
-                    <input
-                      type="text"
-                      name="status"
-                      v-model="customer.status"
-                      :class="[
-                        errors.first('status') || error.status
-                          ? 'is-invalid'
-                          : '',
-                      ]"
-                      class="mx-input"
-                    />
-                  </div>
-                </div>
-              </div> -->
+              
             </div>
             <textarea
               rows="8"
@@ -1091,9 +1069,7 @@ export default {
           this.apiUrls.getEmploymentStatus
         );
         this.employmentStatusList = fetchEmploymentStatus.data.data;
-        this.employmentStatus = this.employmentStatusList.find(
-          (x) => x.id === this.customer.employment_status_id
-        ).name;
+       
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1133,9 +1109,7 @@ export default {
       try {
         const fetchUserStage = await get(this.apiUrls.getStage);
         this.customerStages = fetchUserStage.data.data;
-        this.customerStage = fetchUserStage.data.data.find(
-          (x) => x.id === this.customer.customer_stage_id
-        ).name;
+        
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1168,12 +1142,8 @@ export default {
                 });
                 this.editMode = false;
                 this.customer = response.data.data;
-                this.employmentStatus = this.employmentStatusList.find(
-          (x) => x.id === this.customer.employment_status_id
-        ).name;
-                this.customerStage = this.customerStages.find(
-          (x) => x.id === this.customer.customer_stage_id
-        ).name;
+                
+                
               })
 
               .catch(({ response: { data } }) => {

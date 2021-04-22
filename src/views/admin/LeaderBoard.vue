@@ -348,27 +348,7 @@ export default {
       this.sortedAgents = sortedAgents;
     },
 
-    sortByTotal(){
-      let sortedAgents = this.agents.sort((a,b) => {
-        return b.total - a.total
-      });
-      this.sortedAgents = sortedAgents;
-    },
-
-     sortByRegistered(){
-      let sortedAgents = this.agents.sort((a,b) => {
-        return b.registered - a.registered
-      });
-      console.log('i woked');
-      this.sortedAgents = sortedAgents;
-    },
-
-    sortByAffidavit(){
-      let sortedAgents = this.agents.sort((a,b) => {
-        return b.affidavit - a.affidavit
-      });
-      this.sortedAgents = sortedAgents;
-    },
+    
 
     getTotalRegistered(){
       if(this.agents.length > 0){
@@ -383,26 +363,11 @@ export default {
       }
     },
     changeOrder(){
-      switch (this.option) {
-        case "registered":
-          this.sortByRegistered();
-          break;
+      this.sortedAgents = this.agents.sort((a,b) => {
+        return b[this.option] - a[this.option]
+      });
 
-        case "purchased":
-          this.sortByPurchased();
-          break;
-
-        case "affidavit":
-          this.sortByAffidavit();
-          break;
-
-        case "total":
-          this.sortByTotal();
-          break;
       
-        default:
-          break;
-      }
     },
 
     

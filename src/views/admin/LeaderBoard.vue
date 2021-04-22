@@ -333,7 +333,8 @@ export default {
   },
   async created() {
     await this.getAgents();
-    this.sortByPurchased();
+    this.option = 'purchased';
+    this.changeOrder();
     this.totalRegistered = this.getTotalRegistered();
 
   },
@@ -341,15 +342,7 @@ export default {
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
-    sortByPurchased(){
-      let sortedAgents = this.agents.sort((a,b) => {
-        return b.purchased - a.purchased
-      });
-      this.sortedAgents = sortedAgents;
-    },
-
     
-
     getTotalRegistered(){
       if(this.agents.length > 0){
         let total = 0;

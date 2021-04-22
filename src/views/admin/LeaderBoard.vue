@@ -325,7 +325,7 @@ export default {
       OId: 0,
       sortedAgents: [],
       totalRegistered: 0,
-      option: ''
+      option: 'purchased'
     };
   },
   components: {
@@ -333,7 +333,6 @@ export default {
   },
   async created() {
     await this.getAgents();
-    this.option = 'purchased';
     this.changeOrder();
     this.totalRegistered = this.getTotalRegistered();
 

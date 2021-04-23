@@ -11,14 +11,26 @@
 </template>
 <script>
 import Sidebar from "@/components/Sidebar/Sidebar.vue";
+import { eventBus } from "../main";
+
 
 import HeaderStats from "@/components/Headers/HeaderStats.vue";
 export default {
   name: "admin-layout",
+  mounted() {
+     eventBus.$on("userStats", (data) => {
+      this.stats = data
+    });
+  },
   components: {
     Sidebar,
     HeaderStats,
   },
+  data() {
+    return {
+      stats: {}
+    }
+  }
  
  
 };

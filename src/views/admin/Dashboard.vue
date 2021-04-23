@@ -378,19 +378,15 @@
                   {{ user.email || "" }}
                 </td>
 
-                <td                  
+                <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
-                  {{
-                   user.employment_status.name || ""
-                  }}
+                  {{ user.employment_status.name || "" }}
                 </td>
                 <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
-                  {{
-                    user.customer_stage.name || ""
-                  }}
+                  {{ user.customer_stage.name || "" }}
                 </td>
                 <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
@@ -401,10 +397,14 @@
             </tbody>
           </table>
         </div>
-        
       </div>
-      <div class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded">
-          <base-pagination :pageParam='pageParams' @fetchData='searchUsersList()'/>
+      <div
+        class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+      >
+        <base-pagination
+          :pageParam="pageParams"
+          @fetchData="searchUsersList()"
+        />
       </div>
       <div v-if="feedbackModal" id="overlay">
         <div class="flex items-center justify-center bottom-0 w-full h-full">
@@ -417,7 +417,6 @@
             </div>
             <br />
             <div class="flex flex-wrap">
-              
               <div class="w-full md:w-6/12 px-4">
                 <textarea
                   rows="8"
@@ -479,15 +478,13 @@ import "vue2-datepicker/index.css";
 import queryParam from "../../utilities/queryParam";
 import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
- import BasePagination from "../../components/BasePagination";
-
-
+import BasePagination from "../../components/BasePagination";
 
 export default {
   mixins: [permissions],
   components: {
     DatePicker,
-    BasePagination
+    BasePagination,
   },
 
   props: {
@@ -512,7 +509,7 @@ export default {
       branches: [],
       agents: [],
       message: "",
-     page: 1,
+      page: 1,
       apiUrls: {
         getEmploymentStatus: `/api/employment_status`,
         getusersList: `/api/customer_contact`,
@@ -529,14 +526,13 @@ export default {
     };
   },
   async created() {
-    await this.searchUsersList();    
+    await this.searchUsersList();
     await this.getBranches();
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
-    
   },
-  methods: {   
+  methods: {
     async getEmploymentStatus() {
       try {
         const fetchEmploymentStatus = await get(
@@ -565,7 +561,6 @@ export default {
       }
     },
 
-    
     async getBranches() {
       try {
         const branches = await get("/api/branches");
@@ -586,19 +581,45 @@ export default {
     async searchUsersList() {
       this.$LIPS(true);
       try {
-        const query = { ...this.searchQuery, page: this.pageParams.page,limit: this.pageParams.limit, };
+        const query = {
+          ...this.searchQuery,
+          page: this.pageParams.page,
+          limit: this.pageParams.limit,
+        };
         const fetchusersList = await get(
           this.apiUrls.getusersList + queryParam(query)
         );
-       let {current_page, first_page_url, from, last_page, last_page_url, data, per_page, next_page_url, to, total, prev_page_url} = fetchusersList.data.data[0];
-       this.pageParams = Object.assign({}, this.pageParams, {current_page, first_page_url, from, last_page, last_page_url, per_page, next_page_url, to, total, prev_page_url});        
-
+        let {
+          current_page,
+          first_page_url,
+          from,
+          last_page,
+          last_page_url,
+          data,
+          per_page,
+          next_page_url,
+          to,
+          total,
+          prev_page_url,
+        } = fetchusersList.data.data[0];
+        this.pageParams = Object.assign({}, this.pageParams, {
+          current_page,
+          first_page_url,
+          from,
+          last_page,
+          last_page_url,
+          per_page,
+          next_page_url,
+          to,
+          total,
+          prev_page_url,
+        });
 
         this.usersList = data;
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
         this.OId = from;
-       
+
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);

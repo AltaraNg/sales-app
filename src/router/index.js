@@ -42,15 +42,16 @@ const router = new VueRouter({
             path: "/admin/todos",
             component: Todo,
         },
+        {
+            path: "/admin/dsaratings",
+            component: LeaderBoard,
+            name: "LeaderBoard"
+        }
 
 
         ],
     },
-    {
-        path: "/admin/dsaratings",
-        component: LeaderBoard,
-        name: "LeaderBoard"
-    }, {
+    , {
         path: "/login",
         redirect: "/auth/login",
         component: Auth,

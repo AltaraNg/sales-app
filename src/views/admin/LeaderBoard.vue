@@ -5,11 +5,11 @@
       <br />
      
       <div class="hidden md:contents relative">
-        <div class=" bg-white">
+        <div class="w-full bg-white">
           <div>
             <div class="altaraBlue">
               
-              <div class="flex justify-around" v-if="sortedAgents.length > 0">
+              <div class="flex justify-around pt-8" v-if="sortedAgents.length > 0">
                 <div>
                   <div class="flex flex-col ...">
                     <br />
@@ -24,6 +24,9 @@
                       </div>
                     </div>
                     <div class="ml-2 h-20 w-16 bg-white"></div>
+                    <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
+                      {{sortedAgents[1].full_name}} {{sortedAgents[1].total}}
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -37,6 +40,9 @@
                       </div>
                     </div>
                     <div class="ml-2 h-32 w-16 bg-white"></div>
+                    <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
+                      {{sortedAgents[0].full_name}} {{sortedAgents[0].total}}
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -55,6 +61,9 @@
                     </div>
 
                     <div class="ml-2 h-14 w-16 bg-white"></div>
+                    <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
+                      {{sortedAgents[2].full_name}} {{sortedAgents[2].total}}
+                    </div>
                   </div>
                 </div>
               </div>

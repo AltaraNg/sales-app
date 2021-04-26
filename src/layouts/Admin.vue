@@ -2,7 +2,7 @@
   <div>
     <sidebar />
     <div class="relative md:ml-56 bg-white">
-      <header-stats/>
+      <header-stats v-if="currentRouteName !== 'LeaderBoard'"/>
       <div class="px-4 md:px-10 mx-auto w-full -m-24">
         <router-view />
       </div>
@@ -29,6 +29,11 @@ export default {
   data() {
     return {
       stats: {}
+    }
+  },
+  computed : {
+    currentRouteName(){
+      return this.$route.name;
     }
   }
  

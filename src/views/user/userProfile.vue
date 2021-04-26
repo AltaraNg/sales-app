@@ -842,6 +842,7 @@
               cols="40"
               type="text"
               name="feedback"
+              class="p-3"
               placeholder="Enter reason why the customer did not end up buying from Altara..."
               v-validate="'required'"
               :class="[
@@ -930,6 +931,7 @@
               cols="40"
               type="text"
               name="todo"
+              class="p-3"
               placeholder="Enter todo..."
               v-validate="'required'"
               :class="[

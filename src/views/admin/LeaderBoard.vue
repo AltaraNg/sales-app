@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <sidebar />
+      <!-- <sidebar /> -->
       <br />
      
       <div class="hidden md:contents relative">
@@ -197,9 +197,7 @@
               </tbody>
             </table>
           </div>
-          <div class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded">
-          <base-pagination :pageParam='pageParams' @fetchData='getAgents()'/>
-      </div>
+         
         </div>
       </div>
     </div>

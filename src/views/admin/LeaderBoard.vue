@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <sidebar />
+      <!-- <sidebar /> -->
       <br />
      
       <div class="hidden md:contents relative">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="ml-2 h-20 w-16 bg-white"></div>
                     <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
-                      {{sortedAgents[1].full_name}} {{sortedAgents[1].total}}
+                      {{sortedAgents[1].full_name}}
                     </div>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="ml-2 h-32 w-16 bg-white"></div>
                     <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
-                      {{sortedAgents[0].full_name}} {{sortedAgents[0].total}}
+                      {{sortedAgents[0].full_name}}
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
 
                     <div class="ml-2 h-14 w-16 bg-white"></div>
                     <div class="text-center text-white text-sm mt-1 mb-1 h-20 w-20 flex items-center justify-center">
-                      {{sortedAgents[2].full_name}} {{sortedAgents[2].total}}
+                      {{sortedAgents[2].full_name}} 
                     </div>
                   </div>
                 </div>
@@ -197,9 +197,7 @@
               </tbody>
             </table>
           </div>
-          <div class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded">
-          <base-pagination :pageParam='pageParams' @fetchData='getAgents()'/>
-      </div>
+         
         </div>
       </div>
     </div>

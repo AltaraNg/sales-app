@@ -4,7 +4,7 @@
       <!-- <sidebar /> -->
       <br />
      
-      <div class="hidden md:contents relative min-w-0 container">
+      <div class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3">
         <div class="w-full bg-white">
           <div>
             <div class="altaraBlue">
@@ -110,6 +110,34 @@
                   </select>
                 </div>
               </div>
+
+              <div class="contents md:hidden relative">
+        <div class="text-center py-2 font-medium px-5">
+          Rank of Agents
+        </div>
+        <div v-if="sortedAgents.length > 0">
+          <div :key="index" v-for="(user, index) in sortedAgents">
+            <div v-on:click="viewUser(user)" class="customerTile">
+              <div class="flex justify-between">
+                <div class="flex items-stretch">
+                  <div
+                    :style="{ background: generateRandomColor() }"
+                    class="avatarCircle"
+                  >
+                    {{ user.full_name[0].toUpperCase() || "" }}
+                  </div>
+                  <div class="self-center font-medium">
+                    {{ user.full_name || "" }}
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <div class="font-bold">{{ user.total || 0 }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
               <div
         class="hidden md:contents relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
       >

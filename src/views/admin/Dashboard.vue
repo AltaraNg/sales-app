@@ -242,7 +242,7 @@
 
       <div class="contents md:hidden relative">
         <div class="text-center py-2 font-medium px-5">
-          List of contacted customers
+          List of contacted customer
         </div>
         <div v-if="usersList.length > 0">
           <div :key="index" v-for="(user, index) in usersList">

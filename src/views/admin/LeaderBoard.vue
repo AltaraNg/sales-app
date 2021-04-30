@@ -131,7 +131,7 @@
                   </div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="font-bold">{{ user.total || 0 }}</div>
+                  <div class="font-bold">{{ user.purchased || 0 }}</div>
                 </div>
               </div>
             </div>

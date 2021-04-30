@@ -48,8 +48,9 @@
         <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-          <li class="items-center">
             <router-link to="/admin/dashboard">
+
+          <li class="items-center">
               <div
                 class="text-xs uppercase py-3 font-bold block"
                 :class="['text-gray-800 hover:text-gray-600']"
@@ -60,11 +61,14 @@
                 ></i>
                 Dashboard
               </div>
-            </router-link>
           </li>
+            </router-link>
 
+          
+          <router-link to="/admin/register"
+          >
           <li class="items-center">
-            <router-link to="/admin/register">
+            
               <a
                 class="text-xs uppercase py-3 font-bold block"
                 :class="['text-gray-800 hover:text-gray-600']"
@@ -75,10 +79,13 @@
                 ></i>
                 Register Customer
               </a>
-            </router-link>
           </li>
+            </router-link>
+
+
+           <router-link to="/admin/dsaratings">
           <li class="items-center">
-            <router-link to="/admin/dsaratings">
+           
               <a
                 class="text-xs uppercase py-3 font-bold block"
                 :class="['text-gray-800 hover:text-gray-600']"
@@ -89,10 +96,13 @@
                 ></i>
                 Leaderboard
               </a>
-            </router-link>
           </li>
-          <li class="items-center">
+            </router-link>
+
+
             <router-link to="/admin/todos">
+
+          <li class="items-center">
               <a
                 class="text-xs uppercase py-3 font-bold block"
                 :class="['text-gray-800 hover:text-gray-600']"
@@ -103,8 +113,9 @@
                 ></i>
                 Todos
               </a>
-            </router-link>
           </li>
+            </router-link>
+
           <br />
           <li class="absolute bottom-0">
             <div v-on:click="logOut()">
@@ -153,6 +164,6 @@ export default {
 </script>
 <style>
 .active{
-  background: blueviolet;
+  background: gray;
 }
 </style>

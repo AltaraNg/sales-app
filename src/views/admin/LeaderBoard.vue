@@ -4,7 +4,7 @@
       <!-- <sidebar /> -->
       <br />
      
-      <div class="hidden md:contents relative">
+      <div class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3">
         <div class="w-full bg-white">
           <div>
             <div class="altaraBlue">
@@ -80,7 +80,7 @@
 
               
             </div>
-            <div class="w-full lg:w-2/12 xl:w-3/12 bg-white">
+            <div class="w-full lg:w-2/12 xl:w-2/12">
                 <div class="relative w-50 mb-3">
                   <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password">
@@ -110,6 +110,37 @@
                   </select>
                 </div>
               </div>
+
+              <div class="contents md:hidden relative">
+        <div class="text-center py-2 font-medium px-5">
+          Rank of Agents
+        </div>
+        <div v-if="sortedAgents.length > 0">
+          <div :key="index" v-for="(user, index) in sortedAgents">
+            <div v-on:click="viewUser(user)" class="customerTile">
+              <div class="flex justify-between">
+                <div class="flex items-stretch">
+                  <div
+                    :style="{ background: generateRandomColor() }"
+                    class="avatarCircle"
+                  >
+                    {{ user.full_name[0].toUpperCase() || "" }}
+                  </div>
+                  <div class="self-center font-medium">
+                    {{ user.full_name || "" }}
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <div class="font-bold">{{ user.purchased || 0 }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div
+        class="hidden md:contents relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+      >
             <table class="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
@@ -196,6 +227,7 @@
                 </tr>
               </tbody>
             </table>
+              </div>
           </div>
          
         </div>

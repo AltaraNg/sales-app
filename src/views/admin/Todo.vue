@@ -187,6 +187,7 @@
       <div class="contents md:hidden">
         <div class="flex-col">
           <div class="flex flex-wrap">
+
             <div class="w-full lg:w-2/12 xl:w-3/12">
               <div class="relative w-50 mb-3">
                 <label
@@ -215,6 +216,38 @@
                   <date-picker
                     valueType="format"
                     v-model="searchQuery.toDate"
+                  ></date-picker>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Todo Keyword
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.name"
+                  ></date-picker>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/12 xl:w-3/12">
+              <div class="relative w-50 mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Customer Name
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.customer"
                   ></date-picker>
                 </div>
               </div>

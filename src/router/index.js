@@ -30,7 +30,8 @@ const router = new VueRouter({
         children: [{
             path: "/admin/dashboard",
             component: Dashboard,
-            props: true
+            props: true,
+            name: "Dashboard"
         },
         {
             path: "/admin/register",
@@ -41,6 +42,7 @@ const router = new VueRouter({
         }, {
             path: "/admin/todos",
             component: Todo,
+            name: "Todos"
         },
         {
             path: "/admin/dsaratings",

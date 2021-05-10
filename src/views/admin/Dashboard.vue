@@ -397,6 +397,9 @@
             </tbody>
           </table>
         </div>
+        <div class="text-right">
+          <i class="fas fa-download mb-2 text-lg pointer" @click="exportCsv()"></i>
+        </div>
       </div>
       <div
         class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
@@ -516,6 +519,7 @@ export default {
         getStage: `/api/customer_stage`,
         postComment: `/api/feedback`,
         getDSAs: `/api/get-users?role=18`,
+        export: `/api/contact-customer/export`
       },
       userMeta: {},
       feedback: "",
@@ -576,6 +580,24 @@ export default {
     },
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    },
+
+    async exportCsv(){
+      this.$LIPS(true);
+      try {
+        const response = await get(this.apiUrls.export + queryParam(this.searchQuery), {responseType: 'blob'});
+        let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        let fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'file.csv');
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      }finally{
+        this.$LIPS(false);
+      }
+
     },
 
     async searchUsersList() {

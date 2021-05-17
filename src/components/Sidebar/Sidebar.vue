@@ -49,7 +49,7 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
 
-          <router-link to="/admin/superadmin" v-if="canDo(Manager)">
+          <router-link to="/admin/superadmin" v-if="canDo(Manager) && canView==='beta'">
 
           <li class="items-center ml-2">
               <div
@@ -166,6 +166,7 @@ export default {
     return {
       collapseShow: "hidden",
       altaraLogo,
+      canView: ''
     };
   },
   methods: {
@@ -179,6 +180,9 @@ export default {
     },
   },
   components: {},
+  mounted() {
+    this.canView = localStorage.getItem('flag');
+}
 };
 </script>
 <style>

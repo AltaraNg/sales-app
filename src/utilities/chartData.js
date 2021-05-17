@@ -1,3 +1,4 @@
+import {get} from './api.js'
 export const showroomData = {
     type: "line",
     data: {

@@ -4,126 +4,7 @@
   <div
     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pr-2"
   >
-    <div class="rounded-t mb-0 px-4 py-3 border-0">
-      <div class="flex flex-wrap items-center">
-        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-          <h3 class="font-semibold text-base text-gray-800">DSA Ratings</h3>
-        </div>
-        <div
-          class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
-        ></div>
-      </div>
-    </div>
-    <div class="block w-full overflow-x-auto">
-      <!-- Projects table -->
-
-      <!-- Projects table -->
-      <table class="items-center w-full bg-transparent border-collapse">
-        <thead>
-          <tr>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Position
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Name
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Purchased
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Affidavit
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Registered
-            </th>
-
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Contacted
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              1
-            </th>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              John Doe
-            </th>
-
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              5
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              6
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              9
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              89
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              2
-            </th>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              Jane Doe
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              9
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              5
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              6
-            </td>
-
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              89
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <showroom-stats :graphData='graphData'> </showroom-stats>
   </div>
   <div
     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pl-2"
@@ -305,213 +186,99 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(user, index) in agents">
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
             >
-              1
+              {{index + 1}}
             </th>
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
             >
-              John Doe
+              {{user.full_name}}
             </th>
 
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              5
+              {{user.purchased}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              6
+              {{user.affidavit}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              9
+             {{user.registered}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
             >
-              89
+              {{user.total}}
             </td>
           </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              2
-            </th>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              Jane Doe
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              9
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              5
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              6
-            </td>
-
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              89
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
   </div>
-  <div
-    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pl-2"
-  >
-    <div class="rounded-t mb-0 px-4 py-3 border-0">
-      <div class="flex flex-wrap items-center">
-        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-          <h3 class="font-semibold text-base text-gray-800">Feedbacks</h3>
-        </div>
-        <div
-          class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
-        ></div>
-      </div>
-    </div>
-    <div class="block w-full overflow-x-auto">
-      <!-- Projects table -->
-
-      <!-- Projects table -->
-      <table class="items-center w-full bg-transparent border-collapse">
-        <thead>
-          <tr>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Position
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Name
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Purchased
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Affidavit
-            </th>
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Registered
-            </th>
-
-            <th
-              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            >
-              Contacted
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              1
-            </th>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              John Doe
-            </th>
-
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              5
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              6
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              9
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              89
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              2
-            </th>
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              Jane Doe
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              9
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              5
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              6
-            </td>
-
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
-            >
-              89
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  
   </div>
   </div>
 </template>
 <script>
+import ShowroomStats from '../../components/ShowroomStats';
+import { get } from '../../utilities/api.js';
+import showroomData from '../../utilities/chartData.js'
+import queryParam from '../../utilities/queryParam';
+
 export default {
+  name: 'AdminDashboard',
+  components: {
+    ShowroomStats,
+    
+    } ,
   data() {
     return {
       apiUrls: {
         feedbacks: `/api/feedbacks`,
-        agents: `/api/get-users?role=18&stats=true`
-      }
+        getDSAs: `/api/get-users?role=18&stats=true`
+      },
+      graphData: showroomData,
+      pageParams: {},
+      agents: [],
+      searchQuery: {},
+      canView: ''
     };
   },
-  components: {},
+  
+  mounted(){
+    this.getAgents();
+    this.canView = localStorage.getItem('flag');
+
+  },
+
+  methods: {
+    async getAgents() {
+      console.log('work');
+      this.$LIPS(true);
+      try {
+        const query = { ...this.searchQuery, page: this.pageParams.page,limit: this.pageParams.limit, };
+        const agents = await get(this.apiUrls.getDSAs + queryParam(query));
+        console.log('work');
+        this.agents = agents.data.data.data;
+        let {current_page, first_page_url, from, last_page, last_page_url, data, per_page, next_page_url, to, total, prev_page_url} = agents.data.data;
+       this.pageParams = Object.assign({}, this.pageParams, {current_page, first_page_url, from, last_page, last_page_url, per_page, next_page_url, to, total, prev_page_url});
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+      finally{
+        this.$LIPS(false);
+      }
+    },
+  }
+  
 };
 </script>

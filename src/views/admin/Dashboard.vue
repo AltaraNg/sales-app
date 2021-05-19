@@ -397,7 +397,7 @@
             </tbody>
           </table>
         </div>
-        <div class="text-right">
+        <div class="text-right" v-if="canView==='beta'">
           <i class="fas fa-download mb-2 text-lg pointer" @click="exportCsv()"></i>
         </div>
       </div>
@@ -527,6 +527,7 @@ export default {
       feedbackModal: false,
       feedbackPopup: false,
       error: {},
+      canView: ''
     };
   },
   async created() {
@@ -535,6 +536,7 @@ export default {
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
+    this.canView = localStorage.getItem('flag');
   },
   methods: {
     async getEmploymentStatus() {

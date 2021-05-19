@@ -92,15 +92,14 @@ import { get, post } from '../../utilities/api';
                     dsas : numbers,
                     message: this.message
                 }
-                console.log(data)
                 
-                    // post(this.URLS.sendMessage, data).then(resp => {
-                    //     console.log(resp)
-                    // }).catch(err => {
+                    post(this.URLS.sendMessage, data).then(resp => {
+                        console.log(resp)
+                    }).catch(err => {
 
-                    // }).finally(() => {
-                    //     this.$LIPS(false);
-                    // })
+                    }).finally(() => {
+                        this.$LIPS(false);
+                    })
                     
                
             },

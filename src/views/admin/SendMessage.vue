@@ -17,15 +17,15 @@
                 </textarea>
             </div>
             <div class="border">
-                <div class="mb-3 text-2xl font-bold ml-1"><label class="text-base">Select Agents</label>
+                <div class="mb-3 text-2xl font-bold ml-1"><label class="text-base">Select Role</label>
                 </div>
                 <select v-model="selectedUser" @change="addToArray()" :disabled="selectAll">
-                    <option value="" selected >Select ...</option>
-                    <option :value="agent" v-for="agent in agents">{{agent.full_name}}</option>
+                    <option selected="selected" disabled >Select ...</option>
+                    <option :value="role" v-for="role in roles">{{role.name}}</option>
                 </select>
-                <input type="checkbox"  v-model="selectAll" class="ml-3" @change="addAll()"/><label>select all</label><button class="altaraBlue text-white text-sm pt-0 ml-3 px-2 rounded-sm" @click="clear()">clear</button>
+                <input type="checkbox"  v-model="selectAll" class="ml-3" @change="addAll()"/><label>select all</label><button class="altaraBlue text-white text-sm pt-0 ml-5 mb-1 px-2 rounded-sm" @click="clear()"><i class="fas fa-trash-alt mr-1"></i>Clear</button>
                 <div class="flex-row">
-                    <small v-for="item in recepients" class="bg-gray-200 text-xs mx-1 px-1 rounded-sm">{{item.full_name}}<i @click="removeFromArray(item)" class="fas fa-times text-xs cursor-pointer text-red-600 ml-1 opacity-0  hover:opacity-100"></i></small>
+                    <small v-for="item in recepients" class="bg-gray-200 text-xs mx-1 px-1 rounded-sm">{{item.name}}<i @click="removeFromArray(item)" class="fas fa-times text-xs cursor-pointer text-red-600 ml-1 opacity-0  hover:opacity-100"></i></small>
                 </div>
             </div>
 
@@ -45,11 +45,11 @@ import { get, post } from '../../utilities/api';
         data() {
             return {
                 recepients: [],
-                message: [],
-                agents: [],
+                message: '',
+                roles: [],
                 selectedUser: null,
                 URLS: {
-                    dsaUrl: `/api/get-users?role=18&stats=true`,
+                    roles: `/api/role`,
                     sendMessage: `/api/send-dsa-message`
                 },
                 selectAll: null
@@ -61,8 +61,10 @@ import { get, post } from '../../utilities/api';
         },
         methods: {
             async fetchDsa(){
-                const agents = await get(this.URLS.dsaUrl);
-                this.agents = agents.data.data.data;
+                this.$LIPS(true);
+                const agents = await get(this.URLS.roles);
+                this.roles = agents.data.roles;
+                this.$LIPS(false);
             },
             addToArray(){
                 if(this.recepients.includes(this.selectedUser)){
@@ -80,19 +82,19 @@ import { get, post } from '../../utilities/api';
             },
             addAll(){
                 if(this.selectAll){
-                    this.recepients = this.agents;
+                    this.recepients = this.roles;
                 }
             },
             sendMessage(){
                 // this.$LIPS(true);
-                let numbers = this.recepients.map(item => {
+                if(this.message !== '' && this.recepients.length > 0){
+                let ids = this.recepients.map(item => {
                     return item.id;
                 })
                 let data = {
-                    dsas : numbers,
+                    dsas : ids,
                     message: this.message
-                }
-                
+                }                    
                     post(this.URLS.sendMessage, data).then(resp => {
                         console.log(resp)
                     }).catch(err => {
@@ -100,6 +102,10 @@ import { get, post } from '../../utilities/api';
                     }).finally(() => {
                         this.$LIPS(false);
                     })
+                }
+                else{
+                    alert('Enter missing fields!!!');
+                }
                     
                
             },

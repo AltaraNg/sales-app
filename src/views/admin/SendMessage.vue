@@ -83,6 +83,7 @@ import { get, post } from '../../utilities/api';
             addAll(){
                 if(this.selectAll){
                     this.recepients = this.roles;
+                    this.selectedUser = '';
                 }
             },
             sendMessage(){

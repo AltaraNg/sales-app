@@ -86,7 +86,7 @@ import { get, post } from '../../utilities/api';
                 }
             },
             sendMessage(){
-                // this.$LIPS(true);
+                this.$LIPS(true);
                 if(this.message !== '' && this.recepients.length > 0){
                 let ids = this.recepients.map(item => {
                     return item.id;
@@ -96,7 +96,15 @@ import { get, post } from '../../utilities/api';
                     message: this.message
                 }                    
                     post(this.URLS.sendMessage, data).then(resp => {
-                        console.log(resp)
+                        console.log(resp);
+
+                        this.$swal({
+                            icon: "success",
+                            title: "Message Sent Successfully",
+                             });
+                        this.clear();
+                        this.message = "";
+                             
                     }).catch(err => {
 
                     }).finally(() => {

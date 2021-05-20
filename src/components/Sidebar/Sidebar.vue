@@ -149,7 +149,7 @@
           </li>
             </router-link>
 
-             <router-link to="/admin/notifications">
+             <router-link to="/admin/notifications" v-if="canDo(Manager) && canView==='beta'">
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -157,7 +157,7 @@
                 :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
-                  class="fas fa-bell-slash mr-2 text-sm"
+                  class="fas fa-bell mr-2 text-sm"
                   :class="['text-gray-400']"
                 ></i>
                Notification

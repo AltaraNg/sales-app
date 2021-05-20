@@ -133,6 +133,39 @@
           </li>
             </router-link>
 
+            <router-link to="/admin/send_message">
+          <li class="items-center ml-2 rounded-lg">
+           
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="far fa-envelope mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+                Send Message
+              </a>
+          </li>
+            </router-link>
+
+             <router-link to="/admin/notifications" v-if="canDo(Manager) && canView==='beta'">
+          <li class="items-center ml-2 rounded-lg">
+           
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="fas fa-bell mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+               Notification
+              </a>
+          </li>
+            </router-link>
+
+
           <br />
           <li class="absolute bottom-0 ml-2 ">
             <div v-on:click="logOut()">

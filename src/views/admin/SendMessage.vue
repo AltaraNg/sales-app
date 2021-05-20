@@ -92,7 +92,7 @@ import { get, post } from '../../utilities/api';
                     return item.id;
                 })
                 let data = {
-                    dsas : ids,
+                    roles : ids,
                     message: this.message
                 }                    
                     post(this.URLS.sendMessage, data).then(resp => {
@@ -111,6 +111,7 @@ import { get, post } from '../../utilities/api';
             },
             clear(){
                 this.recepients = [];
+                this.selectedUser = '';
             }
         }
     }

@@ -134,7 +134,7 @@
             </router-link>
 
             <router-link to="/admin/send_message">
-          <li class="items-center">
+          <li class="items-center ml-2 rounded-lg">
            
               <a
                 class="text-xs uppercase py-3 font-bold block"
@@ -148,6 +148,23 @@
               </a>
           </li>
             </router-link>
+
+             <router-link to="/admin/notifications">
+          <li class="items-center ml-2 rounded-lg">
+           
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="fas fa-bell-slash mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+               Notification
+              </a>
+          </li>
+            </router-link>
+
 
           <br />
           <li class="absolute bottom-0 ml-2 ">

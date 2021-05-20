@@ -4,7 +4,7 @@
   <div
     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pr-2"
   >
-    <showroom-stats :graphData='graphData'> </showroom-stats>
+    <show-room-stats :graphData='graphData'> </show-room-stats>
   </div>
   <div
     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pl-2"
@@ -229,7 +229,7 @@
   </div>
 </template>
 <script>
-import ShowroomStats from '../../components/ShowroomStats';
+import ShowRoomStats from '../../components/ShowRoomStats.vue';
 import { get } from '../../utilities/api.js';
 import showroomData from '../../utilities/chartData.js'
 import queryParam from '../../utilities/queryParam';
@@ -237,7 +237,7 @@ import queryParam from '../../utilities/queryParam';
 export default {
   name: 'AdminDashboard',
   components: {
-    ShowroomStats,
+    ShowRoomStats,
     
     } ,
   data() {

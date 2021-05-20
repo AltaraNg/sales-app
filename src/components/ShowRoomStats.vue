@@ -8,7 +8,7 @@
 import Chart from 'chart.js/auto';
 
 export default {
-  name: "ShowroomStats",
+  name: "ShowRoomStats",
   props:{
         graphData: {
             type: Object,

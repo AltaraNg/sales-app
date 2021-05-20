@@ -50,7 +50,7 @@ import { get, post } from '../../utilities/api';
                 selectedUser: null,
                 URLS: {
                     roles: `/api/role`,
-                    sendMessage: `/api/send-dsa-message`
+                    sendMessage: `/api/send-internal-message`
                 },
                 selectAll: null
             }

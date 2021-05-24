@@ -227,15 +227,25 @@
         <div class="flex justify-between">
           <div
             v-on:click="searchUsersList()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
           >
+          <i class="fas fa-search"></i>
             Search
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
           >
             Reset
+          </div>
+
+          <div
+            v-if="canView === 'beta'"
+            v-on:click="exportCsv()"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+          >
+          <i class="fas fa-file-export"></i>
+            Export
           </div>
         </div>
       </div>
@@ -334,6 +344,11 @@
                 >
                   Contacted By
                 </th>
+                 <th
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                >
+                  Date Registered
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -393,13 +408,16 @@
                 >
                   {{ user.users.full_name || "" }}
                 </td>
+                 <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                >
+                  {{ $dateTimeConvert(user.created_at) || "" }}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="text-right" v-if="canView==='beta'">
-          <i class="fas fa-download mb-2 text-lg pointer" @click="exportCsv()"></i>
-        </div>
+        
       </div>
       <div
         class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"

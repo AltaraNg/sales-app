@@ -2,15 +2,14 @@
   <div>
     <div>
       <h1 class="text-lg font-bold">Send Message</h1>
-       <div class="border w-1/2 mt-3 h-40 overflow-auto">
+      <div class="border w-1/2 mt-3 h-40 overflow-auto">
         <div>
-          <label class="typo__label p-2 font-bold ">Select Role</label>
+          <label class="typo__label p-2 font-bold">Select Role</label>
           <multiselect
-          class="p-2 mt-3 border-black  h-30 cursor-pointer"
             v-model="recepients"
             :options="roles"
             :multiple="true"
-            :close-on-select="true"
+            :close-on-select="false"
             :clear-on-select="false"
             :preserve-search="true"
             placeholder="Pick roles ..."
@@ -27,7 +26,6 @@
               ></template
             >
           </multiselect>
-          
         </div>
       </div>
       <div class="mt-10 w-1/2">
@@ -38,12 +36,10 @@
           name="todo"
           class="p-3 border"
           placeholder="Enter Message ..."
-          
           v-model="message"
         >
         </textarea>
       </div>
-     
 
       <div class="text-center mt-5 w-1/2">
         <button
@@ -88,25 +84,7 @@ export default {
       this.roles = agents.data.roles;
       this.$LIPS(false);
     },
-    addToArray() {
-      if (this.recepients.includes(this.selectedUser)) {
-        return;
-      }
-      this.recepients.push(this.selectedUser);
-    },
-    removeFromArray(item) {
-      console.log(item);
 
-      this.recepients = this.recepients.filter((a) => {
-        return a.id !== item.id;
-      });
-    },
-    addAll() {
-      if (this.selectAll) {
-        this.recepients = this.roles;
-        this.selectedUser = "";
-      }
-    },
     sendMessage() {
       this.$LIPS(true);
       if (this.message !== "" && this.recepients.length > 0) {
@@ -125,8 +103,9 @@ export default {
               icon: "success",
               title: "Message Sent Successfully",
             });
-            this.clear();
+
             this.message = "";
+            this.recepients = "";
           })
           .catch((err) => {})
           .finally(() => {
@@ -136,13 +115,10 @@ export default {
         alert("Enter missing fields!!!");
       }
     },
-    clear() {
-      this.recepients = [];
-      this.selectedUser = "";
-    },
   },
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss" scoped>
 </style>

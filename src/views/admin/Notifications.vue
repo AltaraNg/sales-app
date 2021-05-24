@@ -61,6 +61,9 @@
           <base-pagination :pageParam="pageParams"></base-pagination>
       </div>
     </div>
+    <div v-else class="chatBox">
+        No messages available
+    </div>
   </div>
 </template>
 

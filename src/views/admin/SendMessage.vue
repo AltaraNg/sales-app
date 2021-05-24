@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
-      <h1 class="text-lg font-bold">Send Message</h1>
-      <div class="border w-1/2 mt-3 h-40 overflow-auto">
+    <div class="mt-10 ml-10">
+      <h1 class="text-lg font-bold ml-5">Send Message</h1>
+      <div class="w-1/2 mt-16 ml-5 ">
         <div>
           <label class="typo__label p-2 font-bold">Select Role</label>
           <multiselect
@@ -17,18 +17,14 @@
             track-by="id"
             :preselect-first="true"
             :option-height="40"
+            :taggable="true"
           >
-            <template slot="selection" slot-scope="{ values, search, isOpen }"
-              ><span
-                class="multiselect__single"
-                v-if="values.length &amp;&amp; !isOpen"
-                >{{ values.length }} roles selected</span
-              ></template
-            >
+            
           </multiselect>
         </div>
       </div>
-      <div class="mt-10 w-1/2">
+      <div class="mt-10 ml-5 w-1/2">
+      <label class="typo__label p-2 font-bold">Enter Message</label>
         <textarea
           rows="8"
           cols="40"
@@ -41,7 +37,7 @@
         </textarea>
       </div>
 
-      <div class="text-center mt-5 w-1/2">
+      <div class="text-left mt-5 ml-5 w-1/2">
         <button
           class="altaraBlue text-white p-2 rounded-md"
           @click="sendMessage()"

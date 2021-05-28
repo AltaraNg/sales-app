@@ -1,11 +1,18 @@
 <template>
+<div>
+  <div class=" flex flex-row">
   <div
-    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pr-2"
+  >
+    <show-room-stats :graphData='graphData'> </show-room-stats>
+  </div>
+  <div
+    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pl-2"
   >
     <div class="rounded-t mb-0 px-4 py-3 border-0">
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-          <h3 class="font-semibold text-base text-gray-800">DSA Ratings</h3>
+          <h3 class="font-semibold text-base text-gray-800">Feedbacks</h3>
         </div>
         <div
           class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
@@ -123,12 +130,155 @@
       </table>
     </div>
   </div>
+  </div>
+  <div class=" flex flex-row">
+  <div
+    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded pr-2"
+  >
+    <div class="rounded-t mb-0 px-4 py-3 border-0">
+      <div class="flex flex-wrap items-center">
+        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+          <h3 class="font-semibold text-base text-gray-800">DSA Ratings</h3>
+        </div>
+        <div
+          class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
+        ></div>
+      </div>
+    </div>
+    <div class="block w-full overflow-x-auto">
+      <!-- Projects table -->
+
+      <!-- Projects table -->
+      <table class="items-center w-full bg-transparent border-collapse">
+        <thead>
+          <tr>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Position
+            </th>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Name
+            </th>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Purchased
+            </th>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Affidavit
+            </th>
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Registered
+            </th>
+
+            <th
+              class="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              Contacted
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in agents">
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+            >
+              {{index + 1}}
+            </th>
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+            >
+              {{user.full_name}}
+            </th>
+
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+            >
+              {{user.purchased}}
+            </td>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+            >
+              {{user.affidavit}}
+            </td>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+            >
+             {{user.registered}}
+            </td>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+            >
+              {{user.total}}
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  </div>
+  </div>
 </template>
 <script>
+import ShowRoomStats from '../../components/ShowRoomStats.vue';
+import { get } from '../../utilities/api.js';
+import showroomData from '../../utilities/chartData.js'
+import queryParam from '../../utilities/queryParam';
+
 export default {
+  name: 'AdminDashboard',
+  components: {
+    ShowRoomStats,
+    
+    } ,
   data() {
-    return {};
+    return {
+      apiUrls: {
+        feedbacks: `/api/feedbacks`,
+        getDSAs: `/api/get-users?role=18&stats=true`
+      },
+      graphData: showroomData,
+      pageParams: {},
+      agents: [],
+      searchQuery: {},
+      canView: ''
+    };
   },
-  components: {},
+  
+  mounted(){
+    this.getAgents();
+    this.canView = localStorage.getItem('flag');
+
+  },
+
+  methods: {
+    async getAgents() {
+      console.log('work');
+      this.$LIPS(true);
+      try {
+        const query = { ...this.searchQuery, page: this.pageParams.page,limit: this.pageParams.limit, };
+        const agents = await get(this.apiUrls.getDSAs + queryParam(query));
+        console.log('work');
+        this.agents = agents.data.data.data;
+        let {current_page, first_page_url, from, last_page, last_page_url, data, per_page, next_page_url, to, total, prev_page_url} = agents.data.data;
+       this.pageParams = Object.assign({}, this.pageParams, {current_page, first_page_url, from, last_page, last_page_url, per_page, next_page_url, to, total, prev_page_url});
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+      finally{
+        this.$LIPS(false);
+      }
+    },
+  }
+  
 };
 </script>

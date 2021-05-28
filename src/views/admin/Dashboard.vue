@@ -227,22 +227,32 @@
         <div class="flex justify-between">
           <div
             v-on:click="searchUsersList()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
           >
+          <i class="fas fa-search"></i>
             Search
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
           >
             Reset
+          </div>
+
+          <div
+            v-if="canView === 'beta'"
+            v-on:click="exportCsv()"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+          >
+          <i class="fas fa-file-export"></i>
+            Export
           </div>
         </div>
       </div>
 
       <div class="contents md:hidden relative">
         <div class="text-center py-2 font-medium px-5">
-          List of contacted customers
+          List of contacted customer
         </div>
         <div v-if="usersList.length > 0">
           <div :key="index" v-for="(user, index) in usersList">
@@ -334,6 +344,11 @@
                 >
                   Contacted By
                 </th>
+                 <th
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                >
+                  Date Registered
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -393,10 +408,16 @@
                 >
                   {{ user.users.full_name || "" }}
                 </td>
+                 <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                >
+                  {{ $dateTimeConvert(user.created_at) || "" }}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
+        
       </div>
       <div
         class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
@@ -516,6 +537,7 @@ export default {
         getStage: `/api/customer_stage`,
         postComment: `/api/feedback`,
         getDSAs: `/api/get-users?role=18`,
+        export: `/api/contact-customer/export`
       },
       userMeta: {},
       feedback: "",
@@ -523,6 +545,7 @@ export default {
       feedbackModal: false,
       feedbackPopup: false,
       error: {},
+      canView: ''
     };
   },
   async created() {
@@ -531,6 +554,7 @@ export default {
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
+    this.canView = localStorage.getItem('flag');
   },
   methods: {
     async getEmploymentStatus() {
@@ -576,6 +600,24 @@ export default {
     },
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    },
+
+    async exportCsv(){
+      this.$LIPS(true);
+      try {
+        const response = await get(this.apiUrls.export + queryParam(this.searchQuery), {responseType: 'blob'});
+        let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        let fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'file.csv');
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      }finally{
+        this.$LIPS(false);
+      }
+
     },
 
     async searchUsersList() {

@@ -2,8 +2,8 @@
   <div>
     <sidebar />
     <div class="relative md:ml-56 bg-white">
-      <header-stats v-if="currentRouteName !== 'LeaderBoard'"/>
-      <div class="px-4 md:px-10 mx-auto w-full -m-24">
+      <header-stats v-if="currentRouteName === 'Dashboard'"/>
+      <div class="px-4 md:px-10 mx-auto w-full m-4">
         <router-view />
       </div>
     </div>

@@ -10,6 +10,8 @@ import Login from "@/views/auth/Login.vue";
 import Index from "@/views/Index.vue";
 import UserProfile from "@/views/user/userProfile.vue";
 import Todo from "@/views/admin/Todo.vue";
+import SendMessage from "@/views/admin/SendMessage.vue";
+import Notifications from "@/views/admin/Notifications.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
 import Flash from "@/utilities/flash";
@@ -30,7 +32,8 @@ const router = new VueRouter({
         children: [{
             path: "/admin/dashboard",
             component: Dashboard,
-            props: true
+            props: true,
+            name: "Dashboard"
         },
         {
             path: "/admin/register",
@@ -41,11 +44,22 @@ const router = new VueRouter({
         }, {
             path: "/admin/todos",
             component: Todo,
+            name: "Todos"
         },
         {
             path: "/admin/dsaratings",
             component: LeaderBoard,
             name: "LeaderBoard"
+        },
+        {
+            path: "/admin/send_message",
+            component: SendMessage,
+            name: "SendMessage"
+        },
+        {
+            path: "/admin/notifications",
+            component: Notifications,
+            name: 'Notifications'
         }
 
 

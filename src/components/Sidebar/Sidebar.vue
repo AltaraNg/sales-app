@@ -133,6 +133,22 @@
           </li>
             </router-link>
 
+            <router-link to="/admin/feedback">
+
+          <li class="items-center ml-2 rounded-lg">
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="fas fa-clipboard-list mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+                Feedbacks
+              </a>
+          </li>
+            </router-link>
+
             <router-link to="/admin/send_message">
           <li class="items-center ml-2 rounded-lg">
            

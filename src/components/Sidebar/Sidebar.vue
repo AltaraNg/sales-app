@@ -149,7 +149,8 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/send_message">
+            
+            <router-link to="/admin/send_message" v-if="canDo(Manager)">
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -165,7 +166,7 @@
           </li>
             </router-link>
 
-             <router-link to="/admin/notifications" v-if="canDo(Manager) && canView==='beta'">
+             <router-link to="/admin/notifications" >
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -203,7 +204,7 @@
     <!-- Pin to bottom left corner -->
   </nav>
 </template>
-); }
+
 
 <script>
 import altaraLogo from "@/assets/img/altaraLogo.png";

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="messages.length != 0" class="block w-full overflow-x-auto">
+      <h1 class="text-2xl mt-3 mb-10 ml-4">Notifications</h1>
+    <div v-if="messages.length != 0" class="block w-full overflow-x-auto ml-4">
       <!-- Projects table -->
 
       <!-- Projects table -->

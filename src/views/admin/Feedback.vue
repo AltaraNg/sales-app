@@ -83,6 +83,14 @@
           >
             Reset
           </div>
+            <div
+            v-if="canView === 'beta'"
+            v-on:click="exportCsv()"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+          >
+          <i class="fas fa-file-export"></i>
+            Export
+          </div>
         </div>
 
         <table class="items-center w-full bg-transparent border-collapse mt-5">
@@ -138,7 +146,7 @@
                 <div
                   class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
                 >
-                  {{ index + 1 || "" }}
+                  {{   index + OId || "" }}
                 </div>
               </th>
               <th
@@ -147,6 +155,7 @@
               <!-- <router-link :to="{ name: 'userProfile', params: {customer: todo.customer, id: todo.customer.id } }"> 
                 {{ todo.customer.name || "Not Available" }}
               </router-link> -->
+              {{feedback.customer.name}}
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -161,7 +170,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
               >
-                {{ feedback.created_at || "Not Available" }}
+                {{ feedback.user.full_name || "Not Available" }}
               </td>
 
               <td
@@ -173,6 +182,7 @@
                   class="form-checkbox h-5 w-5 text-gray-600"
                   :checked="todo.status === 'done' ? true : false"
                 /> -->
+                {{feedback.created_at}}
               </td>
             </tr>
             <tr v-if="feedbacks.length === 0">
@@ -182,6 +192,14 @@
             </tr>
           </tbody>
         </table>
+         <div
+        class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+      >
+        <base-pagination
+          :pageParam="pageParams"
+          @fetchData="getTodos()"
+        />
+      </div>
       </div>
 
       <div class="contents md:hidden">
@@ -266,13 +284,14 @@
             >
               Reset
             </div>
+           
           </div>
-          <div :key="index" v-for="(data, index) in todos" class="mt-5">
+          <div :key="index" v-for="(data, index) in feedbacks" class="mt-5">
             <div class="customerTile">
               <div class="flex justify-between">
                 <div class="flex items-stretch">
                   <div class="self-center font-medium">
-                    {{ data.todo || "" }}
+                    {{ data.notes || "" }}
                   </div>
                 </div>
                 <div class="flex flex-col">
@@ -301,10 +320,12 @@
 import { get, put } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam";
 export default {
   components: {
     DatePicker,
+    BasePagination
   },
   data() {
     return {
@@ -313,10 +334,15 @@ export default {
         getFeedbacks: `/api/feedback`,
       },
       searchQuery: {},
+      pageParams: {},
+      OId: 0,
+      canView: ''
+
     };
   },
   async created() {
     this.getTodos();
+     this.canView = localStorage.getItem('flag');
   },
   methods: {
     async getTodos() {
@@ -324,12 +350,39 @@ export default {
 
       try {
         const query = {
-          user: localStorage.getItem("user_id"),
           ...this.searchQuery,
+           page: this.pageParams.page,
+          limit: this.pageParams.limit,
         };
-
-        const fetchFeedbacks = await get(this.apiUrls.getFeedbacks);
+        
+        const fetchFeedbacks = await get(this.apiUrls.getFeedbacks + queryParam(query));
+        let {
+          current_page,
+          first_page_url,
+          from,
+          last_page,
+          last_page_url,
+          data,
+          per_page,
+          next_page_url,
+          to,
+          total,
+          prev_page_url,
+        } = fetchFeedbacks.data.data;
+        this.pageParams = Object.assign({}, this.pageParams, {
+          current_page,
+          first_page_url,
+          from,
+          last_page,
+          last_page_url,
+          per_page,
+          next_page_url,
+          to,
+          total,
+          prev_page_url,
+        });
         this.feedbacks = fetchFeedbacks.data.data.data;
+        this.OId = from;
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
@@ -363,6 +416,25 @@ export default {
       this.getTodos();
 
     },
+
+    async exportCsv(){
+      this.$LIPS(true);
+      try {
+        const response = await get(this.apiUrls.export + queryParam(this.searchQuery), {responseType: 'blob'});
+        let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        let fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'file.csv');
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      }finally{
+        this.$LIPS(false);
+      }
+
+    },
+
   },
 };
 </script>

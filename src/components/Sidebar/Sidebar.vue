@@ -133,7 +133,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/feedback">
+            <router-link to="/admin/feedback" v-if="canDo(Manager)">
 
           <li class="items-center ml-2 rounded-lg">
               <a

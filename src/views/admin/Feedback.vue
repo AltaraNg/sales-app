@@ -331,7 +331,7 @@ export default {
       feedbacks: [],
       apiUrls: {
         getFeedbacks: `/api/feedback`,
-        export: `/api/feedback/export`
+        export: `/api/feedbacks/export`
       },
       searchQuery: {},
       pageParams: {},

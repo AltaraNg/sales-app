@@ -239,8 +239,7 @@
             Reset
           </div>
 
-          <div
-            v-if="canView === 'beta'"
+          <div            
             v-on:click="exportCsv()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
           >

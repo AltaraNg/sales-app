@@ -2,7 +2,6 @@ import { get, post, put } from "../utilities/api";
 
 export default {
   index(param) {
-      console.log(param);
     return get(`/api/customer_contact${param}`);
   },
 

@@ -967,6 +967,7 @@ import { get, post, put } from "@/utilities/api";
 import DatePicker from "vue2-datepicker";
 import queryParam from "../../utilities/queryParam";
 import permissions from "../../components/mixins/permissions.js";
+import customerApi from "../../api/customer.js";
 
 
 export default {
@@ -1133,9 +1134,7 @@ export default {
           if (result) {
             this.$LIPS(true);
             this.error = {};
-            put(this.apiUrls.updateUser + this.customer.id, {
-              ...userInfo,
-            })
+            customerApi.update(userInfo, this.customer.id)
               .then((response) => {
                 this.$LIPS(false);
                 this.$swal({
@@ -1162,7 +1161,7 @@ export default {
       this.$LIPS(true);
 
       try {
-        const fetchusersList = await get(this.apiUrls.getusersList);
+        const fetchusersList = await customerApi.index();
         this.usersList = fetchusersList.data.data.data;
         this.$LIPS(false);
       } catch (err) {
@@ -1256,10 +1255,7 @@ export default {
                 this.$swal({
                   icon: "success",
                   title: "Todo Logged Successfully",
-                });
-                // this.customer.notifications.push({
-                //   data: { date: new Date().toJSON(), feedback: user.feedback },
-                // });
+                });               
                 user.todo = "";
                 user.due_date = "";
                 user.type = "";

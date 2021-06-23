@@ -499,6 +499,8 @@ import queryParam from "../../utilities/queryParam";
 import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
 import BasePagination from "../../components/BasePagination";
+import customerApi from "../../api/customer.js";
+import router from '../../router';
 
 export default {
   mixins: [permissions],
@@ -531,12 +533,8 @@ export default {
       message: "",
       page: 1,
       apiUrls: {
-        getEmploymentStatus: `/api/employment_status`,
-        getusersList: `/api/customer_contact`,
-        getStage: `/api/customer_stage`,
         postComment: `/api/feedback`,
         getDSAs: `/api/get-users?role=18`,
-        export: `/api/contact-customer/export`
       },
       userMeta: {},
       feedback: "",
@@ -558,9 +556,7 @@ export default {
   methods: {
     async getEmploymentStatus() {
       try {
-        const fetchEmploymentStatus = await get(
-          this.apiUrls.getEmploymentStatus
-        );
+        const fetchEmploymentStatus = await customerApi.employmentStatus();
         this.employmentStatus = fetchEmploymentStatus.data.data;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -568,7 +564,7 @@ export default {
     },
     async getUserStage() {
       try {
-        const fetchUserStage = await get(this.apiUrls.getStage);
+        const fetchUserStage = await customerApi.customerStage();
         this.customerStage = fetchUserStage.data.data;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -604,7 +600,7 @@ export default {
     async exportCsv(){
       this.$LIPS(true);
       try {
-        const response = await get(this.apiUrls.export + queryParam(this.searchQuery), {responseType: 'blob'});
+        const response = await customerApi.exportCustomers(queryParam(this.searchQuery));
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
         let fileLink = document.createElement('a');
         fileLink.href = fileURL;
@@ -626,10 +622,8 @@ export default {
           ...this.searchQuery,
           page: this.pageParams.page,
           limit: this.pageParams.limit,
-        };
-        const fetchusersList = await get(
-          this.apiUrls.getusersList + queryParam(query)
-        );
+        };       
+        const fetchusersList = await customerApi.index(queryParam(query));
         let {
           current_page,
           first_page_url,
@@ -660,6 +654,8 @@ export default {
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
         this.OId = from;
+
+        router.replace({path: "/admin/dashboard", query: query})
 
         this.$LIPS(false);
       } catch (err) {

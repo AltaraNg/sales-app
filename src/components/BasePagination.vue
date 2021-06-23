@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto text-xs divide-y my-1 py-2">
+  <div class="container mx-auto text-xs divide-y my-1 py-2" v-if="pageParam.total / pageParam.per_page > 1">
     <div class="clearfix"></div>
     <div class="flex justify-between flex-row pt-2">
       <div class="">

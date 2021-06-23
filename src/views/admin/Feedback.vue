@@ -186,7 +186,7 @@
             </tr>
             <tr v-if="feedbacks.length === 0">
               <td colspan="6"  class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex ">
-                You currently have no todos
+                You currently have no feedback
               </td>
             </tr>
           </tbody>
@@ -321,6 +321,7 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam";
+import feedbackApi from "../../api/feedback.js"
 export default {
   components: {
     DatePicker,
@@ -328,11 +329,7 @@ export default {
   },
   data() {
     return {
-      feedbacks: [],
-      apiUrls: {
-        getFeedbacks: `/api/feedback`,
-        export: `/api/feedbacks/export`
-      },
+      feedbacks: [],     
       searchQuery: {},
       pageParams: {},
       OId: 0,
@@ -355,7 +352,7 @@ export default {
           limit: this.pageParams.limit,
         };
         
-        const fetchFeedbacks = await get(this.apiUrls.getFeedbacks + queryParam(query));
+        const fetchFeedbacks = await feedbackApi.index(queryParam(query));
         let {
           current_page,
           first_page_url,
@@ -390,27 +387,7 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
-    checkTodo(data) {
-      this.$LIPS(true);
-      put(this.apiUrls.getTodos + "/" + data.id, {
-        status: data.status === "done" ? "not done" : "done",
-      })
-        .then(() => {
-          this.$LIPS(false);
-          this.$swal({
-            icon: "success",
-            title: "Todo Updated Successfully",
-          });
-          this.getTodos();
-        })
-
-        .catch(({ response: { data } }) => {
-          const errData = data.data.errors;
-          this.error = errData ? errData : data;
-
-          this.$LIPS(false);
-        });
-    },
+    
     resetSearch() {
       this.searchQuery = {};
       this.getTodos();
@@ -420,7 +397,7 @@ export default {
     async exportCsv(){
       this.$LIPS(true);
       try {
-        const response = await get(this.apiUrls.export + queryParam(this.searchQuery), {responseType: 'blob'});
+        const response = await feedbackApi.exportFeedback();
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
         let fileLink = document.createElement('a');
         fileLink.href = fileURL;

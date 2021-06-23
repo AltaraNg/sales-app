@@ -500,6 +500,7 @@ import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
 import BasePagination from "../../components/BasePagination";
 import customerApi from "../../api/customer.js";
+import router from '../../router';
 
 export default {
   mixins: [permissions],
@@ -653,6 +654,8 @@ export default {
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
         this.OId = from;
+
+        router.replace({path: "/admin/dashboard", query: query})
 
         this.$LIPS(false);
       } catch (err) {

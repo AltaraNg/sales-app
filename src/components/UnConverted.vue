@@ -133,9 +133,9 @@ export default {
     return {
       customers: [],
       pageParams: {},
-      OId: 1,
+      OId: 1, // **to persist serial number
       searchQuery: {
-          unconverted: 4
+          unconverted: 4 // **default number of months
       }
     };
   },

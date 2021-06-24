@@ -5,9 +5,8 @@ export default {
     return get(`/api/customer_contact${param}`);
   },
 
-  exportCustomers(params = {}) {
-    return get("/api/contact-customer/export", {
-      params: params,
+  exportCustomers(params = "") {
+    return get(`/api/contact-customer/export${params}`, {      
       responseType: "blob"
     });
   },

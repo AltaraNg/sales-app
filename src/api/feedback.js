@@ -9,10 +9,9 @@ export default {
         return post("/api/feedback", data);
     },
 
-    exportFeedback(params = {}) {
-        return get("/api/feedbacks/export", {
-          params: params,
-          responseType: "blob"
+    exportFeedback(params = "") {
+        return get(`/api/feedbacks/export${params}`, {
+         responseType: "blob"
         });
       },
 }

@@ -227,21 +227,21 @@
         <div class="flex justify-between">
           <div
             v-on:click="searchUsersList()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
           <i class="fas fa-search"></i>
             Search
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
             Reset
           </div>
 
           <div            
             v-on:click="exportCsv()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
           <i class="fas fa-file-export"></i>
             Export

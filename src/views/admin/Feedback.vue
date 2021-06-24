@@ -396,7 +396,7 @@ export default {
     async exportCsv(){
       this.$LIPS(true);
       try {
-        const response = await feedbackApi.exportFeedback();
+        const response = await feedbackApi.exportFeedback(queryParam(this.searchQuery));
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
         let fileLink = document.createElement('a');
         fileLink.href = fileURL;

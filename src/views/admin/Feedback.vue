@@ -3,6 +3,11 @@
     <div
       class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
     >
+       <div class="rounded-t bg-white mb-8 px-2 py-6 ">
+      <div class="text-center flex justify-between">
+        <h6 class="text-gray-800 text-xl font-bold">Feedbacks</h6>
+      </div>
+    </div>
       <div class="hidden md:contents">
         <div class="flex-col">
           <div class="flex">
@@ -39,19 +44,7 @@
               </div>
             </div>
 
-            <div class="w-full lg:w-2/12 xl:w-2/12">
-              <div class="relative w-50 mb-3 ">
-                <label
-                  class="block uppercase text-gray-700 text-xs font-bold mb-2 px-3"
-                  htmlFor="grid-password"
-                >
-                  Todo keyword
-                </label>
-                <div class="mx-input-wrapper px-3">
-                  <input class="mx-input" v-model="searchQuery.name"/>
-                </div>
-              </div>
-            </div>
+            
 
 
              <div class="w-full lg:w-2/12 xl:w-2/12">
@@ -67,30 +60,30 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="flex justify-between">
-          <div
+             <div
             v-on:click="getTodos()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-36 cursor-pointer"
           >
             Search
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-4 cursor-pointer"
           >
             Reset
           </div>
             <div            
             v-on:click="exportCsv()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-4 cursor-pointer"
           >
-          <i class="fas fa-file-export"></i>
+          
             Export
           </div>
+          </div>
         </div>
+
+        
 
         <table class="items-center w-full bg-transparent border-collapse mt-5">
           <thead>
@@ -273,15 +266,21 @@
           <div class="flex justify-between">
             <div
               v-on:click="getTodos()"
-              class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+              class="w-1/5 py-2 altaraBlue rounded h-10 text-white text-center"
             >
               Search
             </div>
             <div
               v-on:click="resetSearch()"
-              class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+              class="w-1/5 py-2 altaraBlue rounded h-10 text-white text-center"
             >
               Reset
+            </div>
+            <div
+              v-on:click="exportCsv()"
+              class="w-1/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            >
+              Export
             </div>
            
           </div>

@@ -3,6 +3,11 @@
     <div
       class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
     >
+     <div class="rounded-t bg-white mb-8 px-2 py-6 ">
+      <div class="text-center flex justify-between">
+        <h6 class="text-gray-800 text-xl font-bold">Todos</h6>
+      </div>
+    </div>
       <div class="hidden md:contents">
         <div class="flex-col">
           <div class="flex">
@@ -67,23 +72,25 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="flex justify-between">
+          
           <div
             v-on:click="getTodos()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-24 cursor-pointer"
           >
             Search
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-2/5 py-2 altaraBlue rounded h-10 text-white text-center"
+            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-2 cursor-pointer"
           >
             Reset
           </div>
+        
+          </div>
         </div>
+
+        
 
         <table class="items-center w-full bg-transparent border-collapse mt-5">
           <thead>

@@ -394,7 +394,6 @@ export default {
     },
 
     async exportCsv(){
-      console.log('I worked');
       this.$LIPS(true);
       try {
         const response = await feedbackApi.exportFeedback(queryParam(this.searchQuery));

@@ -3,11 +3,11 @@
     <div
       class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
     >
-       <div class="rounded-t bg-white mb-8 px-2 py-6 ">
-      <div class="text-center flex justify-between">
-        <h6 class="text-gray-800 text-xl font-bold">Feedbacks</h6>
+      <div class="rounded-t bg-white mb-8 px-2 py-6 ">
+        <div class="text-center flex justify-between">
+          <h6 class="text-gray-800 text-xl font-bold">Feedbacks</h6>
+        </div>
       </div>
-    </div>
       <div class="hidden md:contents">
         <div class="flex-col">
           <div class="flex">
@@ -44,10 +44,7 @@
               </div>
             </div>
 
-            
-
-
-             <div class="w-full lg:w-2/12 xl:w-2/12">
+            <div class="w-full lg:w-2/12 xl:w-2/12">
               <div class="relative w-50 mb-3 ">
                 <label
                   class="block uppercase text-gray-700 text-xs font-bold mb-2 px-3"
@@ -56,34 +53,33 @@
                   Customer name
                 </label>
                 <div class="mx-input-wrapper px-3">
-                  <input class="mx-input" v-model="searchQuery.customer"/>
+                  <input class="mx-input" v-model="searchQuery.customer" />
                 </div>
               </div>
             </div>
 
-             <div
-            v-on:click="getTodos()"
-            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-36 cursor-pointer"
-          >
-            Search
-          </div>
-          <div
-            v-on:click="resetSearch()"
-            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-4 cursor-pointer"
-          >
-            Reset
-          </div>
-            <div            
-            v-on:click="exportCsv()"
-            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-4 cursor-pointer"
-          >
-          
-            Export
-          </div>
+            <div class="w-full lg:w-6/12 xl:w-6/12 flex">
+              <div
+                v-on:click="getTodos()"
+                class="mt-6 altaraBlue text-white rounded h-8 ml-36 cursor-pointer w-1/3 "
+              >
+                <div class="text-center mt-1">Search</div>
+              </div>
+              <div
+                v-on:click="resetSearch()"
+                class="mt-6 altaraBlue text-white rounded h-8 ml-4 cursor-pointer  w-1/3 "
+              >
+                <div class="text-center mt-1">Reset</div>
+              </div>
+              <div
+                v-on:click="exportCsv()"
+                class=" mt-6 altaraBlue text-white rounded h-8 ml-4 cursor-pointer  w-1/3 "
+              >
+                <div class="text-center mt-1">Export</div>
+              </div>
+            </div>
           </div>
         </div>
-
-        
 
         <table class="items-center w-full bg-transparent border-collapse mt-5">
           <thead>
@@ -138,16 +134,16 @@
                 <div
                   class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
                 >
-                  {{   index + OId || "" }}
+                  {{ index + OId || "" }}
                 </div>
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-              <!-- <router-link :to="{ name: 'userProfile', params: {customer: todo.customer, id: todo.customer.id } }"> 
+                <!-- <router-link :to="{ name: 'userProfile', params: {customer: todo.customer, id: todo.customer.id } }"> 
                 {{ todo.customer.name || "Not Available" }}
               </router-link> -->
-              {{feedback.customer.name}}
+                {{ feedback.customer.name }}
               </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
@@ -174,30 +170,29 @@
                   class="form-checkbox h-5 w-5 text-gray-600"
                   :checked="todo.status === 'done' ? true : false"
                 /> -->
-                {{feedback.created_at}}
+                {{ feedback.created_at }}
               </td>
             </tr>
             <tr v-if="feedbacks.length === 0">
-              <td colspan="6"  class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex ">
+              <td
+                colspan="6"
+                class="border-t-0 px-6 border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 justify-center flex "
+              >
                 You currently have no feedback
               </td>
             </tr>
           </tbody>
         </table>
-         <div
-        class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
-      >
-        <base-pagination
-          :pageParam="pageParams"
-          @fetchData="getTodos()"
-        />
-      </div>
+        <div
+          class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+        >
+          <base-pagination :pageParam="pageParams" @fetchData="getTodos()" />
+        </div>
       </div>
 
       <div class="contents md:hidden">
         <div class="flex-col">
           <div class="flex flex-wrap">
-
             <div class="w-full lg:w-2/12 xl:w-3/12">
               <div class="relative w-50 mb-3">
                 <label
@@ -282,7 +277,6 @@
             >
               Export
             </div>
-           
           </div>
           <div :key="index" v-for="(data, index) in feedbacks" class="mt-5">
             <div class="customerTile">
@@ -320,7 +314,7 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam";
-import feedbackApi from "../../api/feedback.js"
+import feedbackApi from "../../api/feedback.js";
 export default {
   components: {
     DatePicker,
@@ -328,17 +322,16 @@ export default {
   },
   data() {
     return {
-      feedbacks: [],     
+      feedbacks: [],
       searchQuery: {},
       pageParams: {},
       OId: 0,
-      canView: ''
-
+      canView: ""
     };
   },
   async created() {
     this.getTodos();
-     this.canView = localStorage.getItem('flag');
+    this.canView = localStorage.getItem("flag");
   },
   methods: {
     async getTodos() {
@@ -347,10 +340,10 @@ export default {
       try {
         const query = {
           ...this.searchQuery,
-           page: this.pageParams.page,
-          limit: this.pageParams.limit,
+          page: this.pageParams.page,
+          limit: this.pageParams.limit
         };
-        
+
         const fetchFeedbacks = await feedbackApi.index(queryParam(query));
         let {
           current_page,
@@ -363,7 +356,7 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         } = fetchFeedbacks.data.data;
         this.pageParams = Object.assign({}, this.pageParams, {
           current_page,
@@ -375,7 +368,7 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         });
         this.feedbacks = fetchFeedbacks.data.data.data;
         this.OId = from;
@@ -386,34 +379,32 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
-    
+
     resetSearch() {
       this.searchQuery = {};
       this.getTodos();
-
     },
 
-    async exportCsv(){
+    async exportCsv() {
       this.$LIPS(true);
       try {
-        const response = await feedbackApi.exportFeedback(queryParam(this.searchQuery));
+        const response = await feedbackApi.exportFeedback(
+          queryParam(this.searchQuery)
+        );
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        let fileLink = document.createElement('a');
+        let fileLink = document.createElement("a");
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'file.csv');
+        fileLink.setAttribute("download", "file.csv");
         document.body.appendChild(fileLink);
         fileLink.click();
       } catch (error) {
         this.$displayErrorMessage(error);
-      }finally{
+      } finally {
         this.$LIPS(false);
       }
-
-    },
-
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

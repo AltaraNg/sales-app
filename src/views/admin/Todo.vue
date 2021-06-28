@@ -73,19 +73,21 @@
               </div>
             </div>
 
-          
+
+           <div class="w-full lg:w-4/12 xl:w-4/12 flex">          
           <div
             v-on:click="getTodos()"
-            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-24 cursor-pointer"
+            class="mt-6 altaraBlue text-white text-center rounded h-8 ml-24 cursor-pointer w-1/2"
           >
-            Search
+           <div class="text-center mt-1">Search</div>
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-full lg:w-1/12 xl:w-1/12 mt-6 altaraBlue text-white text-center rounded h-8 ml-2 cursor-pointer"
+            class="mt-6 altaraBlue text-white text-center rounded h-8 ml-2 cursor-pointer w-1/2"
           >
-            Reset
+            <div class="text-center mt-1">Reset</div>
           </div>
+           </div>
         
           </div>
         </div>

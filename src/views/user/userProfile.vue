@@ -25,7 +25,7 @@
                   v-on:click="toggleTabs(1)"
                   v-bind:class="{
                     'text-white': openTab !== 1,
-                    'bg-white': openTab === 1,
+                    'bg-white': openTab === 1
                   }"
                 >
                   Basic Info
@@ -37,7 +37,7 @@
                   v-on:click="toggleTabs(2)"
                   v-bind:class="{
                     'text-white': openTab !== 2,
-                    'bg-white': openTab === 2,
+                    'bg-white': openTab === 2
                   }"
                 >
                   Customer Feedbacks
@@ -49,7 +49,7 @@
                   v-on:click="toggleTabs(3)"
                   v-bind:class="{
                     'text-white': openTab !== 3,
-                    ' bg-white': openTab === 3,
+                    ' bg-white': openTab === 3
                   }"
                 >
                   Todo
@@ -65,7 +65,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 1,
-                block: openTab === 1,
+                block: openTab === 1
               }"
             >
               <div
@@ -122,7 +122,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -156,7 +156,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -202,7 +202,7 @@
                           errors.first('customer stage') ||
                           error.customer_stage_id
                             ? 'is-invalid'
-                            : '',
+                            : ''
                         ]"
                         class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                       >
@@ -290,7 +290,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 2,
-                block: openTab === 2,
+                block: openTab === 2
               }"
               class="px-5"
             >
@@ -305,10 +305,7 @@
                 v-for="(data, index) in customer.feedback"
                 class="chatBox"
               >
-                <div
-                  v-on:click="openPopup(data)"
-                  class="flex justify-between"
-                >
+                <div v-on:click="openPopup(data)" class="flex justify-between">
                   <div class="self-center w-70 truncate">
                     {{ data.notes }}
                   </div>
@@ -321,7 +318,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 3,
-                block: openTab === 3,
+                block: openTab === 3
               }"
             >
               <div
@@ -365,9 +362,7 @@
       <div class="md:ml-56">
         <div class="px-4 md:px-10">
           <div class="flex flex-wrap">
-            <div
-              class="w-full md:w-4/12 altaraBlue shadow-lg rounded p-4"
-            >
+            <div class="w-full md:w-4/12 altaraBlue shadow-lg rounded p-4">
               <div
                 v-if="customer.name"
                 :style="{ background: generateRandomColor() }"
@@ -433,7 +428,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -467,7 +462,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -496,7 +491,7 @@
                       </div>
                     </div>
 
-                      <div class="w-full lg:w-12/12" v-if="!canDo(DSA)">
+                    <div class="w-full lg:w-12/12" v-if="!canDo(DSA)">
                       <div class="relative w-full py-3">
                         <label
                           class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -510,10 +505,9 @@
                           v-validate="'required'"
                           name="agent"
                           :class="[
-                            errors.first('agent') ||
-                            error.user_id
+                            errors.first('agent') || error.user_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -534,16 +528,11 @@
                         >
                           {{ errors.first("agent") }}
                         </small>
-                        <small
-                          class="error-control"
-                          v-if="error.user_id"
-                          >{{ error.user_id[0] }}</small
-                        >
+                        <small class="error-control" v-if="error.user_id">{{
+                          error.user_id[0]
+                        }}</small>
                       </div>
                     </div>
-
-
-
 
                     <div class="w-full lg:w-12/12">
                       <div class="relative w-full py-3">
@@ -562,7 +551,7 @@
                             errors.first('customer stage') ||
                             error.customer_stage_id
                               ? 'is-invalid'
-                              : '',
+                              : ''
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -664,7 +653,7 @@
                         v-on:click="toggleBigTabs(1)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 1,
-                          'altaraBlue text-white': openBigTab === 1,
+                          'altaraBlue text-white': openBigTab === 1
                         }"
                       >
                         Customer Feedbacks
@@ -676,7 +665,7 @@
                         v-on:click="toggleBigTabs(2)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 2,
-                          'altaraBlue text-white': openBigTab === 2,
+                          'altaraBlue text-white': openBigTab === 2
                         }"
                       >
                         Todo
@@ -689,7 +678,7 @@
                 <div
                   v-bind:class="{
                     hidden: openBigTab !== 1,
-                    block: openBigTab === 1,
+                    block: openBigTab === 1
                   }"
                 >
                   <div
@@ -703,7 +692,6 @@
                     v-for="(data, index) in customer.feedback"
                     class="chatBox"
                   >
-                  
                     <div
                       v-on:click="openPopup(data.notes)"
                       class="flex justify-between"
@@ -711,7 +699,9 @@
                       <div class="flex">
                         <div class="space0"></div>
                         <div class="self-center w-80 truncate">
-                          <h2 class="font-bold">{{data.reason === null? '' : data.reason.reason}}</h2>
+                          <h2 class="font-bold">
+                            {{ data.reason === null ? "" : data.reason.reason }}
+                          </h2>
                           {{ data.notes }}
                         </div>
                       </div>
@@ -722,15 +712,18 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="customer.feedback && !customer.feedback.length" class="chatBox">
-  No Feedbacks Available
-</div>
+                  <div
+                    v-if="customer.feedback && !customer.feedback.length"
+                    class="chatBox"
+                  >
+                    No Feedbacks Available
+                  </div>
                 </div>
               </div>
               <div
                 v-bind:class="{
                   hidden: openBigTab !== 2,
-                  block: openBigTab === 2,
+                  block: openBigTab === 2
                 }"
               >
                 <div
@@ -765,8 +758,8 @@
                     </div>
                   </div>
                   <div v-if="todos.length === 0" class="chatBox">
-  No Todos Available
-</div>
+                    No Todos Available
+                  </div>
                 </div>
               </div>
             </div>
@@ -848,7 +841,7 @@
               :class="[
                 errors.first('feedback') || error.feedback
                   ? 'is-invalid'
-                  : 'border',
+                  : 'border'
               ]"
               v-model="customer.notes"
             />
@@ -917,14 +910,13 @@
                       name="type"
                       v-model="customer.type"
                       :class="[
-                        errors.first('type') || error.type ? 'is-invalid' : '',
+                        errors.first('type') || error.type ? 'is-invalid' : ''
                       ]"
                       class="mx-input"
                     />
                   </div>
                 </div>
               </div>
-              
             </div>
             <textarea
               rows="8"
@@ -935,7 +927,7 @@
               placeholder="Enter todo..."
               v-validate="'required'"
               :class="[
-                errors.first('todo') || error.todo ? 'is-invalid' : 'border',
+                errors.first('todo') || error.todo ? 'is-invalid' : 'border'
               ]"
               v-model="customer.todo"
             />
@@ -967,17 +959,17 @@ import { get, post, put } from "@/utilities/api";
 import DatePicker from "vue2-datepicker";
 import queryParam from "../../utilities/queryParam";
 import permissions from "../../components/mixins/permissions.js";
-
+import customerApi from "../../api/customer.js";
+import feedbackApi from "../../api/feedback.js";
 
 export default {
   name: "UserProfile",
   mixins: [permissions],
 
-
   components: {
     Sidebar,
     HeaderStats,
-    DatePicker,
+    DatePicker
   },
   data() {
     return {
@@ -1017,7 +1009,7 @@ export default {
       todos: [],
       reasons: [],
       customerStages: [],
-      todo: {},
+      todo: {}
     };
   },
   async created() {
@@ -1033,19 +1025,18 @@ export default {
     await this.getTodos();
 
     await this.getReasons();
-    
   },
   methods: {
     checkTodo(data) {
       this.$LIPS(true);
       put(this.apiUrls.postTodo + "/" + data.id, {
-        status: data.status === "done" ? "not done" : "done",
+        status: data.status === "done" ? "not done" : "done"
       })
         .then(() => {
           this.$LIPS(false);
           this.$swal({
             icon: "success",
-            title: "Todo Updated Successfully",
+            title: "Todo Updated Successfully"
           });
           this.getTodos();
         })
@@ -1067,11 +1058,8 @@ export default {
     },
     async getEmploymentStatus() {
       try {
-        const fetchEmploymentStatus = await get(
-          this.apiUrls.getEmploymentStatus
-        );
+        const fetchEmploymentStatus = await customerApi.getEmploymentStatus();
         this.employmentStatusList = fetchEmploymentStatus.data.data;
-       
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1085,7 +1073,7 @@ export default {
       }
     },
 
-    async getAgents(){
+    async getAgents() {
       try {
         const agents = await get(this.apiUrls.getDSAs);
         this.agents = agents.data.data.data;
@@ -1098,7 +1086,7 @@ export default {
       try {
         const query = {
           customerId: this.customer.id,
-          user: localStorage.getItem("user_id"),
+          user: localStorage.getItem("user_id")
         };
 
         const fetchTodos = await get(this.apiUrls.postTodo + queryParam(query));
@@ -1111,7 +1099,6 @@ export default {
       try {
         const fetchUserStage = await get(this.apiUrls.getStage);
         this.customerStages = fetchUserStage.data.data;
-        
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -1125,27 +1112,24 @@ export default {
         employment_status_id: customer.employment_status_id,
         email: customer.email,
         customer_stage_id: customer.customer_stage_id,
-        user_id: customer.user_id,
+        user_id: customer.user_id
       };
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.$LIPS(true);
             this.error = {};
-            put(this.apiUrls.updateUser + this.customer.id, {
-              ...userInfo,
-            })
-              .then((response) => {
+            customerApi
+              .update(userInfo, this.customer.id)
+              .then(response => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "User Updated Successfully",
+                  title: "User Updated Successfully"
                 });
                 this.editMode = false;
                 this.customer = response.data.data;
-                
-                
               })
 
               .catch(({ response: { data } }) => {
@@ -1156,13 +1140,13 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     async getUsersList() {
       this.$LIPS(true);
 
       try {
-        const fetchusersList = await get(this.apiUrls.getusersList);
+        const fetchusersList = await customerApi.index();
         this.usersList = fetchusersList.data.data.data;
         this.$LIPS(false);
       } catch (err) {
@@ -1189,7 +1173,7 @@ export default {
 
         this.$displayErrorMessage(err);
         return this.$router.push({
-          name: "admin",
+          name: "admin"
         });
       }
     },
@@ -1202,27 +1186,25 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.closeFeedbackPopup();
             this.$LIPS(true);
             this.error = {};
-            post(this.apiUrls.postComment, {
+            feedbackApi.create({
               notes: user.notes,
               reason_id: user.reason,
               customer_id: this.customer.id,
               user_id: localStorage.getItem("user_id")
-              
             })
-              .then((result) => {
+              .then(result => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 // this.searchUsersList();
                 this.customer.feedback.unshift(result.data.data);
-                
               })
 
               .catch(({ response: { data } }) => {
@@ -1233,12 +1215,12 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     async postTodoComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.closeTodoPopup();
             this.$LIPS(true);
@@ -1249,17 +1231,14 @@ export default {
               type: user.type,
               // status: user.status,
               customer_id: this.customer.id,
-              user_id: localStorage.getItem("user_id"),
+              user_id: localStorage.getItem("user_id")
             })
               .then(() => {
                 this.$LIPS(false);
                 this.$swal({
                   icon: "success",
-                  title: "Todo Logged Successfully",
+                  title: "Todo Logged Successfully"
                 });
-                // this.customer.notifications.push({
-                //   data: { date: new Date().toJSON(), feedback: user.feedback },
-                // });
                 user.todo = "";
                 user.due_date = "";
                 user.type = "";
@@ -1275,7 +1254,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -1312,17 +1291,17 @@ export default {
       this.$router.push({
         name: "userProfile",
         params: {
-          customer: data,
-        },
+          customer: data
+        }
       });
     },
-    toggleTabs: function (tabNumber) {
+    toggleTabs: function(tabNumber) {
       this.openTab = tabNumber;
     },
-    toggleBigTabs: function (tabNumber) {
+    toggleBigTabs: function(tabNumber) {
       this.openBigTab = tabNumber;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -1345,4 +1324,3 @@ export default {
   overflow: scroll;
 }
 </style>
-

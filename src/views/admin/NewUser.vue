@@ -156,8 +156,8 @@
   </div>
 </template>
 <script>
-import { get, post } from "../../utilities/api";
 import { eventBus } from "../../main";
+import customerApi from "../../api/customer.js";
 
 export default {
   data() {
@@ -177,9 +177,7 @@ export default {
   methods: {
     async getEmploymentStatus() {
       try {
-        const fetchEmploymentStatus = await get(
-          this.apiUrls.getEmploymentStatus
-        );
+        const fetchEmploymentStatus = await customerApi.employmentStatus();
         this.employmentStatus = fetchEmploymentStatus.data.data;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -194,7 +192,7 @@ export default {
           if (result) {
             this.$LIPS(true);
             this.error = {};
-            post(this.apiUrls.register, this.customer)
+            customerApi.create(this.customer)
               .then(({ data }) => {
                 this.$LIPS(false);
                 eventBus.$emit("fireMethod");

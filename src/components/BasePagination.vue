@@ -1,34 +1,20 @@
 <template>
-  <div class="container mx-auto text-xs divide-y my-1 py-2">
+  <div class="container mx-auto text-xs divide-y my-1 py-2" v-if="pageParam.total / pageParam.per_page > 1">
     <div class="clearfix"></div>
     <div class="flex justify-between flex-row pt-2">
       <div class="">
         <strong class="box-border border-solid">
-          Displaying: {{ pageParam.from }} - {{ pageParam.to }} of
+          Displaying {{ pageParam.from }} - {{ pageParam.to }} of
           {{ pageParam.total }}
         </strong>
       </div>
 
       <div class="flex flex-row divide-x">
         <div class="px-2">
-          <span class="">set current Page: </span>
-          <input
-            class="input bg-gray-300 text-center"
-            type="number"
-            v-model="pageParam.page"
-            style="max-width: 50px"
-            @keyup.enter="fetchData(pageParam.page)"
-          />
+         
         </div>
         <div class="px-2">
-          <span class="">set page-size: </span>
-          <input
-            class="input bg-gray-300 text-center"
-            type="number"
-            v-model="pageParam.limit"
-            style="max-width: 50px"
-            @keyup.enter="fetchData(pageParam.limit)"
-          />
+         
         </div>
       </div>
 

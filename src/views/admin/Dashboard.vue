@@ -575,6 +575,15 @@ export default {
       try {
         const agents = await get(this.apiUrls.getDSAs);
         this.agents = agents.data.data.data;
+        this.agents = this.agents.sort((a, b) => {
+          if(a.full_name > b.full_name){
+            return 1;
+          }
+          if(a.full_name < b.full_name){
+            return -1;
+          }
+          return 0
+        });
       } catch (err) {
         this.$displayErrorMessage(err);
       }

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
+import Calculator from "@/views/calculator/index.vue"
 import NewUser from "@/views/admin/NewUser.vue";
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import LeaderBoard from "@/views/admin/LeaderBoard.vue";
@@ -85,6 +86,12 @@ const router = new VueRouter({
         path: "/landing",
         name: "landing",
         component: Index,
+    },
+    {
+        path: "/calculator",
+        component: Calculator,
+        name: "Calculator",
+
     },
     {
         path: "/admin/userProfile/:id",

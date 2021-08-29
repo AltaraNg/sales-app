@@ -5,7 +5,7 @@
           :style="`background-image: url('${registerBg2}');`">
         <div class="w-full  lg:w-3/5 lg:ml-24 ml-0 mx-3 md:mx-6 lg:mx-0 ">
             <div class=" flex flex-col items-center justify-center mt-24 px-10 ">
-                <h3 class="text-white tracking-wide text-2xl font-black text-center pb-6 ">
+                <h3 class="text-white tracking-wide text-2xl font-black text-center pb-6 " >
                     Do The Math, Calculate Your  Product/Cash Loans
                 </h3>
                 <p class="text-white text-center font-normal text-md">
@@ -22,18 +22,16 @@
                     </select>
                 </div>
                 <div class="flex justify-end px-10">
-                <button class="bg-white rounded px-8 py-3 font-semibold mt-20 mb-8 text-altaraBlue">Calculate Loan</button>
+                <button class="bg-white rounded px-8 py-3 cursor-pointer font-semibold mt-20 mb-8 text-altaraBlue" @click.prevent="toggleModal">Calculate Loan</button>
                 </div>
             </form>
         </div>
-        <div class="hidden lg:flex lg:w-2/5 bg-white lg:flex-col pb-16  rounded my-20 mx-20 h-full  hover:shadow-2xl">
-          <h3 class=" tracking-wider mb-32 leading-6 text-2xl font-bold text-center px-8 mt-16 text-black  ">
-                   Your initial payment is <br><p class="underline pt-8"> ₦20,900.00</p>
-         </h3>
-         <Result type="Monthly Repayment" amount="₦ 11,500.00" />
-         <Result type="Total Repayment" amount="₦ 124,956.00" />
-         <Result type="Total Product Price" amount="₦ 147,500.00" />
-        </div>
+        <calculator-result class="hidden lg:flex"/>
+        <Modal v-if='modal==true' :onClose="onModalClose" >
+          <calculator-result class="flex flex-col lg:hidden"/>
+       
+          
+        </Modal>
           </div>
     </div>
 
@@ -41,13 +39,16 @@
 </template>
 <script>
 import registerBg2 from "@/assets/img/register_bg_2.png"; 
-import Result from "@/components/Results/"
+import CalculatorResult from "@/components/Cards/calculator"
+import Modal from '@/components/modal.vue'
 export default {
     components:{
-        Result
+        Modal,
+        CalculatorResult
     },
    data(){
        return{
+           modal:false,
            formdata:[
                {
                    "name":"Product name",
@@ -73,6 +74,14 @@ export default {
            registerBg2
            
        }
-   } 
+   } ,
+   methods:{
+    toggleModal(){
+      this.modal =!this.modal;
+    },
+     onModalClose (){
+      modalState.value = false
+    }
+   }
 }
 </script>

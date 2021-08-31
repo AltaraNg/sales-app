@@ -10,7 +10,7 @@
                 <h3 class="font-bold lg:text-2xl md:text-lg text-base text-gray-900">{{title}}</h3> 
               </div>
 
-                <span v-if="!hideCloseButton"
+                <span
                       class="text-primary text-xl font-semibold hover:text-black no-undeline cursor-pointer" 
                       @click='toggleModal'>&times;</span>
             </div>

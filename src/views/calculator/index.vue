@@ -80,7 +80,7 @@ export default {
       this.modal =!this.modal;
     },
      onModalClose (){
-      modalState.value = false
+      this.modal = false
     }
    }
 }

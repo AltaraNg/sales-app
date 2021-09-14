@@ -13,6 +13,7 @@ import Todo from "@/views/admin/Todo.vue";
 import SendMessage from "@/views/admin/SendMessage.vue";
 import Notifications from "@/views/admin/Notifications.vue"
 import Feedback from "@/views/admin/Feedback.vue";
+import InactiveProspects from "@/views/admin/InactiveProspects.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
 import Flash from "@/utilities/flash";
@@ -66,6 +67,11 @@ const router = new VueRouter({
             path: "/admin/feedback",
             component: Feedback,
             name: 'Feedback'
+        },
+        {
+            path: "/admin/inactive-prospects",
+            component: InactiveProspects,
+            name: 'InactiveProspects'
         }
 
 

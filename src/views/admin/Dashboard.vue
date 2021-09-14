@@ -224,12 +224,14 @@
           </div>
         </div>
 
+        
+
         <div class="flex justify-between">
           <div
             v-on:click="searchUsersList()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-          <i class="fas fa-search"></i>
+            <i class="fas fa-search"></i>
             Search
           </div>
           <div
@@ -239,15 +241,28 @@
             Reset
           </div>
 
-          <div            
+          <div
             v-on:click="exportCsv()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-          <i class="fas fa-file-export"></i>
+            <i class="fas fa-file-export"></i>
             Export
           </div>
         </div>
       </div>
+
+      <vue-tailwind-modal
+          :showing="showModal"
+          @close="showModal = false"
+          :showClose="true"
+          :backgroundClose="false"
+          :css="modalOptions"
+        >
+          <!-- Put your modal content here -->
+          <h2 class="text-lg mb-5 text-center"><i class="fas fa-exclamation-triangle text-yellow-400"></i> Inactive Prospects Notification </h2>
+          <h3>Dear <b>{{username}}</b>,</h3>
+          <p class="text-lg">You have 10 inactive customers who have not moved stages in a long time. <router-link class="text-blue-500" to="/admin/inactive-prospects">Click here to view them</router-link></p>
+        </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
         <div class="text-center py-2 font-medium px-5">
@@ -343,7 +358,7 @@
                 >
                   Contacted By
                 </th>
-                 <th
+                <th
                   class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Date Registered
@@ -407,7 +422,7 @@
                 >
                   {{ user.users.full_name || "" }}
                 </td>
-                 <td
+                <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{ $dateTimeConvert(user.created_at) || "" }}
@@ -416,7 +431,6 @@
             </tbody>
           </table>
         </div>
-        
       </div>
       <div
         class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
@@ -448,7 +462,7 @@
                   :class="[
                     errors.first('feedback') || error.feedback
                       ? 'is-invalid'
-                      : 'border',
+                      : 'border'
                   ]"
                   v-model="customer.feedback"
                 />
@@ -500,25 +514,33 @@ import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
 import BasePagination from "../../components/BasePagination";
 import customerApi from "../../api/customer.js";
-import router from '../../router';
+import router from "../../router";
+import VueTailwindModal from "vue-tailwind-modal";
+import Vue from "vue";
 
 export default {
   mixins: [permissions],
   components: {
     DatePicker,
     BasePagination,
+    VueTailwindModal
   },
 
   props: {
     size: {
       type: Number,
       required: false,
-      default: 20,
-    },
+      default: 20
+    }
   },
   computed: {},
   data() {
     return {
+      modalOptions: {
+	background: "smoke",
+	modal: "max-h-90",
+	close: "",
+},
       pageNumber: 1,
       pageParams: {},
       OId: 0,
@@ -531,10 +553,11 @@ export default {
       branches: [],
       agents: [],
       message: "",
+      showModal: false,
       page: 1,
       apiUrls: {
         postComment: `/api/feedback`,
-        getDSAs: `/api/get-users?role=18`,
+        getDSAs: `/api/get-users?role=18`
       },
       userMeta: {},
       feedback: "",
@@ -542,16 +565,18 @@ export default {
       feedbackModal: false,
       feedbackPopup: false,
       error: {},
-      canView: ''
+      canView: "",
+      username : localStorage.getItem('user_name')
     };
   },
   async created() {
     await this.searchUsersList();
+    this.showNotification();
     await this.getBranches();
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
-    this.canView = localStorage.getItem('flag');
+    this.canView = localStorage.getItem("flag");
   },
   methods: {
     async getEmploymentStatus() {
@@ -576,13 +601,13 @@ export default {
         const agents = await get(this.apiUrls.getDSAs);
         this.agents = agents.data.data.data;
         this.agents = this.agents.sort((a, b) => {
-          if(a.full_name > b.full_name){
+          if (a.full_name > b.full_name) {
             return 1;
           }
-          if(a.full_name < b.full_name){
+          if (a.full_name < b.full_name) {
             return -1;
           }
-          return 0
+          return 0;
         });
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -606,22 +631,23 @@ export default {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
 
-    async exportCsv(){
+    async exportCsv() {
       this.$LIPS(true);
       try {
-        const response = await customerApi.exportCustomers(queryParam(this.searchQuery));
+        const response = await customerApi.exportCustomers(
+          queryParam(this.searchQuery)
+        );
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        let fileLink = document.createElement('a');
+        let fileLink = document.createElement("a");
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'file.csv');
+        fileLink.setAttribute("download", "file.csv");
         document.body.appendChild(fileLink);
         fileLink.click();
       } catch (error) {
         this.$displayErrorMessage(error);
-      }finally{
+      } finally {
         this.$LIPS(false);
       }
-
     },
 
     async searchUsersList() {
@@ -630,8 +656,8 @@ export default {
         const query = {
           ...this.searchQuery,
           page: this.pageParams.page,
-          limit: this.pageParams.limit,
-        };       
+          limit: this.pageParams.limit
+        };
         const fetchusersList = await customerApi.index(queryParam(query));
         let {
           current_page,
@@ -644,7 +670,7 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         } = fetchusersList.data.data[0];
         this.pageParams = Object.assign({}, this.pageParams, {
           current_page,
@@ -656,15 +682,16 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         });
 
         this.usersList = data;
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
+        eventBus.$emit("notification");
         this.OId = from;
 
-        router.replace({path: "/admin/dashboard", query: query})
+        router.replace({ path: "/admin/dashboard", query: query });
 
         this.$LIPS(false);
       } catch (err) {
@@ -680,20 +707,20 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.feedbackModal = false;
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
-              feedback: user.feedback,
+              feedback: user.feedback
             })
               .then(({ data }) => {
                 this.$LIPS(false);
                 user.feedback = "";
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 this.searchUsersList();
               })
@@ -706,7 +733,7 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -731,11 +758,23 @@ export default {
         name: "userProfile",
         params: {
           customer: data,
-          id: data.id,
-        },
+          id: data.id
+        }
       });
     },
-  },
+
+    showNotification() {
+      let notCookie = this.$getCookie("showNotification");
+      if (notCookie !== null) {
+        if (this.$getCookieValue("showNotification") === "true") {
+          //*show modal
+          this.showModal = true;
+
+          this.$setCookie("showNotification", false);
+        }
+      }
+    }
+  }
 };
 </script>
 

@@ -2,7 +2,7 @@
     <div class="altaraBlue h-full">
           <div class="  w-full h-full flex flex-col items-center justify-center altaraBlue  bg-no-repeat bg-full   "
           :style="`background-image: url('${registerBg2}');`">
-        <div class="w-full  sm:px-3 md:px-36 lg:px-64 pb-20 lg:pb-10  ">
+        <div class="w-full  sm:px-3 md:px-36 lg:px-64 pb-10  ">
             <div class=" flex flex-col items-center justify-center mt-10 px-10 ">
                 <h3 class="text-white tracking-wide text-2xl font-black text-center pb-4 " >
                     Do The Math, Calculate Your  Product/Cash Loans
@@ -19,38 +19,38 @@
             </form>
         </div>
         <!-- mobile view -->
-        <div class="md:flex md:flex-col lg:hidden items-center w-full">
-        <div class="flex justify-center md:space-x-20 justify-evenly mb-20">
-            <button class="rounded-full w-16 h-16 text-white text-3xl bg-blue-500">20%</button>
-            <button class="rounded-full w-16 h-16 text-white text-3xl bg-red-500">40%</button>
-            <button class="rounded-full w-16 h-16 text-white text-3xl bg-green-400">60%</button>
-            <button class="rounded-full w-16 h-16 text-white text-3xl bg-yellow-500">80%</button>
-        </div>
-        <!-- work in progress dummydata -->
-        <div class="rounded-lg flex flex-col md:px-8 py-8 px-4  bg-white shadow-2xl h-auto w-11/12 md:w-9/12 mx-auto mb-10">
-        <p class="text-lg font-semibold text-red-500 ">Altara Credit Product</p>
-        <div class="flex items-center justify-between mt-10">
+         <div class="md:flex md:flex-col lg:hidden items-center w-full" v-for="(biztype, index) in businessTypes" :key="index">
+        <div class="rounded-lg flex flex-col md:px-8 py-8 px-4  bg-white shadow-2xl h-auto w-11/12 md:w-11/12  mx-auto mb-10" >
+                    <div  class=" flex justify-center md:space-x-20 justify-evenly mb-4">
+            <div  v-for="(dpayments, index) in downPaymentRates" :key="index">
+              <button class="rounded-full w-16 h-16 text-white text-3xl cursor-pointer bg-gray-500"  @click="downpaymentMobileCalc(biztype.id,dpayments.percent )"   :class='dpayments.percent == 20 ? "bg-blue-500" : dpayments.percent == 40 ? "bg-red-500" : dpayments.percent == 60 ? "bg-green-500" : "bg-yellow-500"'>{{dpayments.percent}}%</button>
+            </div>
+          </div>
+        <p class="text-lg font-semibold text-red-500 ">{{biztype.name}}</p>
+        <div class="flex items-center justify-between mt-8">
             <div class="flex-col items-center">
-                <div class="rounded-lg px-4 md:px-8 py-1 text-xs md:text-sm font-semibold bg-red-100">Initial Payment</div>
-                <p class="amount font-bold text-2xl text-center">₦ 20,900.00</p>
+                <div class="rounded-lg px-4 md:px-8 py-1 text-xs md:text-sm font-semibold bg-red-100" >Initial Payment</div>
+                <p class="amount font-bold text-2xl text-center">{{selectedDownpayment !== null && biztype.id === selectedDownpayment.bizId ? $formatCurrency(Math.ceil(selectedDownpayment.actualDownpayment)) : "₦0.00" }}</p>
             </div>
              <div class="flex-col items-center">
                 <div class="rounded-lg px-4 md:px-8 py-1 text-xs md:text-sm font-semibold bg-red-100">Monthly Repayment</div>
-                <p class="amount font-bold text-2xl text-center">₦ 20,900.00</p>
+                <p class="amount font-bold text-2xl text-center">{{selectedDownpayment !== null && biztype.id === selectedDownpayment.bizId ? $formatCurrency(Math.ceil(selectedDownpayment.actualRepayment /12)) : "₦0.00" }}</p>
             </div>
         </div>
-        <div class="flex items-center justify-between mt-16">
+        <div class="flex items-center justify-between mt-12">
             <div class="flex-col items-center">
                 <div class="rounded-lg px-4 md:px-8 py-1 text-xs md:text-sm font-semibold bg-red-100">Total Repayment</div>
-                <p class="amount font-bold text-2xl text-center">₦ 20,900.00</p>
+                <p class="amount font-bold text-2xl text-center">{{selectedDownpayment !== null && biztype.id === selectedDownpayment.bizId ? $formatCurrency(Math.ceil(selectedDownpayment.actualRepayment)) : "₦0.00" }}</p>
             </div>
              <div class="flex-col items-center">
                 <div class="rounded-lg px-4 md:px-8 py-1 text-xs md:text-sm font-semibold bg-red-100">Total Product Price</div>
-                <p class="amount font-bold text-2xl text-center">₦ 20,900.00</p>
+                <p class="amount font-bold text-2xl text-center">{{selectedDownpayment !== null && biztype.id === selectedDownpayment.bizId ? $formatCurrency(Math.ceil(selectedDownpayment.total)) : "₦0.00" }}</p>
             </div>
         </div>
         </div>
-        </div>
+       </div>
+
+
         <!-- desktop view -->
         <div class="hidden px-16 py-8  mb-8  bg-white rounded-lg  lg:flex flex-col " v-for="(b_type, index) in businessTypeCalc" :key="index">
           <div>
@@ -63,7 +63,7 @@
                         <td class= "font-bold text-lg">Total Repayment</td>
                         <td class= "font-bold text-lg">Total Product Price</td>
                     </thead>
-                    <tbody v-for="(downpayments, index) in downpaymentCalc" :key= "index">
+                    <tbody v-for="(downpayments, index) in computedGetCalc" :key= "index">
                           
                         <tr class="my-2 px-3 py-2 flex justify-evenly items-center space-x-20 " v-if="(downpayments.bizId == b_type.id)" :class='downpayments.percent == 20 ? "bg-blue-100" : downpayments.percent == 40 ? "bg-red-100" : downpayments.percent == 60 ? "bg-green-100" : "bg-yellow-100"'>
                             <td class= "font-bold text-lg -mr-6 -ml-10" ref="downpayment">{{downpayments.percent}}%</td>
@@ -77,10 +77,9 @@
           </div>
         </div>
 
-
-        
-          </div>
-    </div>
+ </div>
+    </div>  
+ 
 </template>
 
 <script>
@@ -103,6 +102,7 @@ export default{
        products:[],
        businessTypes: [],
        product: "",
+       isActive:false,
        repaymentCycle:14,
        repaymentDuration: 180,
        calculation:[],
@@ -114,7 +114,9 @@ export default{
         eachDownpayment:{},
         totals:[],
          test1: true,
-         downPaymentArr:[]
+         downPaymentArr:[],
+         selectedDownpayment:null,
+         downpaymentCalculations:[]
         }
     },
     components:{
@@ -126,8 +128,33 @@ export default{
           return item;
         })
       },
+      computedGetCalc(){
+         return this.downpaymentCalc()
+      },
       // in progress
-      downpaymentCalc(){
+     
+    },
+      async mounted() {
+    await this.getCalculation();
+    await this.getProduct();
+    await this.getBusinessTypes();
+     await this.getDownPaymentRates();
+  },
+
+    methods:{
+    selectedItem(value) {
+      this.selectedProduct = value;
+    }, 
+  downpaymentMobileCalc(bizId, percent){
+      this.selectedDownpayment=  this.downpaymentCalculations.filter((result)=>{
+          return result.bizId == bizId && result.percent == percent
+          
+        })[0]
+        
+        console.log( this.selectedDownpayment);
+    },
+  
+     downpaymentCalc(){
         let  downPaymentArr = [];
         this.businessTypes.map((bizType)=>{
             return this.downPaymentRates.map((paymentRate)=>{
@@ -135,46 +162,31 @@ export default{
                return bizType.id === param.business_type_id && paymentRate.id === param.down_payment_rate_id 
 
              });
-             console.log('filteredBizType', filteredBizType);
+            
             const { total, actualDownpayment, actualRepayment }= calculate(
           this.selectedProduct.price,
           paymentRate,
-          filteredBizType[0]
+          filteredBizType[1]
         );
-        console.log({bizId:bizType.id,percent: paymentRate['percent'], total, actualDownpayment, actualRepayment })
-
-          console.log('paymentRate', paymentRate)
+        
+       
           downPaymentArr.push({bizId:bizType.id,percent: paymentRate['percent'],total, actualDownpayment, actualRepayment})
         })
         });
-        console.log('downPaymentArr', downPaymentArr)
+        this.downpaymentCalculations= downPaymentArr
         return downPaymentArr
         
-      }
-    },
-      async mounted() {
-    await this.getCalculation();
-    await this.getProduct();
-    await this.getBusinessTypes();
-     await this.getDownPaymentRates();
-    //  this.getCalc()
-  
-  },
-
-    methods:{
-    selectedItem(value) {
-      this.selectedProduct = value;
-    },
+      },
         
 
     async getProduct() {
       try {
         const fetchProduct = await get(this.apiUrls.getProduct + this.product);
         this.products= fetchProduct.data.data.data
-       const found= this.products.find((item)=>{
+       this.products.find((item)=>{
             return item.product_id == this.selectedProduct.product_id; 
         })
-        return found
+        
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -183,7 +195,6 @@ export default{
       try {
         const fetchDownPaymentRates = await get(this.apiUrls.downPaymentRates);
         this.downPaymentRates = fetchDownPaymentRates.data.data.data;
-        console.log(this.downPaymentRates);
         this.downPaymentRates = this.downPaymentRates.filter((item) => {
 						return !((item.name.includes('plus')) || (item.name.includes('zero')) || (item.name.includes('ten')));
 					});
@@ -192,7 +203,7 @@ export default{
             
         })
 
-        console.log(this.downPaymentRates, "downPaymentRates");
+    
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -214,7 +225,6 @@ export default{
           this.businessTypes = this.businessTypes.filter(item => {
             return item.name.includes("Products")
         });
-        console.log(this.businessTypes);
     } catch (err) {
         this.$displayErrorMessage(err);
     }

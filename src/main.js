@@ -17,7 +17,18 @@ Vue.use(VeeValidate, {
     classes: true,
     classNames: { invalid: "is-invalid" }
 });
-export const eventBus = new Vue(); // added line
+export const eventBus = new Vue(); 
+// added line
+
+Vue.filter('truncate', function(value, size){
+    if (!value) return '';
+  value = value.toString();
+
+  if (value.length <= size) {
+    return value;
+  }
+  return value.substr(0, size) + '...';
+})
 
 new Vue({
     router,

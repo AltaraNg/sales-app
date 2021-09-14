@@ -70,7 +70,6 @@
           <li class="items-center ml-2">
               <div
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-chart-line mr-2 text-sm"
@@ -167,10 +166,10 @@
             </router-link>
 
              <router-link to="/admin/notifications" >
-          <li class="items-center ml-2 rounded-lg">
+          <li class="items-center ml-2 rounded-lg row">
            
               <a
-                class="text-xs uppercase py-3 font-bold block"
+                class="text-xs uppercase py-3 font-bold block col"
                 :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
@@ -178,6 +177,26 @@
                   :class="['text-gray-400']"
                 ></i>
                Notification
+               <span class="float-right mr-3 pr-4 font-light">5</span>
+              </a>
+              <!-- <span class="inline float-right col">5</span> -->
+          </li>
+            </router-link>
+
+            <router-link to="/admin/inactive-prospects" >
+          <li class="items-center ml-2 rounded-lg">
+           
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+                <i
+                  class="fas fa-user-circle mr-2 text-sm"
+                  :class="['text-gray-400']"
+                ></i>
+               inactive Prospects
+               <span class="float-right mr-3 pr-4 mt-0 font-light">200</span>
+
               </a>
           </li>
             </router-link>
@@ -252,4 +271,5 @@ export default {
 .active i{
   color: #fff;
 }
+
 </style>

@@ -177,7 +177,7 @@
                   :class="['text-gray-400']"
                 ></i>
                Notification
-               <span class="float-right mr-3 pr-4 font-light">5</span>
+               <span class="float-right mr-3 pr-4 font-light">{{getNotifications ? getNotifications.length : ""}}</span>
               </a>
               <!-- <span class="inline float-right col">5</span> -->
           </li>
@@ -195,7 +195,7 @@
                   :class="['text-gray-400']"
                 ></i>
                inactive Prospects
-               <span class="float-right mr-3 pr-4 mt-0 font-light">200</span>
+               <span class="float-right mr-3 pr-4 mt-0 font-light">{{getInactiveProspects}}</span>
 
               </a>
           </li>
@@ -226,6 +226,8 @@
 
 
 <script>
+import { mapGetters } from "vuex";
+
 import altaraLogo from "@/assets/img/altaraLogo.png";
 import permissions from '../mixins/permissions';
 
@@ -249,9 +251,16 @@ export default {
     },
   },
   components: {},
-  mounted() {
+  async mounted() {
     this.canView = localStorage.getItem('flag');
-}
+    await this.$prepareNotifications();
+    await this.$prepareInactiveProspects();
+
+},
+computed: {
+    ...mapGetters(['getNotifications', 'getInactiveProspects'])
+
+  },
 };
 </script>
 <style>

@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Flash from './flash';
+import messageApi from "../api/messages.js";
+import { get } from "./api.js"
+import queryParam from "./queryParam";
 import { store } from '../store/store';
 
 /**custom made vue filters
@@ -170,14 +173,24 @@ Vue.prototype.$getCookie = (cName) => {
   };
 
   Vue.prototype.$prepareNotifications = () => {
-    !store.getters.getNotifications && get('/api/messages')
-        .then(r => store.dispatch('mutateNotifications', r.data.data));
+      let userId = localStorage.getItem("user_id");
+    const query = {        
+        limit: 100,
+        receiver: userId
+      };
+
+    !store.getters.getNotifications && messageApi.index(queryParam(query))
+    .then(r => store.dispatch('mutateNotifications', r.data.data.data));
 };
 
 
 Vue.prototype.$prepareInactiveProspects = () => {
-    !store.getters.inactiveProspects && get('/api/inactive/prospects')
-        .then(r => store.dispatch('mutateInactiveProspects', r.data.data));
+    const query = {        
+        inActiveDays: 30,
+        
+      };        
+    !store.getters.inactiveProspects && get('/api/inactive/prospects' + queryParam(query))
+        .then(r => store.dispatch('mutateInactiveProspects', r.data.data.meta.total));
 };
 
 

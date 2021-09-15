@@ -1,5 +1,7 @@
 <template>
   <div class="inactive-prospects">
+    <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
+
     <div class="card-area">
       <div class="relative w-full pr-4 max-w-full flex-grow flex-1 card text-center mx-2">
         <h5 class="text-gray-500 uppercase font-bold text-xs">
@@ -26,12 +28,12 @@
         </span>
       </div>
     </div>
-    <div class="block w-full overflow-x-auto mt-10 ml-2">
+    <div class="block w-full overflow-x-auto mt-10 ml-2" v-if="prospects.length > 0">
       <table class="items-center w-full bg-transparent border-collapse">
         <thead>
           <tr>
             <th
-              class="px-6 altaraBlue align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
               v-for="header in headers"
             >
               {{ header }}
@@ -40,6 +42,7 @@
         </thead>
         <tbody>
           <tr
+                @click="selectUser(user)"
                 class="pointer"
                 :key="index"
                 v-for="(user, index) in prospects"
@@ -51,14 +54,14 @@
               >
               <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
                  <div
-                    class="altaraBlue rounded-full text-center pt-1 h-6 w-6 "
+                    class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
                   >
                     {{ index + OId || "" }}
                   </div>
               </td>
 
               
-              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left custom-hover">
                 {{user.name || " "}}
               </td>
               <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
@@ -68,6 +71,9 @@
               </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="chatBox mt-4 w-48">
+      You are up to date
     </div>
     <base-pagination :pageParam="pageParams" 
           @fetchData="fetchInactiveProspects()"
@@ -104,7 +110,9 @@ export default {
         const query = {
           ...this.searchQuery,
           page: this.pageParams.page,
-          limit: this.pageParams.limit
+          limit: this.pageParams.limit,
+          inActiveDays: 30,
+          
         };        
       this.$LIPS(true);
       let prospects = await get(this.apiUrls.inactive_prospects + queryParam(query));
@@ -145,8 +153,13 @@ export default {
         this.$LIPS(false);
 
       }
+    },
+    selectUser(user){
+      this.$router.push(`/admin/userProfile/${user.id}`);
     }
-  }
+  },
+
+  
 };
 </script>
 
@@ -157,11 +170,15 @@ export default {
   margin-left: 5%;
 }
 .inactive-prospects {
-  margin-top: 10%;
+  margin-top: 5%;
 }
 .card {
 
   box-shadow: 1px;
-  border: 1px aliceblue solid;
+  border: 1px #094a73 solid;
+}
+.custom-hover:hover{
+  text-decoration: underline;
+  font-weight: bold;
 }
 </style>

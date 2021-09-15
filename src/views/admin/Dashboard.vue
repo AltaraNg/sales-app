@@ -259,9 +259,12 @@
           :css="modalOptions"
         >
           <!-- Put your modal content here -->
-          <h2 class="text-lg mb-5 text-center"><i class="fas fa-exclamation-triangle text-yellow-400"></i> Inactive Prospects Notification </h2>
-          <h3>Dear <b>{{username}}</b>,</h3>
-          <p class="text-lg">You have 10 inactive customers who have not moved stages in a long time. <router-link class="text-blue-500" to="/admin/inactive-prospects">Click here to view them</router-link></p>
+        <h1 class="text-center text-lg">
+          <i class="fas fa-exclamation-triangle text-yellow-600 "></i>
+        </h1>
+          <h2 class="text-lg mb-5 text-center">
+             Inactive Prospects Notification </h2>
+          <p class="text-lg">You have {{getInactiveProspects}} inactive customers who have not moved stages in a long time. <router-link class="text-blue-500 float-right" to="/admin/inactive-prospects">Click here to view them</router-link></p>
         </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
@@ -506,6 +509,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import { get, post } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -533,13 +537,18 @@ export default {
       default: 20
     }
   },
-  computed: {},
+
+  computed: {
+    ...mapGetters(['getInactiveProspects'])
+  },
+  
+  
   data() {
     return {
       modalOptions: {
 	background: "smoke",
 	modal: "max-h-90",
-	close: "",
+	close: "text-red",
 },
       pageNumber: 1,
       pageParams: {},

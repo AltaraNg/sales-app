@@ -1585,6 +1585,9 @@ video {
   border-color: #4c51bf;
   border-color: rgba(76, 81, 191, var(--divide-opacity));
 }
+.altaraBlue {
+    background-color: #094a73;
+  }
 
 .divide-indigo-800 > :not(template) ~ :not(template) {
   --divide-opacity: 1;

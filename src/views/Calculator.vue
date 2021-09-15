@@ -64,10 +64,11 @@
               <button
                 class="
                   rounded-full
-                  w-16
-                  h-16
-                  text-white text-3xl
+                  w-14
+                  h-14
+                  text-white text-2xl
                   cursor-pointer
+                  transform  hover:scale-125
                   bg-gray-500 focus:outline-none
                 "
                 @click="getResultMobile(biztype.id, dpayments.percent)"
@@ -325,7 +326,7 @@ export default {
     toggleColor(){
       let color = '';
       if(this.selectedDownpayment == null){
-        color = 'bg-gray-300'
+        color = 'bg-gray-300 '
       } else if (this.selectedDownpayment.percent == 20){
          color = 'bg-blue-300'
       }else if (this.selectedDownpayment.percent == 40){

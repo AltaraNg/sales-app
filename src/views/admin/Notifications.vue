@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1 class="text-2xl mt-3 mb-10 ml-4">Notifications</h1>
+    <h1 class="text-2xl mt-3 mb-10 ml-4">Notifications</h1>
     <div v-if="messages.length != 0" class="block w-full overflow-x-auto ml-4">
       <!-- Projects table -->
 
@@ -29,11 +29,14 @@
           <tr
             class="pointer"
             :key="index"
+            @click="showDetail(message)"
             v-for="(message, index) in messages"
-            :style="
+            :style="[
               index % 2 === 0
                 ? { 'background-color': 'white' }
-                : { 'background-color': '#F3F4F6' }
+                : { 'background-color': '#F3F4F6' },
+                message.read === 1 ? {'color': '#4AC2F0'} : {'color': '#094a73'}
+                ]
             "
           >
             <th
@@ -46,9 +49,9 @@
               </div>
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
             >
-              {{ message.message || "" }}
+              {{ message.message | truncate(10) || "" }}
             </th>
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
@@ -58,33 +61,52 @@
           </tr>
         </tbody>
       </table>
+      
+      <vue-tailwind-modal
+        :showing="showModal"
+        @close="showModal = false"
+        :showClose="true"
+        :backgroundClose="false"
+        :css="modalOptions"
+      >
+        <h4 class="h4 text-sm">Sent: {{ currentMessage.created_at }}</h4>
+        <p>Message: {{ currentMessage.message }}</p>
+      </vue-tailwind-modal>
       <div>
-          <base-pagination :pageParam="pageParams"></base-pagination>
+        <base-pagination :pageParam="pageParams" @fetchData="fetchMessages()"></base-pagination>
       </div>
     </div>
+    
     <div v-else class="chatBox">
-        No messages available
+      No messages available
     </div>
   </div>
 </template>
 
 <script>
-import { get } from "../../utilities/api";
+import { get, put } from "../../utilities/api";
+import messageApi from "../../api/messages.js";
 import queryParam from "../../utilities/queryParam";
-import BasePagination from '../../components/BasePagination.vue';
+import BasePagination from "../../components/BasePagination.vue";
+import VueTailwindModal from "vue-tailwind-modal";
+import Vue from 'vue';
 export default {
-    components: {
-        BasePagination
-    },
+  components: {
+    BasePagination,
+    VueTailwindModal
+  },
   data() {
     return {
       messages: [],
       urls: {
-        message: `/api/message`,
+        message: `/api/message`
       },
       pageParams: {},
       OId: 1,
       searchQuery: {},
+      currentMessage: "",
+      showModal: false,
+      modalOptions: {}
     };
   },
   mounted() {
@@ -95,15 +117,14 @@ export default {
       this.$LIPS(true);
       let userId = localStorage.getItem("user_id");
 
-       const query = {
-          ...this.searchQuery,
-          page: this.pageParams.page,
-          limit: this.pageParams.limit,
-          receiver: userId
-        };
-      let messages = await get(
-        this.urls.message + queryParam(query)
-      );
+      const query = {
+        ...this.searchQuery,
+        page: this.pageParams.page,
+        limit: this.pageParams.limit,
+        receiver: userId
+      };
+      const messages = await messageApi.index(queryParam(query));
+
       let {
         current_page,
         first_page_url,
@@ -115,7 +136,7 @@ export default {
         next_page_url,
         to,
         total,
-        prev_page_url,
+        prev_page_url
       } = messages.data.data;
       this.pageParams = Object.assign({}, this.pageParams, {
         current_page,
@@ -127,14 +148,33 @@ export default {
         next_page_url,
         to,
         total,
-        prev_page_url,
+        prev_page_url
       });
       this.messages = messages.data.data.data;
       this.$LIPS(false);
     },
-  },
+
+    async updateRead(message) {
+      this.$LIPS(true);
+      let resp = await put(`/api/message/${message.id}`, { read: true });
+      let m = this.messages.findIndex(item => {
+        return item.id === message.id;
+      })
+
+      Vue.set(this.messages, m, resp.data.data);
+      return "Success";
+    },
+
+    async showDetail(message) {
+      if (message.read !== 1) {
+        await this.updateRead(message);
+      }
+      this.currentMessage = message;
+      this.showModal = true;
+      this.$LIPS(false);
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

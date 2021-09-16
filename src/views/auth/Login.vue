@@ -89,12 +89,17 @@ export default {
               Auth.set(data);
             }
             this.$LIPS(false);
-
+            let notCookie = this.$getCookie('showNotification');
+            if(notCookie == null){
+              this.$setCookie('showNotification', true);
+            }
             this.$router.push("/admin");
           })
           .catch(({ response: { data } }) => {
             this.error = data.errors ? data.errors : data;
             this.$LIPS(false);
+
+            
 
             this.$swal({
               icon: "error",
@@ -103,6 +108,8 @@ export default {
           });
       } else this.$networkErr();
     },
+
+   
   },
 };
 </script>

@@ -70,8 +70,7 @@
               <button
                 class="
                   rounded-full
-                  w-14
-                  h-14
+                   d_buttons
                   text-white text-2xl
                   cursor-pointer
                   transform  hover:scale-125
@@ -465,7 +464,6 @@ export default {
         this.businessTypes = this.businessTypes.filter((item) => {
           return item.name.includes("Products");
         });
-                console.log(this.businessTypes);
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -481,5 +479,9 @@ button,
 }
 .alert{
   margin-bottom: 200%;
+}
+.d_buttons{
+  width:3.7rem;
+  height:3.7rem;
 }
 </style>

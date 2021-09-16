@@ -31,10 +31,12 @@
             :key="index"
             @click="showDetail(message)"
             v-for="(message, index) in messages"
-            :style="
+            :style="[
               index % 2 === 0
                 ? { 'background-color': 'white' }
-                : { 'background-color': '#F3F4F6' }
+                : { 'background-color': '#F3F4F6' },
+                message.read === 1 ? {'color': '#4AC2F0'} : {'color': '#094a73'}
+                ]
             "
           >
             <th
@@ -49,7 +51,7 @@
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
             >
-              {{ message.message | truncate(8) || "" }}
+              {{ message.message | truncate(10) || "" }}
             </th>
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
@@ -59,9 +61,7 @@
           </tr>
         </tbody>
       </table>
-      <div>
-        <base-pagination :pageParam="pageParams"></base-pagination>
-      </div>
+      
       <vue-tailwind-modal
         :showing="showModal"
         @close="showModal = false"
@@ -72,7 +72,11 @@
         <h4 class="h4 text-sm">Sent: {{ currentMessage.created_at }}</h4>
         <p>Message: {{ currentMessage.message }}</p>
       </vue-tailwind-modal>
+      <div>
+        <base-pagination :pageParam="pageParams" @fetchData="fetchMessages()"></base-pagination>
+      </div>
     </div>
+    
     <div v-else class="chatBox">
       No messages available
     </div>

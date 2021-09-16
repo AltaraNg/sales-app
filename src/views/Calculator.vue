@@ -6,9 +6,9 @@
         h-full
         flex flex-col
         items-center
-        justify-center
+        
         altaraBlue
-        bg-no-repeat bg-full
+        bg-no-repeat 
       "
       :style="`background-image: url('${registerBg2}');`"
     >
@@ -37,8 +37,14 @@
           </div>
         </form>
       </div>
+      
+      <div v-if ="select_product == false" class="bg-red-500 alert rounded-full  shadow-lg flex -mt-4 animate-bounce px-5 mx-3 mx-8   py-3  lg:hidden items-center md:flex  justify-center">
+        <p  class="text-white text-center font-semibold text-lg md:text-2xl mr-2 " >PLEASE SELECT A PRODUCT</p>
+        <ArrowUp/>
+      </div>
       <!-- mobile view -->
-      <div
+      <div  class="w-full"  v-else >
+      <div 
         class="md:flex md:flex-col lg:hidden items-center w-full"
         v-for="biztype in businessTypes"
         :key="biztype.id"
@@ -198,6 +204,7 @@
           </div>
         </div>
       </div>
+      </div>
 
       <!-- desktop view -->
       <div
@@ -284,6 +291,7 @@ import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
 import calculate from "../utilities/calculator";
 import { get, post } from "../utilities/api";
+import ArrowUp from "../components/svgs/arrowup.vue"
 export default {
   data() {
     return {
@@ -311,13 +319,15 @@ export default {
       eachDownpayment: {},
       totals: [],
       test1: true,
+      select_product: false,
       downPaymentArr: [],
       selectedDownpayment: null,
       downpaymentCalculations: [],
     };
   },
   components: {
-    AutoComplete,
+    AutoComplete, 
+    ArrowUp
   },
   computed: {
     computedGetCalc() {
@@ -367,7 +377,9 @@ export default {
   methods: {
     selectedItem(value) {
       this.selectedProduct = value;
+      this.select_product = true
     },
+
     getResultMobile(bizId, percent) {
       this.selectedDownpayment = this.downpaymentCalculations.filter(
         (result) => {
@@ -466,5 +478,8 @@ export default {
 button,
 .amount {
   font-family: "Nanum Pen Script", cursive;
+}
+.alert{
+  margin-bottom: 200%;
 }
 </style>

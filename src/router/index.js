@@ -13,6 +13,7 @@ import Todo from "@/views/admin/Todo.vue";
 import SendMessage from "@/views/admin/SendMessage.vue";
 import Notifications from "@/views/admin/Notifications.vue"
 import Feedback from "@/views/admin/Feedback.vue";
+import Calculator from "@/views/Calculator.vue"
 import InactiveProspects from "@/views/admin/InactiveProspects.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
@@ -93,6 +94,14 @@ const router = new VueRouter({
         component: Index,
     },
     {
+        path:"/calculator",
+        name:"calculator",
+        component: Calculator,
+        meta:{
+            NoAuth:true
+        }
+    },
+    {
         path: "/admin/userProfile/:id",
         name: "userProfile",
         component: UserProfile,
@@ -118,13 +127,15 @@ router.beforeEach((to, from, next) => {
         .filter(Boolean)[0]
         .toUpperCase();
     const token = localStorage.getItem("api_token");
-    goingTo != "ADMIN" && token ? reRoute("admin") : next();
-
+    if (goingTo != "ADMIN" && !to.matched.some(route => route.meta.NoAuth)) {
+        token ? reRoute("admin") : next();
+        return
+    }
 
     if (to.matched.some(route => route.meta.requiresAuth)) {
         token ? next() : reRoute("login");
+        return;
     }
-
     next();
 });
 export default router;

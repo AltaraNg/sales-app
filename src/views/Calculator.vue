@@ -135,7 +135,7 @@
                 "
                 :class="toggleColor"
               >
-                Monthly Repayment
+                Bi-Weekly Repayment
               </div>
               <p class="amount font-bold text-lg text-center">
                 {{

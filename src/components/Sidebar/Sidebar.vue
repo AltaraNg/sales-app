@@ -115,6 +115,21 @@
           </li>
             </router-link>
 
+              <router-link to="/calculator"
+          >
+          <li class="items-center ml-2">
+            
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+                :class="['text-gray-800 hover:text-gray-600']"
+              >
+              <i class="fas fa-calculator  mr-2 text-sm"
+                  :class="['text-gray-400']"></i>
+                Calculator
+              </a>
+          </li>
+            </router-link>
+
 
             <router-link to="/admin/todos">
 

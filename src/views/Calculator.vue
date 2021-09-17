@@ -18,13 +18,13 @@
             class="
               text-white
               tracking-wide
-              text-2xl
+              lg:text-2xl text-md
               font-black
               text-center
               pb-4
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans
+            Do The Math, Calculate Your Product/Cash Loans for Six Months/Bi-Monthly Repayment
           </h3>
         </div>
         <form>
@@ -135,7 +135,7 @@
                 "
                 :class="toggleColor"
               >
-                Monthly Repayment
+                Bi-Monthly Repayment
               </div>
               <p class="amount font-bold text-lg text-center">
                 {{

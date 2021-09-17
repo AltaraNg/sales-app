@@ -24,7 +24,7 @@
               pb-4
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans for Six Months/Bi-weekly Repayment
+            Do The Math, Calculate Your Product/Cash Loans for Six Months/Bi-Monthly Repayment
           </h3>
         </div>
         <form>
@@ -135,7 +135,7 @@
                 "
                 :class="toggleColor"
               >
-                Bi-Weekly Repayment
+                Bi-Monthly Repayment
               </div>
               <p class="amount font-bold text-lg text-center">
                 {{

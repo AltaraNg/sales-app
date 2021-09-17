@@ -5,6 +5,9 @@
         class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
       >
         <div class="hidden md:contents">
+          <div class="flex-col mb-2">
+            <auto-complete :url="'/api/customer_contact'" :title="'Search User'" />
+          </div>
           <div class="flex-col">
             <div class="flex justify-between">
               <div class="w-full lg:w-2/12 xl:w-2/12">
@@ -141,6 +144,11 @@
           <div class="flex-col">
             <div class="flex flex-wrap">
               <div class="w-full lg:w-2/12 xl:w-3/12">
+
+              <div class="relative w-50 mb-3">
+                <auto-complete :url="'/api/customer_contact'" :title="'Search User'" />
+
+              </div>
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -436,7 +444,7 @@
         </div>
       </div>
       <div
-        class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+        class="hidden md:hidden relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
       >
         <base-pagination
           :pageParam="pageParams"
@@ -509,6 +517,7 @@
 </template>
 
 <script>
+import AutoComplete from '../../components/AutoCompleteSearch.vue'
 import {mapGetters} from 'vuex';
 import { get, post } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
@@ -527,7 +536,8 @@ export default {
   components: {
     DatePicker,
     BasePagination,
-    VueTailwindModal
+    VueTailwindModal,
+    AutoComplete
   },
 
   props: {
@@ -566,7 +576,8 @@ export default {
       page: 1,
       apiUrls: {
         postComment: `/api/feedback`,
-        getDSAs: `/api/get-users?role=18`
+        getDSAs: `/api/get-users?role=18`,
+        customerContact: '/api/customer_contact'
       },
       userMeta: {},
       feedback: "",

@@ -115,7 +115,7 @@ export default {
 
         get(this.url + queryParam(searchableFields))
           .then(res => {
-            this.customers = res.data.data[0].data;
+            this.customers = res?.data?.data[0]?.data;
           })
           .catch(() => Flash.setError("error fetching result"));
       }

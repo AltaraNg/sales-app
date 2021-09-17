@@ -5,9 +5,9 @@
                 type="text"
                 class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
                 v-model="inputValue"
-                @input="searchEvent"
+                @input="searchProductEvent"
             />
-            <div v-show="inputValue && apiLoaded" class="dropdown-list">
+            <div v-show="inputValue && productRetrieved" class="dropdown-list">
                 <div v-if="itemList.length === 0" class="dropdown-item">
                     Inventory not available!!
                 </div>
@@ -45,7 +45,7 @@ export default {
             selectedItem: {},
             inputValue: "",
             itemList: [],
-            apiLoaded: false
+            productRetrieved: false
         };
     },
 
@@ -56,10 +56,10 @@ export default {
     methods: {
         selectItem(data) {
             this.inputValue = this.formatInput(data);
-            this.apiLoaded = false;
+            this.productRetrieved = false;
             this.$emit("childToParent", data);
         },
-        searchEvent() {
+        searchProductEvent() {
             this.getproduct();
         },
 
@@ -79,8 +79,8 @@ export default {
             }
             try {
                 const fetchProduct = await get(this.apiUrl + queryParam(query));
-                this.itemList = fetchProduct.data.data.data;
-                this.apiLoaded = true;
+                this.itemList = fetchProduct?.data?.data?.data;
+                this.productRetrieved = true;
             } catch (err) {
                 this.$displayErrorMessage(err);
             }

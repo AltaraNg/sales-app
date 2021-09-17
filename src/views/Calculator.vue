@@ -65,13 +65,13 @@
             mb-10
           "
         >
-          <div class="flex justify-center md:space-x-20 justify-evenly mb-4">
+          <div class="flex justify-center md:space-x-20  justify-evenly mb-4">
             <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
               <button
                 class="
                   rounded-full
-                   d_buttons
-                  text-white text-2xl
+                   d_buttons font-semibold
+                  text-white text-lg
                   cursor-pointer
                   transform  hover:scale-125
                   bg-gray-500 focus:outline-none
@@ -111,7 +111,7 @@
               >
                 Initial Payment
               </div>
-              <p class="amount font-bold text-2xl text-center">
+              <p class="amount font-bold text-lg text-center">
                 {{
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
@@ -137,7 +137,7 @@
               >
                 Monthly Repayment
               </div>
-              <p class="amount font-bold text-2xl text-center">
+              <p class="amount font-bold text-lg text-center">
                 {{
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
@@ -165,7 +165,7 @@
               >
                 Total Repayment
               </div>
-              <p class="amount font-bold text-2xl text-center">
+              <p class="amount font-bold text-lg text-center">
                 {{
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
@@ -191,7 +191,7 @@
               >
                 Total Product Price
               </div>
-              <p class="amount font-bold text-2xl text-center">
+              <p class="amount font-bold text-lg text-center">
                 {{
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
@@ -302,22 +302,11 @@ export default {
         downPaymentRates: `/api/down_payment_rate`,
       },
       selectedProduct: {},
-      downPaymentRates: [],
       products: [],
       businessTypes: [],
       product: "",
-      isActive: false,
-      repaymentCycle: 14,
-      repaymentDuration: 180,
-      calculation: [],
-      fPayment: "",
-      tpayment: "",
-      pPrice: "",
-      rPayment: "",
       downPaymentRates: [],
       eachDownpayment: {},
-      totals: [],
-      test1: true,
       select_product: false,
       downPaymentArr: [],
       selectedDownpayment: null,
@@ -391,7 +380,7 @@ export default {
     downpaymentCalc() {
       let downPaymentArr = [];
       this.businessTypes.forEach((bizType) => {
-        return this.downPaymentRates.forEach((paymentRate) => {
+         this.downPaymentRates.forEach((paymentRate) => {
           let filteredBizType = this.calculation.filter((param) => {
             return (
               bizType.id === param.business_type_id &&
@@ -472,11 +461,6 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
-button,
-.amount {
-  font-family: "Nanum Pen Script", cursive;
-}
 .alert{
   margin-bottom: 200%;
 }

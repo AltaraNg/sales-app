@@ -1,70 +1,52 @@
 <template>
-<div>
-  <div class="flex flex-row">
-    <div
-      class="relative w-full px-0"
-    >
-      <input
-        placeholder="Search Customer"
-        @blur="onBlur"
-        @focus="onFocus"
-        @keydown.down="onDownKey"
-        @keydown.enter="onEnterKey"
-        @keydown.esc="onEscape"
-        @keydown.up="onUpKey"
-        ref="search"
-        type="text"
-        class="mx-input"
-        v-model="search"
-      />
-      <span class="" ref="text" v-html="displayText"></span>
+  <div>
+    <div class="md:flex md:flex-row ">
+      <div class="px-1 flex-1">
+        <input
+          placeholder="Search Customer"
+          @blur="onBlur"
+          @focus="onFocus"
+          @keydown.down="onDownKey"
+          @keydown.enter="onEnterKey"
+          @keydown.esc="onEscape"
+          @keydown.up="onUpKey"
+          ref="search"
+          type="text"
+          class="mx-input"
+          v-model="search"
+        />
+        <span class="" ref="text" v-html="displayText"></span>
 
-      <div class="z-auto">
-      <ul class="" v-if="open && customers.length">
-        <li
-          :key="index"
-          class=""
-          v-for="(customer, index) in customers"
+        <div class="">
+          <ul class="z-10" v-if="open && customers.length">
+            <li :key="index" class="" v-for="(customer, index) in customers">
+              <a
+                :class="selectIndex === index && ''"
+                @mousedown.prevent="select(customer)"
+                class=" d-flex justify-content-between"
+                v-html="getAutocomplete(customer)"
+              >
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class=" w-full flex-1 flex-row text-center ">
+        <span
+          class="radio mb-0 flex-1 mx-3 text-xs"
+          v-for="{ title, column } in searchColumns"
         >
-          <a
-            :class="selectIndex === index && ''"
-            @mousedown.prevent="select(customer)"
-            class=" d-flex justify-content-between"
-            v-html="getAutocomplete(customer)"
-          >
-          </a>
-        </li>
-      </ul>
+          <input
+            :id="column"
+            :value="column"
+            type="radio"
+            v-model="searchColumn"
+          />
+          <label :for="column">{{ title | capitalize }}</label>
+        </span>
+      </div>
     </div>
-    </div>
-    
-
-    <div class=" w-full float-right hidden md:contents">
-      <span class="mx-2 radio mb-0" v-for="{ title, column } in searchColumns">
-        <input
-          :id="column"
-          :value="column"
-          type="radio"
-          v-model="searchColumn"
-        />
-        <label :for="column">{{ title | capitalize }}</label>
-      </span>
-    </div>
-
-    
   </div>
-  <div class="contents md:hidden">
-      <span class="mx-2 radio mb-0" v-for="{ title, column } in searchColumns">
-        <input
-          :id="column"
-          :value="column"
-          type="radio"
-          v-model="searchColumn"
-        />
-        <label :for="column">{{ title | capitalize }}</label>
-      </span>
-    </div>
-</div>
 </template>
 
 <script>

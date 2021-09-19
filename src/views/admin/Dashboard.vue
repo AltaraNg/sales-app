@@ -5,15 +5,14 @@
         class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
       >
         <div class="hidden md:contents">
-          <div class="flex-col mb-2">
+          <div class="mb-2">
             <auto-complete :url="'/api/customer_contact'" :title="'Search User'" />
           </div>
-          <div class="flex-col">
-            <div class="flex justify-between">
-              <div class="w-full lg:w-2/12 xl:w-2/12">
-                <div class="relative w-50 mb-3 p-1">
+          <div class="flex flex-row mb-3 w-full">
+              <div class="flex-1">
+                <div class="p-1">
                   <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    class="block uppercase text-gray-700 text-sm font-bold mb-2 sm:text-xs overflow-auto"
                     htmlFor="grid-password"
                   >
                     Employment Status
@@ -36,8 +35,8 @@
                   </select>
                 </div>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
+              <div class="flex-1">
+                <div class="p-1">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -60,10 +59,10 @@
               </div>
 
               <div
-                class="w-full lg:w-2/12 xl:w-2/12 p-1"
+                class="p-1 flex-1"
                 v-if="canDo(Manager) || canDo(Coordinator)"
               >
-                <div class="relative w-50 mb-3">
+                <div class="relative mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -83,8 +82,8 @@
                 </div>
               </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1" v-if="!canDo(DSA)">
-                <div class="relative w-50 mb-3">
+              <div class="flex-1 p-1" v-if="!canDo(DSA)">
+                <div class="relative mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -104,8 +103,8 @@
                 </div>
               </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
+              <div class="flex-1 p-1">
+                <div class="relative mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -120,8 +119,8 @@
                   </div>
                 </div>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
+              <div class="flex-1 p-1">
+                <div class="relative mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
@@ -137,7 +136,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
 
         <div class="contents md:hidden">
@@ -240,13 +239,16 @@
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
             <i class="fas fa-search"></i>
-            Search
+            <span class="mx-1 hidden md:contents">Search</span>
+            
           </div>
           <div
             v-on:click="resetSearch()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-            Reset
+          <i class="fas fa-recycle"></i>
+            <span class="mx-1 hidden md:contents">Reset</span>
+            
           </div>
 
           <div
@@ -254,7 +256,8 @@
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
             <i class="fas fa-file-export"></i>
-            Export
+            <span class="mx-1 hidden md:contents">Export</span>
+            
           </div>
         </div>
       </div>

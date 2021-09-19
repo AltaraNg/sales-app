@@ -311,8 +311,6 @@ export default {
       downPaymentArr: [],
       selectedDownpayment: null,
       downpaymentCalculations: [],
-      repayment_duration: 180
-
     };
   },
   components: {
@@ -356,16 +354,12 @@ export default {
     
     },
 
-
-    
   },
-
   async mounted() {
     await this.getCalculation();
     await this.getProduct();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
-
   },
 
   methods: {
@@ -382,7 +376,7 @@ export default {
           return result.bizId == bizId && result.percent == percent;
         }
       )[0];
-      console.log(this.selectedDownpayment, 'this.selectedDownpayment');
+
     },
 
     downpaymentCalc() {
@@ -392,7 +386,7 @@ export default {
           let filteredBizType = this.calculation.filter((param) => {
             return (
               bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id
+              paymentRate.id === param.down_payment_rate_id 
             );
           });
 
@@ -411,14 +405,8 @@ export default {
           });
         });
       });
-     
       this.downpaymentCalculations = downPaymentArr;
       return downPaymentArr;
-
-    },
-     twentyPercent(){
-       console.log(this.downpaymentCalculations[0]);
-      return this.downpaymentCalculations[0]
     },
     async getProduct() {
       try {

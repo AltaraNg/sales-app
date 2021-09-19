@@ -116,7 +116,7 @@
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
                     ? $formatCurrency(
-                        Math.ceil(selectedDownpayment.actualDownpayment)
+                        selectedDownpayment.actualDownpayment
                       )
                     : "₦0.00"
                 }}
@@ -142,7 +142,7 @@
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
                     ? $formatCurrency(
-                        Math.ceil(selectedDownpayment.actualRepayment / 12)
+                        selectedDownpayment.actualRepayment / 12
                       )
                     : "₦0.00"
                 }}
@@ -170,7 +170,7 @@
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
                     ? $formatCurrency(
-                        Math.ceil(selectedDownpayment.actualRepayment)
+                        selectedDownpayment.actualRepayment
                       )
                     : "₦0.00"
                 }}
@@ -195,7 +195,7 @@
                 {{
                   selectedDownpayment !== null &&
                   biztype.id === selectedDownpayment.bizId
-                    ? $formatCurrency(Math.ceil(selectedDownpayment.total))
+                    ? $formatCurrency(selectedDownpayment.total)
                     : "₦0.00"
                 }}
               </p>
@@ -256,25 +256,25 @@
                 <td class="font-medium text-base">
                   {{
                     $formatCurrency(
-                      Math.ceil(downpayments.actualDownpayment)
+                      Math.floor(downpayments.actualDownpayment)
                     ) || ""
                   }}
                 </td>
                 <td class="font-medium text-base">
                   {{
                     $formatCurrency(
-                      Math.ceil(downpayments.actualRepayment / 12)
+                      Math.floor(downpayments.actualRepayment / 12)
                     ) || ""
                   }}
                 </td>
                 <td class="font-medium text-base">
                   {{
-                    $formatCurrency(Math.ceil(downpayments.actualRepayment)) ||
+                    $formatCurrency(Math.floor(downpayments.actualRepayment)) ||
                     ""
                   }}
                 </td>
                 <td class="font-medium text-base">
-                  {{ $formatCurrency(Math.ceil(downpayments.total)) || "" }}
+                  {{ $formatCurrency(Math.floor(downpayments.total)) || "" }}
                 </td>
               </tr>
             </tbody>
@@ -311,6 +311,8 @@ export default {
       downPaymentArr: [],
       selectedDownpayment: null,
       downpaymentCalculations: [],
+      repayment_duration: 180
+
     };
   },
   components: {
@@ -353,19 +355,25 @@ export default {
       return  color 
     
     },
+
+
     
   },
+
   async mounted() {
     await this.getCalculation();
     await this.getProduct();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
+
   },
 
   methods: {
     selectedItem(value) {
       this.selectedProduct = value;
-      this.select_product = true
+      this.select_product = true;
+       this.downpaymentCalc()
+       this.getResultMobile(2, 20)
     },
 
     getResultMobile(bizId, percent) {
@@ -374,7 +382,7 @@ export default {
           return result.bizId == bizId && result.percent == percent;
         }
       )[0];
-
+      console.log(this.selectedDownpayment, 'this.selectedDownpayment');
     },
 
     downpaymentCalc() {
@@ -384,7 +392,7 @@ export default {
           let filteredBizType = this.calculation.filter((param) => {
             return (
               bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id 
+              paymentRate.id === param.down_payment_rate_id
             );
           });
 
@@ -403,10 +411,15 @@ export default {
           });
         });
       });
+     
       this.downpaymentCalculations = downPaymentArr;
       return downPaymentArr;
-    },
 
+    },
+     twentyPercent(){
+       console.log(this.downpaymentCalculations[0]);
+      return this.downpaymentCalculations[0]
+    },
     async getProduct() {
       try {
         const fetchProduct = await get(this.apiUrls.getProduct + this.product);

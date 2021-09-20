@@ -35,7 +35,7 @@
               index % 2 === 0
                 ? { 'background-color': 'white' }
                 : { 'background-color': '#F3F4F6' },
-                message.read === 1 ? {'color': '#4AC2F0'} : {'color': '#094a73'}
+                message.read === 1 ? {'color': '#20212B','font-weight': 100} : {'color': '#202124', 'font-weight': 800}
                 ]
             "
           >
@@ -161,7 +161,7 @@ export default {
         return item.id === message.id;
       })
 
-      Vue.set(this.messages, m, resp.data.data);
+      this.fetchMessages();
       return "Success";
     },
 

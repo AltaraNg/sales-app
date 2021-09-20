@@ -41,7 +41,7 @@
         </div>
 
         <h6
-          class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-0 pb-4 ml-2 no-underline"
         >
           SideMenu
         </h6>
@@ -49,12 +49,12 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
 
-          <router-link to="/admin/superadmin" v-if="canDo(Manager) && canView==='beta'">
+          <router-link to="/admin/superadmin" v-if="canDo(Manager) && canView==='beta'" >
 
           <li class="items-center ml-2">
               <div
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                
               >
                 <i
                   class="fas fa-chart-line mr-2 text-sm"
@@ -65,15 +65,14 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/dashboard">
+            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700"> 
 
           <li class="items-center ml-2">
               <div
                 class="text-xs uppercase py-3 font-bold block"
               >
                 <i
-                  class="fas fa-chart-line mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  class="fas fa-chart-line mr-2 text-sm"                  
                 ></i>
                 Dashboard
               </div>
@@ -81,17 +80,17 @@
             </router-link>
 
           
-          <router-link to="/admin/register"
+          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700"
           >
           <li class="items-center ml-2">
             
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                
               >
                 <i
                   class="fas fa-user-plus mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Register Customer
               </a>
@@ -99,16 +98,15 @@
             </router-link>
 
 
-           <router-link to="/admin/dsaratings">
+           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2">
            
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-star-half-alt mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Leaderboard
               </a>
@@ -131,32 +129,30 @@
             </router-link>
 
 
-            <router-link to="/admin/todos">
+            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700">
 
           <li class="items-center ml-2 rounded-lg">
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-clipboard-list mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Todos
               </a>
           </li>
             </router-link>
 
-            <router-link to="/admin/feedback" v-if="canDo(Manager)">
+            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
 
           <li class="items-center ml-2 rounded-lg">
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-clipboard-list mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Feedbacks
               </a>
@@ -164,32 +160,30 @@
             </router-link>
 
             
-            <router-link to="/admin/send_message" v-if="canDo(Manager)">
+            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2 rounded-lg">
            
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="far fa-envelope mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Send Message
               </a>
           </li>
             </router-link>
 
-             <router-link to="/admin/notifications" >
+             <router-link to="/admin/notifications" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2 rounded-lg row">
            
               <a
                 class="text-xs uppercase py-3 font-bold block col"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-bell mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                Notification
                <span class="float-right mr-3 pr-4 font-light">{{getNotifications ? getNotifications.length : ""}}</span>
@@ -198,19 +192,18 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/inactive-prospects" >
+            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2 rounded-lg">
            
               <a
-                class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                class="text-xs uppercase py-3 font-bold block"                
               >
                 <i
                   class="fas fa-user-circle mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                inactive Prospects
-               <span class="float-right mr-3 pr-4 mt-0 font-light">{{getInactiveProspects}}</span>
+               <span class="float-right mr-3 pr-4 mt-0 font-bolder animate-bounce my-auto">{{getInactiveProspects}}</span>
 
               </a>
           </li>

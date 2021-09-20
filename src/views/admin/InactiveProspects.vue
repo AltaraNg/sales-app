@@ -1,20 +1,25 @@
 <template>
-  <div class="inactive-prospects">
+  <div class="inactive-prospects overflow-x-auto">
     <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
 
-    <div class="card-area">
+    <div class="md:flex md:justify-between">
       <div
-        class="relative w-full pr-4 max-w-full flex-grow flex-1 card text-center mx-2"
+        class="pr-4 card text-center my-2"
       >
+      <div>
         <h5 class="text-gray-500 uppercase font-bold text-xs">
           Total
         </h5>
         <span class="font-semibold text-xl text-gray-800">
           {{ totalInactive }}
         </span>
+        </div>
+
+        
+
       </div>
       <div
-        class="relative w-full pr-4 max-w-full flex-grow flex-1 card text-center mx-2"
+        class=" pr-4 card text-center my-2"
       >
         <h5 class="text-gray-500 uppercase font-bold text-xs">
           Affidavit
@@ -24,7 +29,7 @@
         </span>
       </div>
       <div
-        class="relative w-full pr-4 max-w-full flex-grow flex-1 card text-center mx-2"
+        class="pr-4 card text-center my-2"
       >
         <h5 class="text-gray-500 uppercase font-bold text-xs">
           KYC
@@ -34,11 +39,11 @@
         </span>
       </div>
     </div>
-    <div
-      class="block w-full overflow-x-auto mt-10 ml-2"
+    <div      
       v-if="prospects.length > 0"
     >
-      <table class="items-center w-full bg-transparent border-collapse">
+    <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
+      <table class="items-center w-full bg-transparent border-collapse mt-10">
         <thead>
           <tr>
             <th
@@ -92,9 +97,42 @@
                   : "No Activity"
               }}
             </td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+              {{user.last_prospect_activity
+                  ? user.last_prospect_activity.date
+                  : "N/A"}}
+            </td>
           </tr>
         </tbody>
       </table>
+      </div>
+      <div class="contents md:hidden">
+        <div class="pt-10">
+         <h3 class="text-center text-lg mb-2 font-bold">List Of Inactive Prospects</h3>
+        </div>
+        <div :key="index" v-for="(user, index) in prospects">
+            <div v-on:click="selectUser(user)" class="customerTile">
+              <div class="flex justify-between">
+                <div class="flex items-stretch">
+                  <div
+                    :style="{ background: generateRandomColor() }"
+                    class="avatarCircle"
+                  >
+                    {{ user.name[0].toUpperCase() || "" }}
+                  </div>
+                  <div class="self-center font-medium">
+                    {{ user.name || "" }}
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <div class="font-bold">{{  user.last_prospect_activity
+                  ? user.last_prospect_activity.type
+                  : "No Activity"}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
     <div v-else class="chatBox mt-4 w-48">
       You are up to date
@@ -119,6 +157,7 @@
     <base-pagination
       :pageParam="pageParams"
       @fetchData="fetchInactiveProspects()"
+      class="hidden md:contents"
     >
     </base-pagination>
   </div>
@@ -133,7 +172,7 @@ export default {
   components: { BasePagination, VueTailwindModal },
   data() {
     return {
-      headers: ["S/N", "Name", "Stage", "Last Activity"],
+      headers: ["S/N", "Name", "Stage", "Last Activity", "Last Activity Date"],
       pageParams: {},
       apiUrls: {
         inactive_prospects: "/api/inactive/prospects"
@@ -146,8 +185,11 @@ export default {
       activeUser: null
     };
   },
-  mounted() {
+  beforeMount(){
     this.fetchInactiveProspects();
+  },
+  mounted() {
+    this.getNextList();
   },
   methods: {
     async fetchInactiveProspects() {
@@ -200,9 +242,33 @@ export default {
     selectUser(user) {
       this.$router.push(`/admin/userProfile/${user.id}`);
     },
+      generateRandomColor() {
+      return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    },
     viewActivity(user){
       this.activeUser = user;
       this.showModal = true;
+    },
+     getNextList(){
+      window.onscroll = () =>{
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+        if(bottomOfWindow){
+          this.pageParams.page += 1;
+          const query = {
+          ...this.searchQuery,
+          page: this.pageParams.page,
+          limit: this.pageParams.limit,
+          inActiveDays: 30
+        };
+
+        get(
+          this.apiUrls.inactive_prospects + queryParam(query)
+        ).then(res => {
+          this.prospects = this.prospects.concat(res?.data?.data?.prospects.data);
+        });
+        
+        }
+      }
     }
   }
 };

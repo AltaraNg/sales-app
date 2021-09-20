@@ -27,7 +27,7 @@
                 to="/calculator"
                 class="get-started text-white font-bold px-12 py-3 rounded outline-none focus:outline-none mr-1 mb-1 altaraBlue text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
               >
-                Use Calculator
+                Product Pricing
               </router-link>
             </div>
           </div>

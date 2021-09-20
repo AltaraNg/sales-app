@@ -592,14 +592,18 @@ export default {
       username : localStorage.getItem('user_name')
     };
   },
-  async created() {
-    await this.searchUsersList();
+  beforeMount(){
+    this.searchUsersList();
+  },
+
+  async mounted() {
     this.showNotification();
     await this.getBranches();
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
     this.canView = localStorage.getItem("flag");
+    this.getNextList();
   },
   methods: {
     async getEmploymentStatus() {
@@ -760,6 +764,27 @@ export default {
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+    },
+    getNextList(){
+      window.onscroll = () =>{
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+        if(bottomOfWindow){
+          this.pageParams.page += 1;
+          const query = {
+          ...this.searchQuery,
+          page: this.pageParams.page,
+          limit: this.pageParams.limit,
+          inActiveDays: 30
+        };
+
+        get(
+          this.apiUrls.customerContact + queryParam(query)
+        ).then(res => {
+          this.usersList = this.usersList.concat(res?.data?.data[0].data);
+        });
+        
+        }
+      }
     },
     openModal(data) {
       this.comments = data.notifications;

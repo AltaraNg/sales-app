@@ -1,30 +1,47 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="
-        w-full
-        h-full
-        flex flex-col
-        items-center
-        
-        altaraBlue
-        bg-no-repeat 
-      "
+      class="w-full h-full flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
       <div class="w-full sm:px-3 md:px-36 lg:px-64 pb-10">
-        <div class="flex flex-col items-center justify-center mt-10 px-10">
+        <div
+          class="flex relative flex-col  items-center justify-center mt-10 px-10"
+        >
+          <button
+            class="
+              bg-white
+              text-black
+              rounded
+              px-8
+              py-2
+              absolute
+              left-0
+              lg:-ml-40 cursor-pointer
+              font-semibold   
+              text-base
+              top-0
+              -mt-6
+              ml-3
+            "
+            @click="hasHistory() ? $router.go(-1) : $router.push('/')"
+          >
+            Back
+          </button>
           <h3
             class="
               text-white
               tracking-wide
-              lg:text-2xl text-md
+              lg:text-2xl
+              text-md
               font-black
               text-center
               pb-4
+              mt-10
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans for Six Months/Bi-Monthly Repayment
+            Do The Math, Calculate Your Product/Cash Loans for Six
+            Months/Bi-Monthly Repayment
           </h3>
         </div>
         <form>
@@ -37,172 +54,192 @@
           </div>
         </form>
       </div>
-      
-      <div v-if ="select_product == false" class="bg-red-500 alert rounded-full  shadow-lg flex -mt-4 animate-bounce px-5 mx-3 mx-8   py-3  lg:hidden items-center md:flex  justify-center">
-        <p  class="text-white text-center font-semibold text-lg md:text-2xl mr-2 " >PLEASE SELECT A PRODUCT</p>
-        <ArrowUp/>
+
+      <div
+        v-if="select_product == false"
+        class="
+          bg-red-500
+          alert
+          rounded-full
+          shadow-lg
+          flex
+          -mt-4
+          animate-bounce
+          px-5
+          mx-3 mx-8
+          py-3
+          lg:hidden
+          items-center
+          md:flex
+          justify-center
+        "
+      >
+        <p
+          class="text-white text-center font-semibold text-lg md:text-2xl mr-2"
+        >
+          PLEASE SELECT A PRODUCT
+        </p>
+        <ArrowUp />
       </div>
       <!-- mobile view -->
-      <div  class="w-full"  v-else >
-      <div 
-        class="md:flex md:flex-col lg:hidden items-center w-full"
-        v-for="biztype in businessTypes"
-        :key="biztype.id"
-      >
-        <div
-          class="
-            rounded-lg
-            flex flex-col
-            md:px-8
-            py-8
-            px-4
-            bg-white
-            shadow-2xl
-            h-auto
-            w-11/12
-            md:w-11/12
-            mx-auto
-            mb-10
-          "
+      <div class="w-full" v-else >
+        <div 
+          class="md:flex md:flex-col lg:hidden items-center w-full"
+          v-for="biztype in businessTypes"
+          :key="biztype.id"
         >
-          <div class="flex justify-center md:space-x-20  justify-evenly mb-4">
-            <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
-              <button
-                class="
-                  rounded-full
-                   d_buttons font-semibold
-                  text-white text-lg
-                  cursor-pointer
-                  transform  hover:scale-125
-                  bg-gray-500 focus:outline-none
-                "
-                @click="getResultMobile(biztype.id, dpayments.percent)"
-                :class="
-                  dpayments.percent == 20
-                    ? 'bg-blue-500'
-                    : dpayments.percent == 40
-                    ? 'bg-red-500'
-                    : dpayments.percent == 60
-                    ? 'bg-green-500'
-                    : 'bg-yellow-500'
-                "
-              >
-                {{ dpayments.percent }}%
-              </button>
-            </div>
-          </div>
-          <p class="text-lg font-semibold" :class="toggletextColor">{{ biztype.name }}</p>
-          <div class="flex items-center px-4 justify-between mt-8">
-            <div class="flex-col items-center">
-              <div
-                class="
-                  rounded-lg
-                  px-4
-                  md:px-8
-                  py-1
-                  text-xs
-                  md:text-sm
-                  font-semibold
-                  
-                "
-                :class ="
-                  toggleColor
-                "
-              >
-                Initial Payment
+          <div
+            class="
+              rounded-lg
+              flex flex-col
+              md:px-8
+              py-8
+              px-4
+              bg-white
+              shadow-2xl
+              h-auto
+              w-11/12
+              md:w-11/12
+              mx-auto
+              mb-10
+            "
+          >
+            <div class="flex justify-center md:space-x-20 justify-evenly mb-4">
+              <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
+                <button
+                  class="
+                    rounded-full
+                    d_buttons
+                    font-semibold
+                    text-white text-lg
+                    cursor-pointer
+                    transform
+                    hover:scale-125
+                    bg-gray-500
+                    focus:outline-none
+                  "
+                  @click="getResultMobile(biztype.id, dpayments.percent)"
+                  :class="
+                    dpayments.percent == 20
+                      ? 'bg-blue-500'
+                      : dpayments.percent == 40
+                      ? 'bg-red-500'
+                      : dpayments.percent == 60
+                      ? 'bg-green-500'
+                      : 'bg-yellow-500'
+                  "
+                >
+                  {{ dpayments.percent }}%
+                </button>
               </div>
-              <p class="amount font-bold text-lg text-center">
-                {{
-                  selectedDownpayment !== null &&
-                  biztype.id === selectedDownpayment.bizId
-                    ? $formatCurrency(
-                        selectedDownpayment.actualDownpayment
-                      )
-                    : "₦0.00"
-                }}
-              </p>
             </div>
-            <div class="flex-col items-center">
-              <div
-                class="
-                  rounded-lg
-                  px-4
-                  md:px-8
-                  py-1
-                  text-xs
-                  md:text-sm
-                  font-semibold
-                "
-                :class="toggleColor"
-              >
-                Bi-Monthly Repayment
+            <p class="text-lg font-semibold" :class="toggletextColor">
+              {{ biztype.name }}
+            </p>
+            <div class="flex items-center px-4 justify-between mt-8">
+              <div class="flex-col items-center">
+                <div
+                  class="
+                    rounded-lg
+                    px-4
+                    md:px-8
+                    py-1
+                    text-xs
+                    md:text-sm
+                    font-semibold
+                  "
+                  :class="toggleColor"
+                >
+                  Initial Payment
+                </div>
+                <p class="amount font-bold text-lg text-center">
+                  {{
+                    selectedDownpayment !== null &&
+                    biztype.id === selectedDownpayment.bizId
+                      ? $formatCurrency(selectedDownpayment.actualDownpayment)
+                      : "₦0.00"
+                  }}
+                </p>
               </div>
-              <p class="amount font-bold text-lg text-center">
-                {{
-                  selectedDownpayment !== null &&
-                  biztype.id === selectedDownpayment.bizId
-                    ? $formatCurrency(
-                        selectedDownpayment.actualRepayment / 12
-                      )
-                    : "₦0.00"
-                }}
-              </p>
+              <div class="flex-col items-center">
+                <div
+                  class="
+                    rounded-lg
+                    px-4
+                    md:px-8
+                    py-1
+                    text-xs
+                    md:text-sm
+                    font-semibold
+                  "
+                  :class="toggleColor"
+                >
+                  Bi-Monthly Repayment
+                </div>
+                <p class="amount font-bold text-lg text-center">
+                  {{
+                    selectedDownpayment !== null &&
+                    biztype.id === selectedDownpayment.bizId
+                      ? $formatCurrency(
+                          selectedDownpayment.actualRepayment / 12
+                        )
+                      : "₦0.00"
+                  }}
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-center px-4 justify-between mt-12">
-            <div class="flex-col items-center">
-              <div
-                class="
-                  rounded-lg
-                  px-4
-                  md:px-8
-                  py-1
-                  text-xs
-                  md:text-sm
-                  font-semibold
-                "
-                :class="toggleColor"
-              >
-                Total Repayment
+            <div class="flex items-center px-4 justify-between mt-12">
+              <div class="flex-col items-center">
+                <div
+                  class="
+                    rounded-lg
+                    px-4
+                    md:px-8
+                    py-1
+                    text-xs
+                    md:text-sm
+                    font-semibold
+                  "
+                  :class="toggleColor"
+                >
+                  Total Repayment
+                </div>
+                <p class="amount font-bold text-lg text-center">
+                  {{
+                    selectedDownpayment !== null &&
+                    biztype.id === selectedDownpayment.bizId
+                      ? $formatCurrency(selectedDownpayment.actualRepayment)
+                      : "₦0.00"
+                  }}
+                </p>
               </div>
-              <p class="amount font-bold text-lg text-center">
-                {{
-                  selectedDownpayment !== null &&
-                  biztype.id === selectedDownpayment.bizId
-                    ? $formatCurrency(
-                        selectedDownpayment.actualRepayment
-                      )
-                    : "₦0.00"
-                }}
-              </p>
-            </div>
-            <div class="flex-col items-center">
-              <div
-                class="
-                  rounded-lg
-                  px-4
-                  md:px-8
-                  py-1
-                  text-xs
-                  md:text-sm
-                  font-semibold 
-                "
-                :class="toggleColor"
-              >
-                Total Product Price
+              <div class="flex-col items-center">
+                <div
+                  class="
+                    rounded-lg
+                    px-4
+                    md:px-8
+                    py-1
+                    text-xs
+                    md:text-sm
+                    font-semibold
+                  "
+                  :class="toggleColor"
+                >
+                  Total Product Price
+                </div>
+                <p class="amount font-bold text-lg text-center">
+                  {{
+                    selectedDownpayment !== null &&
+                    biztype.id === selectedDownpayment.bizId
+                      ? $formatCurrency(selectedDownpayment.total)
+                      : "₦0.00"
+                  }}
+                </p>
               </div>
-              <p class="amount font-bold text-lg text-center">
-                {{
-                  selectedDownpayment !== null &&
-                  biztype.id === selectedDownpayment.bizId
-                    ? $formatCurrency(selectedDownpayment.total)
-                    : "₦0.00"
-                }}
-              </p>
             </div>
           </div>
         </div>
-      </div>
       </div>
 
       <!-- desktop view -->
@@ -290,7 +327,7 @@ import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
 import calculate from "../utilities/calculator";
 import { get, post } from "../utilities/api";
-import ArrowUp from "../components/svgs/arrowup.vue"
+import ArrowUp from "../components/svgs/arrowup.vue";
 export default {
   data() {
     return {
@@ -314,46 +351,59 @@ export default {
     };
   },
   components: {
-    AutoComplete, 
-    ArrowUp
+    AutoComplete,
+    ArrowUp,
   },
   computed: {
     computedGetCalc() {
       return this.downpaymentCalc();
     },
-    toggleColor(){
-      let color = '';
-      if(this.selectedDownpayment == null){
-        color = 'bg-gray-300 '
-      } else if (this.selectedDownpayment.percent == 20){
-         color = 'bg-blue-300'
-      }else if (this.selectedDownpayment.percent == 40){
-          color = 'bg-red-300'
-      }else if (this.selectedDownpayment.percent == 60){
-        color = 'bg-green-300'
-      }else{
-         color ='bg-yellow-300'
+    toggleColor() {
+      let color = "";
+      let selectDownpayment = !this.selectedDownpayment
+        ? null
+        : this.selectedDownpayment.percent;
+      switch (selectDownpayment) {
+        case 20:
+          color = "bg-blue-300";
+          break;
+        case 40:
+          color = "bg-red-300 ";
+          break;
+        case 60:
+          color = "bg-green-300 ";
+          break;
+        case 80:
+          color = "bg-yellow-300 ";
+          break;
+        default:
+          color = "bg-gray-400 ";
       }
-      return  color 
-    
+      return color;
     },
-    toggletextColor(){
-      let color = '';
-      if(this.selectedDownpayment == null){
-        color = 'text-gray-500'
-      } else if (this.selectedDownpayment.percent == 20){
-         color = 'text-blue-500'
-      }else if (this.selectedDownpayment.percent == 40){
-          color = 'text-red-500'
-      }else if (this.selectedDownpayment.percent == 60){
-        color = 'text-green-500'
-      }else{
-         color ='text-yellow-500'
+    toggletextColor() {
+      let color = "";
+      let selectDownpayment = !this.selectedDownpayment
+        ? null
+        : this.selectedDownpayment.percent;
+      switch (selectDownpayment) {
+        case 20:
+          color = "text-blue-500";
+          break;
+        case 40:
+          color = "text-red-500 ";
+          break;
+        case 60:
+          color = "text-green-500 ";
+          break;
+        case 80:
+          color = "text-yellow-500 ";
+          break;
+        default:
+          color = "text-gray-400 ";
       }
-      return  color 
-    
+      return color;
     },
-
   },
   async mounted() {
     await this.getCalculation();
@@ -366,8 +416,11 @@ export default {
     selectedItem(value) {
       this.selectedProduct = value;
       this.select_product = true;
-       this.downpaymentCalc()
-       this.getResultMobile(2, 20)
+      this.downpaymentCalc();
+      this.getResultMobile(2, 20);
+    },
+    hasHistory() {
+      return window.history.length > 2;
     },
 
     getResultMobile(bizId, percent) {
@@ -376,17 +429,16 @@ export default {
           return result.bizId == bizId && result.percent == percent;
         }
       )[0];
-
     },
 
     downpaymentCalc() {
       let downPaymentArr = [];
       this.businessTypes.forEach((bizType) => {
-         this.downPaymentRates.forEach((paymentRate) => {
+        this.downPaymentRates.forEach((paymentRate) => {
           let filteredBizType = this.calculation.filter((param) => {
             return (
               bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id 
+              paymentRate.id === param.down_payment_rate_id
             );
           });
 
@@ -462,11 +514,11 @@ export default {
 };
 </script>
 <style scoped>
-.alert{
+.alert {
   margin-bottom: 200%;
 }
-.d_buttons{
-  width:3.7rem;
-  height:3.7rem;
+.d_buttons {
+  width: 3.7rem;
+  height: 3.7rem;
 }
 </style>

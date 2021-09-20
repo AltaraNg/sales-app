@@ -420,7 +420,7 @@ export default {
       this.getResultMobile(2, 20);
     },
     hasHistory() {
-      return window.history.length > 2;
+      return window.history.length > 2;  
     },
 
     getResultMobile(bizId, percent) {

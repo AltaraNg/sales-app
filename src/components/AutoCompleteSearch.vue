@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="md:flex md:flex-row ">
-      <div class="px-1 flex-1">
+      <div class="flex-1 mr-0 md:mr-6 mb-4 md:mb-0 relative">
         <input
           placeholder="Search Customer"
           @blur="onBlur"
@@ -17,9 +17,9 @@
         />
         <span class="" ref="text" v-html="displayText"></span>
 
-        <div class="">
-          <ul class="z-10" v-if="open && customers.length">
-            <li :key="index" class="" v-for="(customer, index) in customers">
+        <div class="absolute bg-white z-10 w-full">
+          <ul class="" v-if="open && customers.length">
+            <li :key="index" class="cursor-pointer hover:bg-gray-400 py-2" v-for="(customer, index) in customers">
               <a
                 :class="selectIndex === index && ''"
                 @mousedown.prevent="select(customer)"
@@ -31,9 +31,9 @@
           </ul>
         </div>
       </div>
-      <div class=" w-full flex-1 flex-row text-center ">
+      <div class="gap-4 flex items-center text-center mb-2 md:mb-0">
         <span
-          class="radio mb-0 flex-1 mx-3 text-xs"
+          class="radio mb-0 mx-3 text-xs flex items-center gap-1"
           v-for="{ title, column } in searchColumns"
         >
           <input

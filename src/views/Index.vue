@@ -16,12 +16,18 @@
               but instead of paying for the products in full upfront, pay small
               amount overtime.
             </p>
-            <div class="mt-10">
+            <div class="mt-10 flex ">
               <router-link
                 to="/auth/login"
-                class="get-started text-white font-bold px-12 py-3 rounded outline-none focus:outline-none mr-1 mb-1 altaraBlue text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+                class="get-started text-white font-bold px-12 py-3 mr-10 rounded outline-none focus:outline-none mr-1 mb-1 altaraBlue text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
               >
                 Sign In
+              </router-link>
+              <router-link
+                to="/calculator"
+                class="get-started text-white font-bold px-12 py-3 rounded outline-none focus:outline-none mr-1 mb-1 altaraBlue text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+              >
+                Product Pricing
               </router-link>
             </div>
           </div>

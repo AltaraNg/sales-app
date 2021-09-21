@@ -34,7 +34,7 @@
             :style="[
               index % 2 === 0
                 ? { 'background-color': 'white' }
-                : { 'background-color': '#F3F4F6' },
+                : { 'background-color': 'white' },
                 message.read === 1 ? {'color': '#20212B','font-weight': 100} : {'color': '#202124', 'font-weight': 800}
                 ]
             "

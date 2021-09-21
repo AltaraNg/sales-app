@@ -113,16 +113,13 @@
           </li>
             </router-link>
 
-              <router-link to="/calculator"
-          >
+              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2">
             
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
-              <i class="fas fa-calculator  mr-2 text-sm"
-                  :class="['text-gray-400']"></i>
+              <i class="fas fa-calculator  mr-2 text-sm"></i>
                 Calculator
               </a>
           </li>
@@ -179,16 +176,20 @@
           <li class="items-center ml-2 rounded-lg row">
            
               <a
-                class="text-xs uppercase py-3 font-bold block col"
+                class="text-xs flex items-center uppercase py-3 font-bold block col"
               >
                 <i
                   class="fas fa-bell mr-2 text-sm"
                   
                 ></i>
-               Notification
-               <span class="float-right mr-3 pr-4 font-light">{{getNotifications ? getNotifications.length : ""}}</span>
+                <div class="flex  w-full justify-between items-center">
+              <p> Notification</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span class=" absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" :class="getNotifications.length > 0 ? 'animate-ping' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 bg-red-600"> {{getNotifications ? getNotifications.length : ""}}</span>
+              </span>
+               </div>
               </a>
-              <!-- <span class="inline float-right col">5</span> -->
           </li>
             </router-link>
 
@@ -196,14 +197,19 @@
           <li class="items-center ml-2 rounded-lg">
            
               <a
-                class="text-xs uppercase py-3 font-bold block"                
+                class="text-xs flex items-center justify-center uppercase py-3 font-bold block"                
               >
                 <i
                   class="fas fa-user-circle mr-2 text-sm"
                   
-                ></i>
-               inactive Prospects
-               <span class="float-right mr-3 pr-4 mt-0 font-bolder animate-bounce my-auto">{{getInactiveProspects}}</span>
+                ></i> 
+              <div class="flex  w-full justify-between items-center ">
+              <p> Inactive Prospects</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span class=" absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75" :class="getInactiveProspects > 0 ? 'animate-ping' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 bg-yellow-600">{{getInactiveProspects}}</span>
+              </span>
+               </div>
 
               </a>
           </li>

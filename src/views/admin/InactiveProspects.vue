@@ -3,24 +3,17 @@
     <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
 
     <div class="md:flex md:justify-between">
-      <div
-        class="pr-4 card text-center my-2"
-      >
-      <div>
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
-          Total
-        </h5>
-        <span class="font-semibold text-xl text-gray-800">
-          {{ totalInactive }}
-        </span>
+      <div class="pr-4 card text-center my-2">
+        <div>
+          <h5 class="text-gray-500 uppercase font-bold text-xs">
+            Total
+          </h5>
+          <span class="font-semibold text-xl text-gray-800">
+            {{ totalInactive }}
+          </span>
         </div>
-
-        
-
       </div>
-      <div
-        class=" pr-4 card text-center my-2"
-      >
+      <div class=" pr-4 card text-center my-2">
         <h5 class="text-gray-500 uppercase font-bold text-xs">
           Affidavit
         </h5>
@@ -28,9 +21,7 @@
           25
         </span>
       </div>
-      <div
-        class="pr-4 card text-center my-2"
-      >
+      <div class="pr-4 card text-center my-2">
         <h5 class="text-gray-500 uppercase font-bold text-xs">
           KYC
         </h5>
@@ -39,99 +30,112 @@
         </span>
       </div>
     </div>
-    <div      
-      v-if="prospects.length > 0"
-    >
-    <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
-      <table class="items-center w-full bg-transparent border-collapse mt-10">
-        <thead>
-          <tr>
-            <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-              v-for="header in headers"
-            >
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="pointer"
-            :key="index"
-            v-for="(user, index) in prospects"
-            :style="
-              index % 2 === 0
-                ? { 'background-color': 'white' }
-                : { 'background-color': '#F3F4F6' }
-            "
-          >
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              <div
-                class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+    <div v-if="prospects.length > 0">
+      <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
+        <table class="items-center w-full bg-transparent border-collapse mt-10">
+          <thead>
+            <tr>
+              <th
+                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                v-for="header in headers"
               >
-                {{ index + OId || "" }}
-              </div>
-            </td>
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="pointer"
+              :key="index"
+              v-for="(user, index) in prospects"
+              :style="
+                index % 2 === 0
+                  ? { 'background-color': 'white' }
+                  : { 'background-color': '#F3F4F6' }
+              "
+            >
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+              >
+                <div
+                  class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+                >
+                  {{ index + OId || "" }}
+                </div>
+              </td>
 
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left custom-hover"
-              @click="selectUser(user)"
-            >
-              {{ user.name || " " }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              {{ user.customer_stage.name || " " }}
-            </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left custom-hover"
+                @click="selectUser(user)"
+              >
+                {{ user.name || " " }}
+              </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+              >
+                {{ user.customer_stage.name || " " }}
+              </td>
 
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-              :class="{ 'text-red-500': user.last_prospect_activity === null, 'custom-hover': user.last_prospect_activity !== null }" @click="viewActivity(user)"
-            >
-              {{
-                user.last_prospect_activity
-                  ? user.last_prospect_activity.type
-                  : "No Activity"
-              }}
-            </td>
-            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-              {{user.last_prospect_activity
-                  ? user.last_prospect_activity.date
-                  : "N/A"}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                :class="{
+                  'text-red-500': user.last_prospect_activity === null,
+                  'custom-hover': user.last_prospect_activity !== null
+                }"
+                @click="viewActivity(user)"
+              >
+                {{
+                  user.last_prospect_activity
+                    ? user.last_prospect_activity.type
+                    : "No Activity"
+                }}
+              </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                @click="viewActivityList(user)"
+              >
+                {{
+                  user.last_prospect_activity
+                    ? user.last_prospect_activity.date
+                    : "N/A"
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="contents md:hidden">
         <div class="pt-10">
-         <h3 class="text-center text-lg mb-2 font-bold">List Of Inactive Prospects</h3>
+          <h3 class="text-center text-lg mb-2 font-bold">
+            List Of Inactive Prospects
+          </h3>
         </div>
         <div :key="index" v-for="(user, index) in prospects">
-            <div v-on:click="selectUser(user)" class="customerTile">
-              <div class="flex justify-between">
-                <div class="flex items-stretch">
-                  <div
-                    :style="{ background: generateRandomColor() }"
-                    class="avatarCircle"
-                  >
-                    {{ user.name[0].toUpperCase() || "" }}
-                  </div>
-                  <div class="self-center font-medium">
-                    {{ user.name || "" }}
-                  </div>
+          <div v-on:click="selectUser(user)" class="customerTile">
+            <div class="flex justify-between text-xs">
+              <div class="flex items-stretch">
+                <div
+                  :style="{ background: generateRandomColor() }"
+                  class="avatarCircle"
+                >
+                  {{ user.name[0].toUpperCase() || "" }}
                 </div>
-                <div class="flex flex-col">
-                  <div class="font-bold">{{  user.last_prospect_activity
-                  ? user.last_prospect_activity.type
-                  : "No Activity"}}</div>
+                <div class="self-center font-medium">
+                  {{ user.name || "" }}
+                </div>
+              </div>
+              <div class="flex flex-col my-auto">
+                <div class="font-bold">
+                  {{
+                    user.last_prospect_activity
+                      ? user.last_prospect_activity.type
+                      : "No Activity"
+                  }}
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
     <div v-else class="chatBox mt-4 w-48">
@@ -145,14 +149,53 @@
       :backgroundClose="false"
       :css="modalOptions"
     >
-    <div v-if="activeUser && activeUser.last_prospect_activity !== null">
-    <p>Activity type: <span>{{activeUser ? activeUser.last_prospect_activity.type : ''}}</span></p>
-    <p>Details: <span>{{activeUser ? activeUser.last_prospect_activity.text : ''}}</span></p>
-    <p>Date occurred: <span>{{activeUser ? activeUser.last_prospect_activity.created_at : ''}}</span></p>
-    </div>
-    <div v-else>
-      <p class="text-lg"> There is no Activity</p>
-    </div>
+      <div v-if="activeUser && activeUser.last_prospect_activity !== null">
+        <p>
+          Activity type:
+          <span>{{
+            activeUser ? activeUser.last_prospect_activity.type : ""
+          }}</span>
+        </p>
+        <p>
+          Details:
+          <span>{{
+            activeUser ? activeUser.last_prospect_activity.text : ""
+          }}</span>
+        </p>
+        <p>
+          Date occurred:
+          <span>{{
+            activeUser ? activeUser.last_prospect_activity.created_at : ""
+          }}</span>
+        </p>
+      </div>
+      <div v-else>
+        <p class="text-lg">There is no Activity</p>
+      </div>
+    </vue-tailwind-modal>
+
+    <vue-tailwind-modal
+      :showing="showActivityModal"
+      @close="showActivityModal = false"
+      :showClose="true"
+      :backgroundClose="false"
+      :css="modalOptions"
+    >
+      <div class="flex justify-between text-lg ">
+        <h3>S/N</h3>
+        <h3>Activity Type</h3>
+        <h3>Details</h3>
+        <h3>Date</h3>
+      </div>
+      <div
+        v-for="(activity, index) in activityList"
+        class="flex justify-between text-xs"
+      >
+        <h5>{{ index + 1 }}</h5>
+        <h5>{{ activity.type }}</h5>
+        <h5>{{ activity.text }}</h5>
+        <h5>{{ activity.date }}</h5>
+      </div>
     </vue-tailwind-modal>
     <base-pagination
       :pageParam="pageParams"
@@ -175,21 +218,26 @@ export default {
       headers: ["S/N", "Name", "Stage", "Last Activity", "Last Activity Date"],
       pageParams: {},
       apiUrls: {
-        inactive_prospects: "/api/inactive/prospects"
+        inactive_prospects: "/api/inactive/prospects",
+        prospects_activities: "/api/prospect_activities"
       },
       prospects: "",
       totalInactive: 0,
       OId: 0,
       showModal: false,
+      showActivityModal: false,
+
       modalOptions: {},
-      activeUser: null
+      activeUser: null,
+      activityList: []
     };
   },
-  beforeMount(){
+  beforeMount() {
     this.fetchInactiveProspects();
   },
   mounted() {
     this.getNextList();
+    this.getProspectActivities();
   },
   methods: {
     async fetchInactiveProspects() {
@@ -242,33 +290,54 @@ export default {
     selectUser(user) {
       this.$router.push(`/admin/userProfile/${user.id}`);
     },
-      generateRandomColor() {
+    generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
-    viewActivity(user){
+
+    async getProspectActivities() {
+      let activities = await get(this.apiUrls.prospects_activities);
+    },
+    viewActivity(user) {
       this.activeUser = user;
       this.showModal = true;
     },
-     getNextList(){
-      window.onscroll = () =>{
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
-        if(bottomOfWindow){
+
+    async viewActivityList(user) {
+      this.$LIPS(true);
+      try {
+        let activities = await get(
+          this.apiUrls.prospects_activities + queryParam({ customer: user.id })
+        );
+        this.activityList = activities.data.data.prospect_activities.data;
+      } catch (error) {
+        this.$displayErrorMessage(error);
+      } finally {
+        this.$LIPS(false);
+      }
+      this.showActivityModal = true;
+    },
+    getNextList() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          document.documentElement.scrollHeight -
+            document.documentElement.scrollTop ===
+          document.documentElement.clientHeight;
+        if (bottomOfWindow) {
           this.pageParams.page += 1;
           const query = {
-          ...this.searchQuery,
-          page: this.pageParams.page,
-          limit: this.pageParams.limit,
-          inActiveDays: 30
-        };
+            ...this.searchQuery,
+            page: this.pageParams.page,
+            limit: this.pageParams.limit,
+            inActiveDays: 30
+          };
 
-        get(
-          this.apiUrls.inactive_prospects + queryParam(query)
-        ).then(res => {
-          this.prospects = this.prospects.concat(res?.data?.data?.prospects.data);
-        });
-        
+          get(this.apiUrls.inactive_prospects + queryParam(query)).then(res => {
+            this.prospects = this.prospects.concat(
+              res?.data?.data?.prospects.data
+            );
+          });
         }
-      }
+      };
     }
   }
 };

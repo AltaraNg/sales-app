@@ -35,9 +35,10 @@
               index % 2 === 0
                 ? { 'background-color': 'white' }
                 : { 'background-color': 'white' },
-                message.read === 1 ? {'color': '#20212B','font-weight': 100} : {'color': '#202124', 'font-weight': 800}
-                ]
-            "
+              message.read === 1
+                ? { color: '#20212B', 'font-weight': 100 }
+                : { color: '#202124', 'font-weight': 800 }
+            ]"
           >
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
@@ -61,7 +62,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <vue-tailwind-modal
         :showing="showModal"
         @close="showModal = false"
@@ -73,10 +74,13 @@
         <p>Message: {{ currentMessage.message }}</p>
       </vue-tailwind-modal>
       <div>
-        <base-pagination :pageParam="pageParams" @fetchData="fetchMessages()"></base-pagination>
+        <base-pagination
+          :pageParam="pageParams"
+          @fetchData="fetchMessages()"
+        ></base-pagination>
       </div>
     </div>
-    
+
     <div v-else class="chatBox">
       No messages available
     </div>
@@ -85,11 +89,12 @@
 
 <script>
 import { get, put } from "../../utilities/api";
+import{ mapGetters } from 'vuex' 
 import messageApi from "../../api/messages.js";
 import queryParam from "../../utilities/queryParam";
 import BasePagination from "../../components/BasePagination.vue";
 import VueTailwindModal from "vue-tailwind-modal";
-import Vue from 'vue';
+import Vue from "vue";
 export default {
   components: {
     BasePagination,
@@ -111,6 +116,7 @@ export default {
   },
   mounted() {
     this.fetchMessages();
+    this.$prepareNotifications();
   },
   methods: {
     async fetchMessages() {
@@ -156,12 +162,11 @@ export default {
 
     async updateRead(message) {
       this.$LIPS(true);
-      let resp = await put(`/api/message/${message.id}`, { read: true });
-      let m = this.messages.findIndex(item => {
-        return item.id === message.id;
-      })
+      let resp = await put(`/api/message/${message.id}`, { read: true });     
+      console.log('i got here');
+      await this.$prepareNotifications();
+      await this.fetchMessages();
 
-      this.fetchMessages();
       return "Success";
     },
 
@@ -173,6 +178,10 @@ export default {
       this.showModal = true;
       this.$LIPS(false);
     }
+  },
+
+  computed: {
+    ...mapGetters(["getNotifications"])
   }
 };
 </script>

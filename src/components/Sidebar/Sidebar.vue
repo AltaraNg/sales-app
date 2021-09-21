@@ -185,7 +185,7 @@
                 <div class="flex  w-full justify-between items-center">
               <p> Notification</p>
               <span class="flex h-8 w-8 relative mr-2">
-              <span class=" absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" :class="getNotifications.length > 0 ? 'animate-ping' : ''"></span>
+              <span v-if="getNotifications !== null" class=" absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" :class="getNotifications.length > 0 ? 'animate-ping' : ''"></span>
               <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 bg-red-600"> {{getNotifications ? getNotifications.length : ""}}</span>
               </span>
                </div>

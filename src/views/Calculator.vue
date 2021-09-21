@@ -181,7 +181,7 @@
                     selectedDownpayment !== null &&
                     biztype.id === selectedDownpayment.bizId
                       ? $formatCurrency(
-                          selectedDownpayment.actualRepayment / 12
+                          selectedDownpayment.biMonthlyRepayment
                         )
                       : "₦0.00"
                   }}

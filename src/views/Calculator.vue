@@ -300,7 +300,7 @@
                 <td class="font-medium text-base">
                   {{
                     $formatCurrency(
-                      Math.floor(downpayments.actualRepayment / 12)
+                      Math.floor(downpayments.biMonthlyRepayment)
                     ) || ""
                   }}
                 </td>
@@ -442,7 +442,7 @@ export default {
             );
           });
 
-          const { total, actualDownpayment, actualRepayment } = calculate(
+          const { total, actualDownpayment, actualRepayment, biMonthlyRepayment } = calculate(
             this.selectedProduct.price,
             paymentRate,
             filteredBizType[1]
@@ -454,6 +454,7 @@ export default {
             total,
             actualDownpayment,
             actualRepayment,
+            biMonthlyRepayment
           });
         });
       });

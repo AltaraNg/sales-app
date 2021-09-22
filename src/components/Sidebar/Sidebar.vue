@@ -65,7 +65,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700"> 
+            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700 py-2"> 
 
           <li class="items-center ml-2">
               <div
@@ -80,7 +80,7 @@
             </router-link>
 
           
-          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700"
+          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700 py-2"
           >
           <li class="items-center ml-2">
             
@@ -98,7 +98,7 @@
             </router-link>
 
 
-           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700">
+           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
            
               <a
@@ -113,7 +113,7 @@
           </li>
             </router-link>
 
-              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700">
+              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
             
               <a
@@ -126,7 +126,7 @@
             </router-link>
 
 
-            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
@@ -141,7 +141,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
@@ -157,7 +157,7 @@
             </router-link>
 
             
-            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2 rounded-lg">
            
               <a

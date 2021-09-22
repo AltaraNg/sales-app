@@ -265,6 +265,7 @@
         :css="modalOptions"
       >
         <!-- Put your modal content here -->
+        <div v-if="getInactiveProspects > 0">
         <h1 class="text-center text-6xl">
           <i class="fas fa-exclamation-circle text-yellow-600"></i>
         </h1>
@@ -273,13 +274,21 @@
         </h2>
         <p class="text-sm text-center">
           You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
-          moved stages in a long time!!!
+          moved stages in a long time!!!          
+        </p>
+        <div class="text-center flex mt-4">
+          <p class="text-white px-2 py-1 block bg-red-500 rounded w-1/3 flex-1 mx-2 cursor-pointer" @click="showModal = false">Close</p>
           <router-link
-            class="text-green-500 float-right"
+            class="text-white px-2 py-1 block bg-green-500 rounded w-1/3 flex-1 mx-2"
             to="/admin/inactive-prospects"
             >View Them</router-link
           >
-        </p>
+          
+        </div>
+        </div>
+        <div>
+
+        </div>
       </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
@@ -564,7 +573,7 @@ export default {
       modalOptions: {
         background: "smoke",
         modal: "max-h-90",
-        close: "text-red"
+        close: "text-red-500 font-extrabold"
       },
       pageNumber: 1,
       pageParams: {},

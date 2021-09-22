@@ -3,29 +3,29 @@
     <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
 
     <div class="md:flex md:justify-between">
-      <div class="pr-4 card text-center my-2">
+      <div class="flex-1 px-8 mx-4 text-center my-2 altaraBlue py-8 text-white">
         <div>
-          <h5 class="text-gray-500 uppercase font-bold text-xs">
+          <h5 class="font-extrabold uppercase text-xs">
             Total
           </h5>
-          <span class="font-semibold text-xl text-gray-800">
+          <span class="font-semibold text-xl">
             {{ totalInactive }}
           </span>
         </div>
       </div>
-      <div class=" pr-4 card text-center my-2">
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
+      <div class="flex-1 px-8 mx-4 text-center my-2 bg-yellow-800 py-8 text-white">
+        <h5 class="uppercase font-extrabold text-xs">
           Affidavit
         </h5>
-        <span class="font-semibold text-xl text-gray-800">
+        <span class="font-semibold text-xl ">
           25
         </span>
       </div>
-      <div class="pr-4 card text-center my-2">
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
+      <div class="flex-1 px-8 mx-4 text-center my-2 bg-purple-800 py-8 text-white">
+        <h5 class="uppercase font-extrabold text-xs">
           KYC
         </h5>
-        <span class="font-semibold text-xl text-gray-800">
+        <span class="font-semibold text-xl">
           25
         </span>
       </div>
@@ -36,7 +36,7 @@
           <thead>
             <tr>
               <th
-                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
                 v-for="header in headers"
               >
                 {{ header }}
@@ -55,7 +55,7 @@
               "
             >
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
               >
                 <div
                   class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
@@ -65,19 +65,19 @@
               </td>
 
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left custom-hover"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center custom-hover"
                 @click="selectUser(user)"
               >
                 {{ user.name || " " }}
               </td>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
               >
                 {{ user.customer_stage.name || " " | truncate(15) }}
               </td>
 
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
                 :class="{
                   'text-red-500': user.last_prospect_activity === null,
                   'custom-hover': user.last_prospect_activity !== null
@@ -91,7 +91,7 @@
                 }}
               </td>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
               >
                 {{
                   user.last_prospect_activity
@@ -146,7 +146,7 @@
       @close="showActivityModal = false"
       :showClose="true"
       :backgroundClose="false"
-      :css="modalOptions"
+      :css="modalOption"
     >
       <div class="flex text-lg justify-evenly text-center">
         <h3>S/N</h3>
@@ -156,7 +156,7 @@
       </div>
       <div
         v-for="(activity, index) in activityList"
-        class="flex text-xs text-center justify-evenly"
+        class="flex text-xs text-center"
       >
         <h5>{{ index + 1 }}</h5>
         <h5>{{ activity.type }}</h5>
@@ -194,7 +194,7 @@ export default {
       showModal: false,
       showActivityModal: false,
 
-      modalOptions: {
+      modalOption: {
         background: "smoke",
         modal: "max-h-90",
         close: "text-red"
@@ -274,18 +274,21 @@ export default {
     },
 
     async viewActivityList(user) {
-      this.$LIPS(true);
-      try {
-        let activities = await get(
-          this.apiUrls.prospects_activities + queryParam({ customer: user.id })
-        );
-        this.activityList = activities.data.data.prospect_activities.data;
-      } catch (error) {
-        this.$displayErrorMessage(error);
-      } finally {
-        this.$LIPS(false);
+      if (user.last_prospect_activity !== null) {
+        this.$LIPS(true);
+        try {
+          let activities = await get(
+            this.apiUrls.prospects_activities +
+              queryParam({ customer: user.id })
+          );
+          this.activityList = activities.data.data.prospect_activities.data;
+        } catch (error) {
+          this.$displayErrorMessage(error);
+        } finally {
+          this.$LIPS(false);
+        }
+        this.showActivityModal = true;
       }
-      this.showActivityModal = true;
     },
     getNextList() {
       window.onscroll = () => {

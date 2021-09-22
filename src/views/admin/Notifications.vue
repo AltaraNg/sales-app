@@ -50,9 +50,9 @@
               </div>
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
             >
-              {{ message.message | truncate(10) || "" }}
+              {{ message.message | truncate(35) || "" }}
             </th>
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
@@ -67,11 +67,13 @@
         :showing="showModal"
         @close="showModal = false"
         :showClose="true"
-        :backgroundClose="false"
+        :backgroundClose="true"
         :css="modalOptions"
       >
-        <h4 class="h4 text-sm">Sent: {{ currentMessage.created_at }}</h4>
-        <p>Message: {{ currentMessage.message }}</p>
+      <div class="flex justify-between my-auto">
+        <p class="text-left ml-4"><b>Message:</b> <span>{{ currentMessage.message }}</span></p>
+        <h4 class="h4 text-xs  font-bold text-green-500">Sent: {{ currentMessage.created_at }}</h4>
+        </div>
       </vue-tailwind-modal>
       <div>
         <base-pagination
@@ -102,6 +104,11 @@ export default {
   },
   data() {
     return {
+      modalOptions: {
+        background: "bg-gray-200",
+        modal: "max-h-90",
+        close: "text-red-500 font-extrabold"
+      },
       messages: [],
       urls: {
         message: `/api/message`

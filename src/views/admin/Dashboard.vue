@@ -285,8 +285,8 @@
         <div v-if="usersList.length > 0">
           <div :key="index" v-for="(user, index) in usersList">
             <div v-on:click="viewUser(user)" class="customerTile">
-              <div class="flex justify-between">
-                <div class="flex items-stretch">
+              <div class="flex justify-between text-xs">
+                <div class="flex items-stretch ">
                   <div
                     :style="{ background: generateRandomColor() }"
                     class="avatarCircle"
@@ -297,7 +297,7 @@
                     {{ user.name || "" }}
                   </div>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col my-auto">
                   <div class="font-bold">{{ user.reg_id || "" }}</div>
                 </div>
               </div>
@@ -602,8 +602,11 @@ export default {
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
+    
     this.canView = localStorage.getItem("flag");
     this.getNextList();
+
+    
   },
   methods: {
     async getEmploymentStatus() {
@@ -717,9 +720,6 @@ export default {
         eventBus.$emit("userStats", this.userMeta);
         eventBus.$emit("notification");
         this.OId = from;
-
-        router.replace({ path: "/admin/dashboard", query: query });
-
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
@@ -767,8 +767,10 @@ export default {
     },
     getNextList(){
       window.onscroll = () =>{
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+        let bottomOfWindow = document.documentElement.scrollHeight + document.documentElement.scrollTop === document.documentElement.clientHeight;
+
         if(bottomOfWindow){
+          console.log('got there');
           this.pageParams.page += 1;
           const query = {
           ...this.searchQuery,

@@ -193,7 +193,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700" v-if="flag === 'beta'">
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -251,7 +251,8 @@ export default {
     return {
       collapseShow: "hidden",
       altaraLogo,
-      canView: ''
+      canView: '',
+      flag: localStorage.getItem('flag')
     };
   },
   methods: {

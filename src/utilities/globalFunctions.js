@@ -176,10 +176,11 @@ Vue.prototype.$getCookie = (cName) => {
       let userId = localStorage.getItem("user_id");
     const query = {        
         limit: 100,
-        receiver: userId
+        receiver: userId,
+        unread: true
       };
 
-    !store.getters.getNotifications && messageApi.index(queryParam(query))
+    messageApi.index(queryParam(query))
     .then(r => store.dispatch('mutateNotifications', r.data.data.data));
 };
 

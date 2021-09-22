@@ -65,7 +65,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700"> 
+            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700 py-2"> 
 
           <li class="items-center ml-2">
               <div
@@ -80,7 +80,7 @@
             </router-link>
 
           
-          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700"
+          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700 py-2"
           >
           <li class="items-center ml-2">
             
@@ -98,7 +98,7 @@
             </router-link>
 
 
-           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700">
+           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
            
               <a
@@ -113,23 +113,20 @@
           </li>
             </router-link>
 
-              <router-link to="/calculator"
-          >
+              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
             
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
-              <i class="fas fa-calculator  mr-2 text-sm"
-                  :class="['text-gray-400']"></i>
+              <i class="fas fa-calculator  mr-2 text-sm"></i>
                 Calculator
               </a>
           </li>
             </router-link>
 
 
-            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
@@ -144,7 +141,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
@@ -160,7 +157,7 @@
             </router-link>
 
             
-            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700">
+            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -179,16 +176,20 @@
           <li class="items-center ml-2 rounded-lg row">
            
               <a
-                class="text-xs uppercase py-3 font-bold block col"
+                class="text-xs flex items-center uppercase py-3 font-bold block col"
               >
                 <i
                   class="fas fa-bell mr-2 text-sm"
                   
                 ></i>
-               Notification
-               <span class="float-right mr-3 pr-4 font-light">{{getNotifications ? getNotifications.length : ""}}</span>
+                <div class="flex  w-full justify-between items-center">
+              <p> Notification</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span v-if="getNotifications !== null" class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getNotifications.length > 0 ? 'animate-ping bg-red-500' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8" :class="getNotifications.length > 0 ? ' bg-red-600' : 'bg-gray-600'"> {{getNotifications ? getNotifications.length : ""}}</span>
+              </span>
+               </div>
               </a>
-              <!-- <span class="inline float-right col">5</span> -->
           </li>
             </router-link>
 
@@ -196,14 +197,19 @@
           <li class="items-center ml-2 rounded-lg">
            
               <a
-                class="text-xs uppercase py-3 font-bold block"                
+                class="text-xs flex items-center justify-center uppercase py-3 font-bold block"                
               >
                 <i
                   class="fas fa-user-circle mr-2 text-sm"
                   
-                ></i>
-               inactive Prospects
-               <span class="float-right mr-3 pr-4 mt-0 font-bolder animate-bounce my-auto">{{getInactiveProspects}}</span>
+                ></i> 
+              <div class="flex  w-full justify-between items-center ">
+              <p> Inactive Prospects</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getInactiveProspects > 0 ? 'animate-ping bg-yellow-500' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 " :class="getInactiveProspects > 0 ? 'bg-yellow-600' : 'bg-gray-600'">{{getInactiveProspects}}</span>
+              </span>
+               </div>
 
               </a>
           </li>
@@ -274,7 +280,9 @@ computed: {
 </script>
 <style>
 .active{
-  background: #094a73;  
+  background: #094a7350;  
+   border-radius: 0.125rem;
+
 }
 .active div{
    border-radius: 0.125rem;

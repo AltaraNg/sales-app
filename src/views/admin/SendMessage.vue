@@ -98,8 +98,6 @@ export default {
         };
         post(this.URLS.sendMessage, data)
           .then(resp => {
-            console.log(resp);
-
             this.$swal({
               icon: "success",
               title: "Message Sent Successfully"

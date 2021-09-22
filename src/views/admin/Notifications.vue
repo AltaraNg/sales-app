@@ -170,7 +170,6 @@ export default {
     async updateRead(message) {
       this.$LIPS(true);
       let resp = await put(`/api/message/${message.id}`, { read: true });     
-      console.log('i got here');
       await this.$prepareNotifications();
       await this.fetchMessages();
 

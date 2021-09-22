@@ -783,7 +783,6 @@ export default {
           document.documentElement.clientHeight;
 
         if (bottomOfWindow) {
-          console.log("got there");
           this.pageParams.page += 1;
           const query = {
             ...this.searchQuery,

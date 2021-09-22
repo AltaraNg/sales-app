@@ -280,7 +280,9 @@ computed: {
 </script>
 <style>
 .active{
-  background: #094a73;  
+  background: #094a7350;  
+   border-radius: 0.125rem;
+
 }
 .active div{
    border-radius: 0.125rem;

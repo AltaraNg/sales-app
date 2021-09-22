@@ -73,7 +73,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
               >
-                {{ user.customer_stage.name || " " }}
+                {{ user.customer_stage.name || " " | truncate(15) }}
               </td>
 
               <td
@@ -82,17 +82,16 @@
                   'text-red-500': user.last_prospect_activity === null,
                   'custom-hover': user.last_prospect_activity !== null
                 }"
-                @click="viewActivity(user)"
+                @click="viewActivityList(user)"
               >
                 {{
                   user.last_prospect_activity
-                    ? user.last_prospect_activity.type
-                    : "No Activity"
+                    ? user.last_prospect_activity.text
+                    : "No Activity" | truncate(15)
                 }}
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-                @click="viewActivityList(user)"
               >
                 {{
                   user.last_prospect_activity
@@ -143,45 +142,13 @@
     </div>
 
     <vue-tailwind-modal
-      :showing="showModal"
-      @close="showModal = false"
-      :showClose="true"
-      :backgroundClose="false"
-      :css="modalOptions"
-    >
-      <div v-if="activeUser && activeUser.last_prospect_activity !== null">
-        <p>
-          Activity type:
-          <span>{{
-            activeUser ? activeUser.last_prospect_activity.type : ""
-          }}</span>
-        </p>
-        <p>
-          Details:
-          <span>{{
-            activeUser ? activeUser.last_prospect_activity.text : ""
-          }}</span>
-        </p>
-        <p>
-          Date occurred:
-          <span>{{
-            activeUser ? activeUser.last_prospect_activity.created_at : ""
-          }}</span>
-        </p>
-      </div>
-      <div v-else>
-        <p class="text-lg">There is no Activity</p>
-      </div>
-    </vue-tailwind-modal>
-
-    <vue-tailwind-modal
       :showing="showActivityModal"
       @close="showActivityModal = false"
       :showClose="true"
       :backgroundClose="false"
       :css="modalOptions"
     >
-      <div class="flex justify-between text-lg ">
+      <div class="flex text-lg justify-evenly text-center">
         <h3>S/N</h3>
         <h3>Activity Type</h3>
         <h3>Details</h3>
@@ -189,7 +156,7 @@
       </div>
       <div
         v-for="(activity, index) in activityList"
-        class="flex justify-between text-xs"
+        class="flex text-xs text-center justify-evenly"
       >
         <h5>{{ index + 1 }}</h5>
         <h5>{{ activity.type }}</h5>
@@ -227,7 +194,11 @@ export default {
       showModal: false,
       showActivityModal: false,
 
-      modalOptions: {},
+      modalOptions: {
+        background: "smoke",
+        modal: "max-h-90",
+        close: "text-red"
+      },
       activeUser: null,
       activityList: []
     };

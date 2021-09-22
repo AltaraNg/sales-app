@@ -19,7 +19,7 @@
               Message
             </th>
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
+              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap  text-center"
             >
               Date
             </th>
@@ -36,8 +36,8 @@
                 ? { 'background-color': 'white' }
                 : { 'background-color': 'white' },
               message.read === 1
-                ? { color: '#20212B', 'font-weight': 100 }
-                : { color: '#202124', 'font-weight': 800 }
+                ? { color: 'gray',  }
+                : { color: 'black', }, 
             ]"
           >
             <th

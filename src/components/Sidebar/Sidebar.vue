@@ -185,8 +185,8 @@
                 <div class="flex  w-full justify-between items-center">
               <p> Notification</p>
               <span class="flex h-8 w-8 relative mr-2">
-              <span v-if="getNotifications !== null" class=" absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" :class="getNotifications.length > 0 ? 'animate-ping' : ''"></span>
-              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 bg-red-600"> {{getNotifications ? getNotifications.length : ""}}</span>
+              <span v-if="getNotifications !== null" class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getNotifications.length > 0 ? 'animate-ping bg-red-500' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8" :class="getNotifications.length > 0 ? ' bg-red-600' : 'bg-gray-600'"> {{getNotifications ? getNotifications.length : ""}}</span>
               </span>
                </div>
               </a>
@@ -206,8 +206,8 @@
               <div class="flex  w-full justify-between items-center ">
               <p> Inactive Prospects</p>
               <span class="flex h-8 w-8 relative mr-2">
-              <span class=" absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75" :class="getInactiveProspects > 0 ? 'animate-ping' : ''"></span>
-              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 bg-yellow-600">{{getInactiveProspects}}</span>
+              <span class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getInactiveProspects > 0 ? 'animate-ping bg-yellow-500' : ''"></span>
+              <span class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 " :class="getInactiveProspects > 0 ? 'bg-yellow-600' : 'bg-gray-600'">{{getInactiveProspects}}</span>
               </span>
                </div>
 

@@ -68,9 +68,8 @@
           px-5
           mx-3 mx-8
           py-3
-          lg:hidden
           items-center
-          md:flex
+          flex
           justify-center
         "
       >
@@ -81,8 +80,9 @@
         </p>
         <ArrowUp />
       </div>
+       <div class="lg:w-auto w-full " v-else >
       <!-- mobile view -->
-      <div class="w-full" v-else >
+      <div>
         <div 
           class="md:flex md:flex-col lg:hidden items-center w-full"
           v-for="biztype in businessTypes"
@@ -240,8 +240,7 @@
             </div>
           </div>
         </div>
-      </div>
-
+        </div>
       <!-- desktop view -->
       <div
         class="hidden px-16 py-8 mb-8 bg-white rounded-lg lg:flex flex-col"
@@ -318,6 +317,7 @@
           </table>
         </div>
       </div>
+       </div>
     </div>
   </div>
 </template>
@@ -333,6 +333,7 @@ export default {
     return {
       registerBg2,
       apiUrls: {
+        repaymentDuration: `/api/repayment_duration`,
         getProduct: `/api/inventory`,
         getCalculation: `/api/price_calculator`,
         businessTypes: `/api/business_type`,
@@ -348,6 +349,7 @@ export default {
       downPaymentArr: [],
       selectedDownpayment: null,
       downpaymentCalculations: [],
+      repaymentDuration: [],
     };
   },
   components: {
@@ -410,6 +412,7 @@ export default {
     await this.getProduct();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
+    await this.getRepaymentDuration();
   },
 
   methods: {
@@ -433,12 +436,15 @@ export default {
 
     downpaymentCalc() {
       let downPaymentArr = [];
+      this.repaymentDuration.forEach((repayDuration)=>{
       this.businessTypes.forEach((bizType) => {
         this.downPaymentRates.forEach((paymentRate) => {
           let filteredBizType = this.calculation.filter((param) => {
             return (
+              // repayDuration.id === param.repayment_duration_id &&
               bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id
+              paymentRate.id === param.down_payment_rate_id 
+               
             );
           });
 
@@ -449,6 +455,7 @@ export default {
           );
 
           downPaymentArr.push({
+            repaymentDuration:repayDuration.id,
             bizId: bizType.id,
             percent: paymentRate["percent"],
             total,
@@ -458,7 +465,9 @@ export default {
           });
         });
       });
+      });
       this.downpaymentCalculations = downPaymentArr;
+      console.log(this.downpaymentCalculations, 'this.downpaymentCalculations');
       return downPaymentArr;
     },
     async getProduct() {
@@ -507,6 +516,19 @@ export default {
         this.businessTypes = this.businessTypes.filter((item) => {
           return item.name.includes("Products");
         });
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
+   async getRepaymentDuration() {
+      try {
+        const fetchRepaymentDuration = await get(
+          this.apiUrls.repaymentDuration
+        );
+        this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
+                // console.log(this.repaymentDuration)
+        this.repaymentDuration = this.repaymentDuration.splice(2, 2);
+        console.log(this.repaymentDuration)
       } catch (err) {
         this.$displayErrorMessage(err);
       }

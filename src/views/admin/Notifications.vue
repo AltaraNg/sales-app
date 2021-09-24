@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <h1 class="text-2xl mt-3 mb-10 ml-4">Notifications</h1>
-    <div v-if="messages.length != 0" class="block w-full overflow-x-auto ml-4">
+  <div class="md:ml-12">
+    <h1 class="text-2xl mt-3 mb-10 md:ml-4 hidden md:contents">Notifications</h1>
+    <div
+      v-if="messages.length != 0"
+      class="block w-full md:ml-4"
+    >
       <!-- Projects table -->
 
       <!-- Projects table -->
-      <table class="w-full bg-transparent border-collapse">
+      <table class=" md:contents w-full bg-transparent border-collapse hidden">
         <thead>
           <tr>
             <th
@@ -14,10 +17,16 @@
               S/N
             </th>
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
+              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+            >
+              From
+            </th>
+            <th
+              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
             >
               Message
             </th>
+            
             <th
               class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap  text-center"
             >
@@ -35,9 +44,7 @@
               index % 2 === 0
                 ? { 'background-color': 'white' }
                 : { 'background-color': 'white' },
-              message.read === 1
-                ? { color: 'gray',  }
-                : { color: 'black', }, 
+              message.read === 1 ? { color: 'gray' } : { color: 'black' }
             ]"
           >
             <th
@@ -50,18 +57,63 @@
               </div>
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left "
             >
-              {{ message.message | truncate(35) || "" }}
+              {{ message.sender || "" }}
+            </th>
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left  "
+            >
+              {{ message.message | truncate(45) || "" }}
             </th>
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
             >
-              {{ message.created_at || "" }}
+              {{ (message.created_at).slice(0, 10) || "" }}
             </th>
           </tr>
         </tbody>
       </table>
+
+      <div class="contents md:hidden">
+        <div class="pt-10">
+          <h3 class="text-center text-lg mb-10 font-bold">
+            Messages
+          </h3>
+        </div>
+        <div
+          :key="index"
+          v-for="(message, index) in messages"
+          @click="showDetail(message)"
+          :style="[
+            index % 2 === 0
+              ? { 'background-color': 'white' }
+              : { 'background-color': 'white' },
+            message.read === 1 ? { color: 'gray' } : { color: 'black' }
+          ]"
+        >
+          <div class="customerTile">
+            <div class="flex justify-between text-xs">
+              <div class="flex items-stretch">
+                <div
+                  :style="{ background: generateRandomColor() }"
+                  class="avatarCircle"
+                >
+                  {{ message.sender[0].toUpperCase() || "" }}
+                </div>
+                <div class="self-center font-medium">
+                  <span class="text-sm">{{ message.message | truncate(20) || "" }}</span>
+                </div>
+              </div>
+              <div class="flex flex-col my-auto">
+                <div class="font-bold">
+                  {{ (message.created_at).slice(0, 10) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <vue-tailwind-modal
         :showing="showModal"
@@ -70,9 +122,13 @@
         :backgroundClose="true"
         :css="modalOptions"
       >
-      <div class="flex justify-between my-auto">
-        <p class="text-left ml-4"><b>Message:</b> <span>{{ currentMessage.message }}</span></p>
-        <h4 class="h4 text-xs  font-bold text-green-500">Sent: {{ currentMessage.created_at }}</h4>
+        <div class="my-auto">
+          <h4 class="h4 text-xs ml-4 mb-4 font-bold text-green-500">
+            Sent: {{ (currentMessage.created_at) }}
+          </h4>
+          <p class="text-left ml-4">
+            <span>{{ currentMessage.message }}</span>
+          </p>
         </div>
       </vue-tailwind-modal>
       <div>
@@ -91,7 +147,7 @@
 
 <script>
 import { get, put } from "../../utilities/api";
-import{ mapGetters } from 'vuex' 
+import { mapGetters } from "vuex";
 import messageApi from "../../api/messages.js";
 import queryParam from "../../utilities/queryParam";
 import BasePagination from "../../components/BasePagination.vue";
@@ -106,7 +162,7 @@ export default {
     return {
       modalOptions: {
         background: "bg-gray-200",
-        modal: "max-h-90",
+        modal: "max-h-80 w-1/2",
         close: "text-red-500 font-extrabold"
       },
       messages: [],
@@ -169,7 +225,7 @@ export default {
 
     async updateRead(message) {
       this.$LIPS(true);
-      let resp = await put(`/api/message/${message.id}`, { read: true });     
+      let resp = await put(`/api/message/${message.id}`, { read: true });
       await this.$prepareNotifications();
       await this.fetchMessages();
 
@@ -183,6 +239,9 @@ export default {
       this.currentMessage = message;
       this.showModal = true;
       this.$LIPS(false);
+    },
+    generateRandomColor() {
+      return "#" + Math.floor(Math.random() * 16777215).toString(16);
     }
   },
 

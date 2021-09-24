@@ -15,8 +15,10 @@ const calculate = (productPrice, data, params) => {
     const downpayment = initDownpayment + (Math.floor(((total - initDownpayment) / count)) * data.plus);
     const actualDownpayment = Math.floor(downpayment / 100) * 100;
     const actualRepayment = total - downpayment;
+    var   biMonthlyRepayment = Math.round((actualRepayment/12)/100)*100
     total = Math.ceil(labelPrice / 100) * 100;
-    return { total, actualDownpayment, actualRepayment };
+    
+    return { total, actualDownpayment, actualRepayment, biMonthlyRepayment };
 
 };
 

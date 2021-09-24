@@ -81,8 +81,10 @@
         </p>
         <ArrowUp />
       </div>
-      <!-- mobile view -->
-      <div class="w-full" v-else >
+                     
+      <div class="w-full lg:w-auto" v-else >
+        <!-- mobile view -->
+        <div>
         <div 
           class="md:flex md:flex-col lg:hidden items-center w-full"
           v-for="biztype in businessTypes"
@@ -181,7 +183,7 @@
                     selectedDownpayment !== null &&
                     biztype.id === selectedDownpayment.bizId
                       ? $formatCurrency(
-                          selectedDownpayment.actualRepayment / 12
+                          selectedDownpayment.biMonthlyRepayment
                         )
                       : "₦0.00"
                   }}
@@ -240,9 +242,10 @@
             </div>
           </div>
         </div>
-      </div>
-
+        </div>
+      
       <!-- desktop view -->
+      <div>
       <div
         class="hidden px-16 py-8 mb-8 bg-white rounded-lg lg:flex flex-col"
         v-for="(b_type, index) in businessTypes"
@@ -300,7 +303,7 @@
                 <td class="font-medium text-base">
                   {{
                     $formatCurrency(
-                      Math.floor(downpayments.actualRepayment / 12)
+                      Math.floor(downpayments.biMonthlyRepayment)
                     ) || ""
                   }}
                 </td>
@@ -318,6 +321,8 @@
           </table>
         </div>
       </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -337,6 +342,7 @@ export default {
         getCalculation: `/api/price_calculator`,
         businessTypes: `/api/business_type`,
         downPaymentRates: `/api/down_payment_rate`,
+        repaymentDuration: `/api/repayment_duration`,
       },
       selectedProduct: {},
       products: [],
@@ -348,6 +354,7 @@ export default {
       downPaymentArr: [],
       selectedDownpayment: null,
       downpaymentCalculations: [],
+      repaymentDuration: [],
     };
   },
   components: {
@@ -411,7 +418,6 @@ export default {
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
   },
-
   methods: {
     selectedItem(value) {
       this.selectedProduct = value;
@@ -422,7 +428,6 @@ export default {
     hasHistory() {
       return window.history.length > 2;  
     },
-
     getResultMobile(bizId, percent) {
       this.selectedDownpayment = this.downpaymentCalculations.filter(
         (result) => {
@@ -430,7 +435,24 @@ export default {
         }
       )[0];
     },
-
+    
+    async getRepaymentDuration() {
+      try {
+        const fetchRepaymentDuration = await get(
+          this.apiUrls.repaymentDuration
+        );
+        this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
+        this.downPaymentRates = this.downPaymentRates.filter((item) => {
+        return !(
+          item.name.includes("plus") ||
+          item.name.includes("zero") ||
+          item.name.includes("ten")
+        );
+      });
+      } catch (err) {
+        this.$displayErrorMessage(err);
+      }
+    },
     downpaymentCalc() {
       let downPaymentArr = [];
       this.businessTypes.forEach((bizType) => {
@@ -441,19 +463,18 @@ export default {
               paymentRate.id === param.down_payment_rate_id
             );
           });
-
-          const { total, actualDownpayment, actualRepayment } = calculate(
+          const { total, actualDownpayment, actualRepayment, biMonthlyRepayment } = calculate(
             this.selectedProduct.price,
             paymentRate,
             filteredBizType[1]
           );
-
           downPaymentArr.push({
             bizId: bizType.id,
             percent: paymentRate["percent"],
             total,
             actualDownpayment,
             actualRepayment,
+            biMonthlyRepayment
           });
         });
       });
@@ -489,7 +510,6 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
-
     async getCalculation() {
       try {
         const fetchGetCalclations = await get(this.apiUrls.getCalculation);

@@ -99,7 +99,15 @@ const router = new VueRouter({
         component: Calculator,
         meta:{
             NoAuth:true
-        }
+        },
+        children:[
+            // {
+            // path: "/calculator/:id",
+            // name:"Result",
+            // component: "Result",
+            // props:true
+            // }
+        ]
     },
     {
         path: "/admin/userProfile/:id",

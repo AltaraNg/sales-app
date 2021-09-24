@@ -1,35 +1,25 @@
 <template>
   <div class="inactive-prospects overflow-x-auto">
-    <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
+    <h1 class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left">Inactive Prospects</h1>
 
-    <div class="md:flex md:justify-between">
-      <div class="flex-1 px-8 mx-4 text-center my-2 altaraBlue py-8 text-white">
-        <div>
-          <h5 class="font-extrabold uppercase text-xs">
-            Total
-          </h5>
-          <span class="font-semibold text-xl">
-            {{ totalInactive }}
-          </span>
+    <div class="md:flex md:justify-center">
+      <div id="stats ">
+        <pie-chart
+          :chart-data="pieData"
+          :options="option"
+          v-if="loaded"
+          class=""
+        ></pie-chart>
+      </div>
+      <div class="ml-10 self-center">
+        <ul class="list-disc">
+          <li v-for="(item, index) in dataSet" class="list-disc" :style='`color: ${color[index]}`'>
+            <span class="text-left text-black">{{labels[index]}}: </span><span class="text-center font-bold text-black">{{item}}</span>
+          </li>
+        </ul>
         </div>
-      </div>
-      <div class="flex-1 px-8 mx-4 text-center my-2 bg-yellow-800 py-8 text-white">
-        <h5 class="uppercase font-extrabold text-xs">
-          Affidavit
-        </h5>
-        <span class="font-semibold text-xl ">
-          25
-        </span>
-      </div>
-      <div class="flex-1 px-8 mx-4 text-center my-2 bg-purple-800 py-8 text-white">
-        <h5 class="uppercase font-extrabold text-xs">
-          KYC
-        </h5>
-        <span class="font-semibold text-xl">
-          25
-        </span>
-      </div>
     </div>
+
     <div v-if="prospects.length > 0">
       <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
         <table class="items-center w-full bg-transparent border-collapse mt-10">
@@ -120,15 +110,23 @@
                   {{ user.name[0].toUpperCase() || "" }}
                 </div>
                 <div class="self-center font-medium">
-                  {{ user.name || "" }}
+                  <span class="text-sm capitalize">{{ user.name || "" }}</span>
+                  <div class="text-xs">
+                  {{
+                    user.last_prospect_activity
+                      ? user.last_prospect_activity.type
+                      : "No Activity"
+                  }}
                 </div>
+                </div>
+                
               </div>
               <div class="flex flex-col my-auto">
                 <div class="font-bold">
                   {{
                     user.last_prospect_activity
-                      ? user.last_prospect_activity.type
-                      : "No Activity"
+                      ? user.last_prospect_activity.date
+                      : "N/A"
                   }}
                 </div>
               </div>
@@ -138,7 +136,7 @@
       </div>
     </div>
     <div v-else class="chatBox mt-4 w-48">
-      You are up to date
+      You don't have any <b>Inactive Prospect</b>
     </div>
 
     <vue-tailwind-modal
@@ -175,11 +173,12 @@
 
 <script>
 import { get } from "../../utilities/api.js";
+import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
 import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam.js";
 export default {
-  components: { BasePagination, VueTailwindModal },
+  components: { BasePagination, VueTailwindModal, PieChart },
   data() {
     return {
       headers: ["S/N", "Name", "Stage", "Last Activity", "Last Activity Date"],
@@ -188,9 +187,37 @@ export default {
         inactive_prospects: "/api/inactive/prospects",
         prospects_activities: "/api/prospect_activities"
       },
+      loaded: false,
+      labels: [],
+      dataSet: [],
       prospects: "",
       totalInactive: 0,
+      totalStages: "",
+      option: {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          position: 'bottom',
+          text: 'Inactive Prospects Chart'
+        }
+        
+      },
+      color: [
+        "#023e8a",
+              "#CC5A71",
+              "#22223b",
+              "#55a630",
+              "#973aa8",
+              "#cb997e",
+              "#ff0a54",
+              "#43010e",
+      ],
       OId: 0,
+      pieData: {},
       showModal: false,
       showActivityModal: false,
 
@@ -203,12 +230,13 @@ export default {
       activityList: []
     };
   },
-  beforeMount() {
-    this.fetchInactiveProspects();
+  async beforeMount() {
+    await this.fetchInactiveProspects();
   },
-  mounted() {
+  async mounted() {
     this.getNextList();
-    this.getProspectActivities();
+    await this.getProspectActivities();
+    this.loaded = true;
   },
   methods: {
     async fetchInactiveProspects() {
@@ -251,12 +279,50 @@ export default {
         });
         this.prospects = data;
         this.totalInactive = prospects.data?.data?.meta?.total;
+        this.totalStages = prospects.data?.data?.meta?.statsForStages;
+        this.totalStages.sort((a, b) => {
+          if (a.stage_name < b.stage_name) {
+            return -1;
+          }
+          if (a.stage_name > b.stage_name) {
+            return 1;
+          }
+          return 0;
+        });
+        this.getPieChartData();
         this.OId = from;
       } catch (err) {
         this.$displayErrorMessage(err);
       } finally {
         this.$LIPS(false);
       }
+    },
+
+    getPieChartData() {
+      this.getPieData();
+      this.pieData = {
+        labels: this.labels,
+        datasets: [
+          {
+            barPercentage: 1,
+            barThickness: 12,
+            maxBarThickness: 16,
+            data: this.dataSet,
+            backgroundColor: this.color
+          }
+        ]
+      };
+    },
+    getPieData() {
+      let arr = this.totalStages;
+      let labels = [];
+      let data = [];
+      for (let item of arr) {
+        labels.push(item["stage_name"]);
+        data.push(item["stage_count"]);
+      }
+      this.labels = labels;
+      this.dataSet = data;
     },
     selectUser(user) {
       this.$router.push(`/admin/userProfile/${user.id}`);

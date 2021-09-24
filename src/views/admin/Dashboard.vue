@@ -269,19 +269,19 @@
         <h1 class="text-center text-6xl">
           <i class="fas fa-exclamation-circle text-yellow-600"></i>
         </h1>
-        <h2 class="text-sm mb-5 text-center font-extrabold">
+        <h2 class="mb-5 text-center text-2xl font-bold">
           Inactive Prospects Notification
         </h2>
         <p class="text-sm text-center">
           You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
           moved stages in a long time!!!          
         </p>
-        <div class="text-center flex mt-4">
-          <p class="text-white px-2 py-1 block bg-red-500 rounded w-1/3 flex-1 mx-2 cursor-pointer" @click="showModal = false">Close</p>
+        <div class="text-center flex mt-4 justify-end">
+          <p class="text-white py-1 block bg-red-500 rounded md:w-1/5 mx-2 cursor-pointer px-2 md:px-0" @click="showModal = false">Close</p>
           <router-link
-            class="text-white px-2 py-1 block bg-green-500 rounded w-1/3 flex-1 mx-2"
+            class="text-white py-1 block bg-green-500 rounded mx-2 md:w-1/5 px-2 md:px-0"
             to="/admin/inactive-prospects"
-            >View Them</router-link
+            >View</router-link
           >
           
         </div>

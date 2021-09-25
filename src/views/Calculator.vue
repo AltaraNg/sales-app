@@ -6,7 +6,7 @@
     >
       <div class="w-full sm:px-3 md:px-36 lg:px-64 pb-10">
         <div
-          class="flex relative flex-col  items-center justify-center mt-10 px-10"
+          class="flex relative flex-col items-center justify-center mt-10 px-10"
         >
           <button
             class="
@@ -17,8 +17,9 @@
               py-2
               absolute
               left-0
-              lg:-ml-40 cursor-pointer
-              font-semibold   
+              lg:-ml-40
+              cursor-pointer
+              font-semibold
               text-base
               top-0
               -mt-6
@@ -54,6 +55,28 @@
           </div>
         </form>
       </div>
+      <div v-if="select_product == true" class="flex space-x-5 mb-10">
+        <div v-for="(rpayDuration, index) in repaymentDuration" :key="index">
+          <button
+            class="
+              text-green-800
+              font-semibold
+              lg:text-lg
+              text-base
+              rounded-lg
+              px-5
+              py-3
+              bg-white
+            "
+          >
+            <router-link
+              :to="{ name: 'Result', params: { name: rpayDuration.name } }"
+            >
+              {{ rpayDuration.name }}
+            </router-link>
+          </button>
+        </div>
+      </div>
 
       <div
         v-if="select_product == false"
@@ -68,9 +91,8 @@
           px-5
           mx-3 mx-8
           py-3
-          lg:hidden
           items-center
-          md:flex
+          flex
           justify-center
         "
       >
@@ -81,248 +103,19 @@
         </p>
         <ArrowUp />
       </div>
-                     
-      <div class="w-full lg:w-auto" v-else >
-        <!-- mobile view -->
-        <div>
-        <div 
-          class="md:flex md:flex-col lg:hidden items-center w-full"
-          v-for="biztype in businessTypes"
-          :key="biztype.id"
-        >
-          <div
-            class="
-              rounded-lg
-              flex flex-col
-              md:px-8
-              py-8
-              px-4
-              bg-white
-              shadow-2xl
-              h-auto
-              w-11/12
-              md:w-11/12
-              mx-auto
-              mb-10
-            "
-          >
-            <div class="flex justify-center md:space-x-20 justify-evenly mb-4">
-              <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
-                <button
-                  class="
-                    rounded-full
-                    d_buttons
-                    font-semibold
-                    text-white text-lg
-                    cursor-pointer
-                    transform
-                    hover:scale-125
-                    bg-gray-500
-                    focus:outline-none
-                  "
-                  @click="getResultMobile(biztype.id, dpayments.percent)"
-                  :class="
-                    dpayments.percent == 20
-                      ? 'bg-blue-500'
-                      : dpayments.percent == 40
-                      ? 'bg-red-500'
-                      : dpayments.percent == 60
-                      ? 'bg-green-500'
-                      : 'bg-yellow-500'
-                  "
-                >
-                  {{ dpayments.percent }}%
-                </button>
-              </div>
-            </div>
-            <p class="text-lg font-semibold" :class="toggletextColor">
-              {{ biztype.name }}
-            </p>
-            <div class="flex items-center px-4 justify-between mt-8">
-              <div class="flex-col items-center">
-                <div
-                  class="
-                    rounded-lg
-                    px-4
-                    md:px-8
-                    py-1
-                    text-xs
-                    md:text-sm
-                    font-semibold
-                  "
-                  :class="toggleColor"
-                >
-                  Initial Payment
-                </div>
-                <p class="amount font-bold text-lg text-center">
-                  {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.actualDownpayment)
-                      : "₦0.00"
-                  }}
-                </p>
-              </div>
-              <div class="flex-col items-center">
-                <div
-                  class="
-                    rounded-lg
-                    px-4
-                    md:px-8
-                    py-1
-                    text-xs
-                    md:text-sm
-                    font-semibold
-                  "
-                  :class="toggleColor"
-                >
-                  Bi-Monthly Repayment
-                </div>
-                <p class="amount font-bold text-lg text-center">
-                  {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(
-                          selectedDownpayment.biMonthlyRepayment
-                        )
-                      : "₦0.00"
-                  }}
-                </p>
-              </div>
-            </div>
-            <div class="flex items-center px-4 justify-between mt-12">
-              <div class="flex-col items-center">
-                <div
-                  class="
-                    rounded-lg
-                    px-4
-                    md:px-8
-                    py-1
-                    text-xs
-                    md:text-sm
-                    font-semibold
-                  "
-                  :class="toggleColor"
-                >
-                  Total Repayment
-                </div>
-                <p class="amount font-bold text-lg text-center">
-                  {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.actualRepayment)
-                      : "₦0.00"
-                  }}
-                </p>
-              </div>
-              <div class="flex-col items-center">
-                <div
-                  class="
-                    rounded-lg
-                    px-4
-                    md:px-8
-                    py-1
-                    text-xs
-                    md:text-sm
-                    font-semibold
-                  "
-                  :class="toggleColor"
-                >
-                  Total Product Price
-                </div>
-                <p class="amount font-bold text-lg text-center">
-                  {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.total)
-                      : "₦0.00"
-                  }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      
-      <!-- desktop view -->
-      <div>
-      <div
-        class="hidden px-16 py-8 mb-8 bg-white rounded-lg lg:flex flex-col"
-        v-for="(b_type, index) in businessTypes"
-        :key="index"
-      >
-        <div>
-          <p class="font-black text-2xl tracking-wid leading-3 mb-4">
-            {{ b_type.name }}
-          </p>
-          <table class="flex flex-col justify-center items-evenly">
-            <thead
-              class="my-2 px-3 pt-4 flex justify-evenly items-center space-x-10"
-            >
-              <td class="flex-grow pl-24"></td>
-              <td class="font-bold text-lg">Initial Payment</td>
-              <td class="font-bold text-lg">Bi-Monthly Repayment</td>
-              <td class="font-bold text-lg">Total Repayment</td>
-              <td class="font-bold text-lg">Total Product Price</td>
-            </thead>
-            <tbody
-              v-for="(downpayments, index) in computedGetCalc"
-              :key="index"
-            >
-              <tr
-                class="
-                  my-2
-                  px-3
-                  py-2
-                  flex
-                  justify-evenly
-                  items-center
-                  space-x-20
-                "
-                v-if="downpayments.bizId == b_type.id"
-                :class="
-                  downpayments.percent == 20
-                    ? 'bg-blue-100'
-                    : downpayments.percent == 40
-                    ? 'bg-red-100'
-                    : downpayments.percent == 60
-                    ? 'bg-green-100'
-                    : 'bg-yellow-100'
-                "
-              >
-                <td class="font-bold text-lg -mr-6 -ml-10">
-                  {{ downpayments.percent }}%
-                </td>
-                <td class="font-medium text-base">
-                  {{
-                    $formatCurrency(
-                      Math.floor(downpayments.actualDownpayment)
-                    ) || ""
-                  }}
-                </td>
-                <td class="font-medium text-base">
-                  {{
-                    $formatCurrency(
-                      Math.floor(downpayments.biMonthlyRepayment)
-                    ) || ""
-                  }}
-                </td>
-                <td class="font-medium text-base">
-                  {{
-                    $formatCurrency(Math.floor(downpayments.actualRepayment)) ||
-                    ""
-                  }}
-                </td>
-                <td class="font-medium text-base">
-                  {{ $formatCurrency(Math.floor(downpayments.total)) || "" }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+
+      <div class="lg:w-auto w-full" v-else>
+        <router-view
+          :businessTypes="businessTypes"
+          :downPaymentRates="downPaymentRates"
+          :getResultMobile="getResultMobile"
+          :selectedDownpayment="selectedDownpayment"
+          :toggleColor="toggleColor"
+          :toggletextColor="toggletextColor"
+          :computedGetCalc="computedGetCalc"
+        ></router-view>
+       
       </div>
-      </div>
-    </div>
     </div>
   </div>
 </template>
@@ -417,6 +210,7 @@ export default {
     await this.getProduct();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
+    await this.getRepaymentDuration();
   },
   methods: {
     selectedItem(value) {
@@ -426,7 +220,7 @@ export default {
       this.getResultMobile(2, 20);
     },
     hasHistory() {
-      return window.history.length > 2;  
+      return window.history.length > 2;
     },
     getResultMobile(bizId, percent) {
       this.selectedDownpayment = this.downpaymentCalculations.filter(
@@ -435,20 +229,16 @@ export default {
         }
       )[0];
     },
-    
+
     async getRepaymentDuration() {
       try {
         const fetchRepaymentDuration = await get(
           this.apiUrls.repaymentDuration
         );
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
-        this.downPaymentRates = this.downPaymentRates.filter((item) => {
-        return !(
-          item.name.includes("plus") ||
-          item.name.includes("zero") ||
-          item.name.includes("ten")
-        );
-      });
+        this.repaymentDuration = this.repaymentDuration.filter((item) => {
+          return !(item.name.includes("nine") || item.name.includes("twelve"));
+        });
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -463,7 +253,12 @@ export default {
               paymentRate.id === param.down_payment_rate_id
             );
           });
-          const { total, actualDownpayment, actualRepayment, biMonthlyRepayment } = calculate(
+          const {
+            total,
+            actualDownpayment,
+            actualRepayment,
+            biMonthlyRepayment,
+          } = calculate(
             this.selectedProduct.price,
             paymentRate,
             filteredBizType[1]
@@ -474,7 +269,7 @@ export default {
             total,
             actualDownpayment,
             actualRepayment,
-            biMonthlyRepayment
+            biMonthlyRepayment,
           });
         });
       });

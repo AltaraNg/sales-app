@@ -101,12 +101,12 @@ const router = new VueRouter({
             NoAuth:true
         },
         children:[
-            // {
-            // path: "/calculator/:id",
-            // name:"Result",
-            // component: "Result",
-            // props:true
-            // }
+             {
+            path: "/calculator/:name",
+            name:"Result",
+            component: () => import("@/components/Cards/Results.vue"),
+            props:true
+             }
         ]
     },
     {

@@ -6,148 +6,148 @@
       >
         <div class="hidden md:contents">
           <div class="mb-2">
-            <auto-complete :url="'/api/customer_contact'" :title="'Search User'" />
+            <auto-complete
+              :url="'/api/customer_contact'"
+              :title="'Search User'"
+            />
           </div>
           <div class="flex flex-row mb-3 w-full">
-              <div class="flex-1">
-                <div class="p-1">
-                  <label
-                    class="block uppercase text-gray-700 text-sm font-bold mb-2 sm:text-xs overflow-auto"
-                    htmlFor="grid-password"
+            <div class="flex-1">
+              <div class="p-1">
+                <label
+                  class="block uppercase text-gray-700 text-sm font-bold mb-2 sm:text-xs overflow-auto"
+                  htmlFor="grid-password"
+                >
+                  Employment Status
+                </label>
+                <select
+                  v-model="searchQuery.employmentStatus"
+                  name="employment status"
+                  class="mx-input"
+                >
+                  <option disabled selected="selected">
+                    Select Employment Status
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in employmentStatus"
                   >
-                    Employment Status
-                  </label>
-                  <select
-                    v-model="searchQuery.employmentStatus"
-                    name="employment status"
-                    class="mx-input"
-                  >
-                    <option disabled selected="selected">
-                      Select Employment Status
-                    </option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in employmentStatus"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
-              <div class="flex-1">
-                <div class="p-1">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            </div>
+            <div class="flex-1">
+              <div class="p-1">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Customer Stage
+                </label>
+                <select v-model="searchQuery.stage" class="mx-input">
+                  <option disabled selected="selected">
+                    Select Customer Stage
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in customerStage"
                   >
-                    Customer Stage
-                  </label>
-                  <select v-model="searchQuery.stage" class="mx-input">
-                    <option disabled selected="selected">
-                      Select Customer Stage
-                    </option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in customerStage"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div
-                class="p-1 flex-1"
-                v-if="canDo(Manager) || canDo(Coordinator)"
-              >
-                <div class="relative mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            <div class="p-1 flex-1" v-if="canDo(Manager) || canDo(Coordinator)">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Branch
+                </label>
+                <select v-model="searchQuery.branch" class="mx-input">
+                  <option disabled selected="selected">Select Branch</option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in branches"
                   >
-                    Branch
-                  </label>
-                  <select v-model="searchQuery.branch" class="mx-input">
-                    <option disabled selected="selected">Select Branch</option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in branches"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div class="flex-1 p-1" v-if="!canDo(DSA)">
-                <div class="relative mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            <div class="flex-1 p-1" v-if="!canDo(DSA)">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  DSA
+                </label>
+                <select v-model="searchQuery.dsa" class="mx-input">
+                  <option disabled selected="selected">Select DSA</option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in agents"
                   >
-                    DSA
-                  </label>
-                  <select v-model="searchQuery.dsa" class="mx-input">
-                    <option disabled selected="selected">Select DSA</option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in agents"
-                    >
-                      {{ type.full_name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.full_name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div class="flex-1 p-1">
-                <div class="relative mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    From Date
-                  </label>
-                  <div>
-                    <date-picker
-                      valueType="format"
-                      v-model="searchQuery.startDate"
-                    ></date-picker>
-                  </div>
-                </div>
-              </div>
-              <div class="flex-1 p-1">
-                <div class="relative mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    To Date
-                  </label>
-                  <div>
-                    <date-picker
-                      valueType="format"
-                      v-model="searchQuery.endDate"
-                    ></date-picker>
-                  </div>
+            <div class="flex-1 p-1">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  From Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.startDate"
+                  ></date-picker>
                 </div>
               </div>
             </div>
-          
+            <div class="flex-1 p-1">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  To Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.endDate"
+                  ></date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="contents md:hidden">
           <div class="flex-col">
             <div class="flex flex-wrap">
               <div class="w-full lg:w-2/12 xl:w-3/12">
-
-              <div class="relative w-50 mb-3">
-                <auto-complete :url="'/api/customer_contact'" :title="'Search User'" />
-
-              </div>
+                <div class="relative w-50 mb-3">
+                  <auto-complete
+                    :url="'/api/customer_contact'"
+                    :title="'Search User'"
+                  />
+                </div>
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -230,8 +230,6 @@
             </div>
           </div>
         </div>
-
-        
 
         <div class="flex justify-between">
           <div
@@ -240,15 +238,13 @@
           >
             <i class="fas fa-search"></i>
             <span class="mx-1 hidden md:contents">Search</span>
-            
           </div>
           <div
             v-on:click="resetSearch()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-          <i class="fas fa-recycle"></i>
+            <i class="fas fa-recycle"></i>
             <span class="mx-1 hidden md:contents">Reset</span>
-            
           </div>
 
           <div
@@ -257,26 +253,43 @@
           >
             <i class="fas fa-file-export"></i>
             <span class="mx-1 hidden md:contents">Export</span>
-            
           </div>
         </div>
       </div>
 
       <vue-tailwind-modal
-          :showing="showModal"
-          @close="showModal = false"
-          :showClose="true"
-          :backgroundClose="false"
-          :css="modalOptions"
-        >
-          <!-- Put your modal content here -->
-        <h1 class="text-center text-lg">
-          <i class="fas fa-exclamation-triangle text-yellow-600 "></i>
+        :showing="showModal"
+        @close="showModal = false"
+        :showClose="true"
+        :backgroundClose="false"
+        :css="modalOptions"
+      >
+        <!-- Put your modal content here -->
+        <div v-if="getInactiveProspects > 0">
+        <h1 class="text-center text-6xl">
+          <i class="fas fa-exclamation-circle text-yellow-600"></i>
         </h1>
-          <h2 class="text-lg mb-5 text-center">
-             Inactive Prospects Notification </h2>
-          <p class="text-lg">You have {{getInactiveProspects}} inactive customers who have not moved stages in a long time. <router-link class="text-blue-500 float-right" to="/admin/inactive-prospects">Click here to view them</router-link></p>
-        </vue-tailwind-modal>
+        <h2 class="mb-5 text-center text-2xl font-bold">
+          Inactive Prospects Notification
+        </h2>
+        <p class="text-sm text-center">
+          You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
+          moved stages in a long time!!!          
+        </p>
+        <div class="text-center flex mt-4 justify-end">
+          <p class="text-white py-1 block bg-red-500 rounded md:w-1/5 mx-2 cursor-pointer px-2 md:px-0" @click="showModal = false">Close</p>
+          <router-link
+            class="text-white py-1 block bg-green-500 rounded mx-2 md:w-1/5 px-2 md:px-0"
+            to="/admin/inactive-prospects"
+            >View</router-link
+          >
+          
+        </div>
+        </div>
+        <div>
+
+        </div>
+      </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
         <div class="text-center py-2 font-medium px-5">
@@ -285,8 +298,8 @@
         <div v-if="usersList.length > 0">
           <div :key="index" v-for="(user, index) in usersList">
             <div v-on:click="viewUser(user)" class="customerTile">
-              <div class="flex justify-between">
-                <div class="flex items-stretch">
+              <div class="flex justify-between text-xs">
+                <div class="flex items-stretch ">
                   <div
                     :style="{ background: generateRandomColor() }"
                     class="avatarCircle"
@@ -297,7 +310,7 @@
                     {{ user.name || "" }}
                   </div>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col my-auto">
                   <div class="font-bold">{{ user.reg_id || "" }}</div>
                 </div>
               </div>
@@ -520,8 +533,8 @@
 </template>
 
 <script>
-import AutoComplete from '../../components/AutoCompleteSearch.vue'
-import {mapGetters} from 'vuex';
+import AutoComplete from "../../components/AutoCompleteSearch.vue";
+import { mapGetters } from "vuex";
 import { get, post } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -552,17 +565,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getInactiveProspects'])
+    ...mapGetters(["getInactiveProspects"])
   },
-  
-  
+
   data() {
     return {
       modalOptions: {
-	background: "smoke",
-	modal: "max-h-90",
-	close: "text-red",
-},
+        background: "smoke",
+        modal: "max-h-90",
+        close: "text-red-500 font-extrabold"
+      },
       pageNumber: 1,
       pageParams: {},
       OId: 0,
@@ -580,7 +592,7 @@ export default {
       apiUrls: {
         postComment: `/api/feedback`,
         getDSAs: `/api/get-users?role=18`,
-        customerContact: '/api/customer_contact'
+        customerContact: "/api/customer_contact"
       },
       userMeta: {},
       feedback: "",
@@ -589,10 +601,10 @@ export default {
       feedbackPopup: false,
       error: {},
       canView: "",
-      username : localStorage.getItem('user_name')
+      username: localStorage.getItem("user_name")
     };
   },
-  beforeMount(){
+  beforeMount() {
     this.searchUsersList();
   },
 
@@ -602,6 +614,7 @@ export default {
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
+
     this.canView = localStorage.getItem("flag");
     this.getNextList();
   },
@@ -717,9 +730,6 @@ export default {
         eventBus.$emit("userStats", this.userMeta);
         eventBus.$emit("notification");
         this.OId = from;
-
-        router.replace({ path: "/admin/dashboard", query: query });
-
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
@@ -765,26 +775,27 @@ export default {
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
     },
-    getNextList(){
-      window.onscroll = () =>{
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
-        if(bottomOfWindow){
+    getNextList() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          document.documentElement.scrollHeight +
+            document.documentElement.scrollTop ===
+          document.documentElement.clientHeight;
+
+        if (bottomOfWindow) {
           this.pageParams.page += 1;
           const query = {
-          ...this.searchQuery,
-          page: this.pageParams.page,
-          limit: this.pageParams.limit,
-          inActiveDays: 30
-        };
+            ...this.searchQuery,
+            page: this.pageParams.page,
+            limit: this.pageParams.limit,
+            inActiveDays: 30
+          };
 
-        get(
-          this.apiUrls.customerContact + queryParam(query)
-        ).then(res => {
-          this.usersList = this.usersList.concat(res?.data?.data[0].data);
-        });
-        
+          get(this.apiUrls.customerContact + queryParam(query)).then(res => {
+            this.usersList = this.usersList.concat(res?.data?.data[0].data);
+          });
         }
-      }
+      };
     },
     openModal(data) {
       this.comments = data.notifications;

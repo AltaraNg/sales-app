@@ -1,158 +1,166 @@
 <template>
   <div class="inactive-prospects overflow-x-auto">
-    <h1 class="text-2xl mt-3 mb-10 ml-4">Inactive Prospects</h1>
+    <h1 class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left">Inactive Prospects</h1>
 
-    <div class="md:flex md:justify-between">
-      <div
-        class="pr-4 card text-center my-2"
-      >
-      <div>
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
-          Total
-        </h5>
-        <span class="font-semibold text-xl text-gray-800">
-          {{ totalInactive }}
-        </span>
+    <div class="md:flex md:justify-center">
+      <div id="stats ">
+        <pie-chart
+          :chart-data="pieData"
+          :options="option"
+          v-if="loaded"
+          class=""
+        ></pie-chart>
+      </div>
+      <div class="ml-10 self-center">
+        <ul class="list-disc">
+          <li v-for="(item, index) in dataSet" class="list-disc" :style='`color: ${color[index]}`'>
+            <span class="text-left text-black">{{labels[index]}}: </span><span class="text-center font-bold text-black">{{item}}</span>
+          </li>
+        </ul>
         </div>
-
-        
-
-      </div>
-      <div
-        class=" pr-4 card text-center my-2"
-      >
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
-          Affidavit
-        </h5>
-        <span class="font-semibold text-xl text-gray-800">
-          25
-        </span>
-      </div>
-      <div
-        class="pr-4 card text-center my-2"
-      >
-        <h5 class="text-gray-500 uppercase font-bold text-xs">
-          KYC
-        </h5>
-        <span class="font-semibold text-xl text-gray-800">
-          25
-        </span>
-      </div>
     </div>
-    <div      
-      v-if="prospects.length > 0"
-    >
-    <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
-      <table class="items-center w-full bg-transparent border-collapse mt-10">
-        <thead>
-          <tr>
-            <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-              v-for="header in headers"
-            >
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="pointer"
-            :key="index"
-            v-for="(user, index) in prospects"
-            :style="
-              index % 2 === 0
-                ? { 'background-color': 'white' }
-                : { 'background-color': '#F3F4F6' }
-            "
-          >
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              <div
-                class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+
+    <div v-if="prospects.length > 0">
+      <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
+        <table class="items-center w-full bg-transparent border-collapse mt-10">
+          <thead>
+            <tr>
+              <th
+                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
+                v-for="header in headers"
               >
-                {{ index + OId || "" }}
-              </div>
-            </td>
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="pointer"
+              :key="index"
+              v-for="(user, index) in prospects"
+              :style="
+                index % 2 === 0
+                  ? { 'background-color': 'white' }
+                  : { 'background-color': '#F3F4F6' }
+              "
+            >
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              >
+                <div
+                  class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+                >
+                  {{ index + OId || "" }}
+                </div>
+              </td>
 
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left custom-hover"
-              @click="selectUser(user)"
-            >
-              {{ user.name || " " }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-            >
-              {{ user.customer_stage.name || " " }}
-            </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center custom-hover"
+                @click="selectUser(user)"
+              >
+                {{ user.name || " " }}
+              </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              >
+                {{ user.customer_stage.name || " " | truncate(15) }}
+              </td>
 
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
-              :class="{ 'text-red-500': user.last_prospect_activity === null, 'custom-hover': user.last_prospect_activity !== null }" @click="viewActivity(user)"
-            >
-              {{
-                user.last_prospect_activity
-                  ? user.last_prospect_activity.type
-                  : "No Activity"
-              }}
-            </td>
-            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-              {{user.last_prospect_activity
-                  ? user.last_prospect_activity.date
-                  : "N/A"}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+                :class="{
+                  'text-red-500': user.last_prospect_activity === null,
+                  'custom-hover': user.last_prospect_activity !== null
+                }"
+                @click="viewActivityList(user)"
+              >
+                {{
+                  user.last_prospect_activity
+                    ? user.last_prospect_activity.text
+                    : "No Activity" | truncate(15)
+                }}
+              </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              >
+                {{
+                  user.last_prospect_activity
+                    ? user.last_prospect_activity.date
+                    : "N/A"
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="contents md:hidden">
         <div class="pt-10">
-         <h3 class="text-center text-lg mb-2 font-bold">List Of Inactive Prospects</h3>
+          <h3 class="text-center text-lg mb-2 font-bold">
+            List Of Inactive Prospects
+          </h3>
         </div>
         <div :key="index" v-for="(user, index) in prospects">
-            <div v-on:click="selectUser(user)" class="customerTile">
-              <div class="flex justify-between">
-                <div class="flex items-stretch">
-                  <div
-                    :style="{ background: generateRandomColor() }"
-                    class="avatarCircle"
-                  >
-                    {{ user.name[0].toUpperCase() || "" }}
-                  </div>
-                  <div class="self-center font-medium">
-                    {{ user.name || "" }}
-                  </div>
+          <div v-on:click="selectUser(user)" class="customerTile">
+            <div class="flex justify-between text-xs">
+              <div class="flex items-stretch">
+                <div
+                  :style="{ background: generateRandomColor() }"
+                  class="avatarCircle"
+                >
+                  {{ user.name[0].toUpperCase() || "" }}
                 </div>
-                <div class="flex flex-col">
-                  <div class="font-bold">{{  user.last_prospect_activity
-                  ? user.last_prospect_activity.type
-                  : "No Activity"}}</div>
+                <div class="self-center font-medium">
+                  <span class="text-sm capitalize">{{ user.name || "" }}</span>
+                  <div class="text-xs">
+                  {{
+                    user.last_prospect_activity
+                      ? user.last_prospect_activity.type
+                      : "No Activity"
+                  }}
+                </div>
+                </div>
+                
+              </div>
+              <div class="flex flex-col my-auto">
+                <div class="font-bold">
+                  {{
+                    user.last_prospect_activity
+                      ? user.last_prospect_activity.date
+                      : "N/A"
+                  }}
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
     <div v-else class="chatBox mt-4 w-48">
-      You are up to date
+      You don't have any <b>Inactive Prospect</b>
     </div>
 
     <vue-tailwind-modal
-      :showing="showModal"
-      @close="showModal = false"
+      :showing="showActivityModal"
+      @close="showActivityModal = false"
       :showClose="true"
       :backgroundClose="false"
-      :css="modalOptions"
+      :css="modalOption"
     >
-    <div v-if="activeUser && activeUser.last_prospect_activity !== null">
-    <p>Activity type: <span>{{activeUser ? activeUser.last_prospect_activity.type : ''}}</span></p>
-    <p>Details: <span>{{activeUser ? activeUser.last_prospect_activity.text : ''}}</span></p>
-    <p>Date occurred: <span>{{activeUser ? activeUser.last_prospect_activity.created_at : ''}}</span></p>
-    </div>
-    <div v-else>
-      <p class="text-lg"> There is no Activity</p>
-    </div>
+      <div class="flex text-lg justify-evenly text-center">
+        <h3>S/N</h3>
+        <h3>Activity Type</h3>
+        <h3>Details</h3>
+        <h3>Date</h3>
+      </div>
+      <div
+        v-for="(activity, index) in activityList"
+        class="flex text-xs text-center"
+      >
+        <h5>{{ index + 1 }}</h5>
+        <h5>{{ activity.type }}</h5>
+        <h5>{{ activity.text }}</h5>
+        <h5>{{ activity.date }}</h5>
+      </div>
     </vue-tailwind-modal>
     <base-pagination
       :pageParam="pageParams"
@@ -165,31 +173,70 @@
 
 <script>
 import { get } from "../../utilities/api.js";
+import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
 import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam.js";
 export default {
-  components: { BasePagination, VueTailwindModal },
+  components: { BasePagination, VueTailwindModal, PieChart },
   data() {
     return {
       headers: ["S/N", "Name", "Stage", "Last Activity", "Last Activity Date"],
       pageParams: {},
       apiUrls: {
-        inactive_prospects: "/api/inactive/prospects"
+        inactive_prospects: "/api/inactive/prospects",
+        prospects_activities: "/api/prospect_activities"
       },
+      loaded: false,
+      labels: [],
+      dataSet: [],
       prospects: "",
       totalInactive: 0,
+      totalStages: "",
+      option: {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          position: 'bottom',
+          text: 'Inactive Prospects Chart'
+        }
+        
+      },
+      color: [
+        "#023e8a",
+              "#CC5A71",
+              "#22223b",
+              "#55a630",
+              "#973aa8",
+              "#cb997e",
+              "#ff0a54",
+              "#43010e",
+      ],
       OId: 0,
+      pieData: {},
       showModal: false,
-      modalOptions: {},
-      activeUser: null
+      showActivityModal: false,
+
+      modalOption: {
+        background: "smoke",
+        modal: "max-h-90",
+        close: "text-red"
+      },
+      activeUser: null,
+      activityList: []
     };
   },
-  beforeMount(){
-    this.fetchInactiveProspects();
+  async beforeMount() {
+    await this.fetchInactiveProspects();
   },
-  mounted() {
+  async mounted() {
     this.getNextList();
+    await this.getProspectActivities();
+    this.loaded = true;
   },
   methods: {
     async fetchInactiveProspects() {
@@ -232,6 +279,17 @@ export default {
         });
         this.prospects = data;
         this.totalInactive = prospects.data?.data?.meta?.total;
+        this.totalStages = prospects.data?.data?.meta?.statsForStages;
+        this.totalStages.sort((a, b) => {
+          if (a.stage_name < b.stage_name) {
+            return -1;
+          }
+          if (a.stage_name > b.stage_name) {
+            return 1;
+          }
+          return 0;
+        });
+        this.getPieChartData();
         this.OId = from;
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -239,36 +297,87 @@ export default {
         this.$LIPS(false);
       }
     },
+
+    getPieChartData() {
+      this.getPieData();
+      this.pieData = {
+        labels: this.labels,
+        datasets: [
+          {
+            barPercentage: 1,
+            barThickness: 12,
+            maxBarThickness: 16,
+            data: this.dataSet,
+            backgroundColor: this.color
+          }
+        ]
+      };
+    },
+    getPieData() {
+      let arr = this.totalStages;
+      let labels = [];
+      let data = [];
+      for (let item of arr) {
+        labels.push(item["stage_name"]);
+        data.push(item["stage_count"]);
+      }
+      this.labels = labels;
+      this.dataSet = data;
+    },
     selectUser(user) {
       this.$router.push(`/admin/userProfile/${user.id}`);
     },
-      generateRandomColor() {
+    generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
-    viewActivity(user){
+
+    async getProspectActivities() {
+      let activities = await get(this.apiUrls.prospects_activities);
+    },
+    viewActivity(user) {
       this.activeUser = user;
       this.showModal = true;
     },
-     getNextList(){
-      window.onscroll = () =>{
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
-        if(bottomOfWindow){
+
+    async viewActivityList(user) {
+      if (user.last_prospect_activity !== null) {
+        this.$LIPS(true);
+        try {
+          let activities = await get(
+            this.apiUrls.prospects_activities +
+              queryParam({ customer: user.id })
+          );
+          this.activityList = activities.data.data.prospect_activities.data;
+        } catch (error) {
+          this.$displayErrorMessage(error);
+        } finally {
+          this.$LIPS(false);
+        }
+        this.showActivityModal = true;
+      }
+    },
+    getNextList() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          document.documentElement.scrollHeight -
+            document.documentElement.scrollTop ===
+          document.documentElement.clientHeight;
+        if (bottomOfWindow) {
           this.pageParams.page += 1;
           const query = {
-          ...this.searchQuery,
-          page: this.pageParams.page,
-          limit: this.pageParams.limit,
-          inActiveDays: 30
-        };
+            ...this.searchQuery,
+            page: this.pageParams.page,
+            limit: this.pageParams.limit,
+            inActiveDays: 30
+          };
 
-        get(
-          this.apiUrls.inactive_prospects + queryParam(query)
-        ).then(res => {
-          this.prospects = this.prospects.concat(res?.data?.data?.prospects.data);
-        });
-        
+          get(this.apiUrls.inactive_prospects + queryParam(query)).then(res => {
+            this.prospects = this.prospects.concat(
+              res?.data?.data?.prospects.data
+            );
+          });
         }
-      }
+      };
     }
   }
 };

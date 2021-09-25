@@ -109,9 +109,7 @@
           :businessTypes="businessTypes"
           :downPaymentRates="downPaymentRates"
           :getResultMobile="getResultMobile"
-          :selectedDownpayment="selectedDownpayment"
-          :toggleColor="toggleColor"
-          :toggletextColor="toggletextColor"
+          :selectedDownpayment="selectedDownpayment"         
           :computedGetCalc="computedGetCalc"
         ></router-view>
        
@@ -158,52 +156,7 @@ export default {
     computedGetCalc() {
       return this.downpaymentCalc();
     },
-    toggleColor() {
-      let color = "";
-      let selectDownpayment = !this.selectedDownpayment
-        ? null
-        : this.selectedDownpayment.percent;
-      switch (selectDownpayment) {
-        case 20:
-          color = "bg-blue-300";
-          break;
-        case 40:
-          color = "bg-red-300 ";
-          break;
-        case 60:
-          color = "bg-green-300 ";
-          break;
-        case 80:
-          color = "bg-yellow-300 ";
-          break;
-        default:
-          color = "bg-gray-400 ";
-      }
-      return color;
-    },
-    toggletextColor() {
-      let color = "";
-      let selectDownpayment = !this.selectedDownpayment
-        ? null
-        : this.selectedDownpayment.percent;
-      switch (selectDownpayment) {
-        case 20:
-          color = "text-blue-500";
-          break;
-        case 40:
-          color = "text-red-500 ";
-          break;
-        case 60:
-          color = "text-green-500 ";
-          break;
-        case 80:
-          color = "text-yellow-500 ";
-          break;
-        default:
-          color = "text-gray-400 ";
-      }
-      return color;
-    },
+   
   },
   async mounted() {
     await this.getCalculation();
@@ -253,15 +206,20 @@ export default {
               paymentRate.id === param.down_payment_rate_id
             );
           });
-          const {
-            total,
-            actualDownpayment,
-            actualRepayment,
-            biMonthlyRepayment,
-          } = calculate(
+          
+         let repayment_duration = this.repaymentDuration.find((item)=>{
+            if(item.name == this.$route.params.name){
+              return true
+            } 
+            return false
+          })
+          
+
+          const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
             this.selectedProduct.price,
             paymentRate,
-            filteredBizType[1]
+            filteredBizType[1],
+            repayment_duration?.value
           );
           downPaymentArr.push({
             bizId: bizType.id,
@@ -273,6 +231,7 @@ export default {
           });
         });
       });
+      console.log(this.$route.params.name, 'vue')
       this.downpaymentCalculations = downPaymentArr;
       return downPaymentArr;
     },

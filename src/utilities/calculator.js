@@ -1,6 +1,7 @@
-const calculate = (productPrice, data, params) => {
+const calculate = (productPrice, data, params, repayment_duration) => {
     const count = repaymentCount(
-        180,
+        
+        repayment_duration,
         14
     );
     const marketPrice = Math.floor(productPrice * (1 + params.margin))

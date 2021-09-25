@@ -246,6 +246,54 @@ export default {
             id:this.$route.params.name
         }
     },
+    computed:{
+         toggleColor() {
+      let color = "";
+      let selectDownpayment = !this.selectedDownpayment
+        ? null
+        : this.selectedDownpayment.percent;
+      switch (selectDownpayment) {
+        case 20:
+          color = "bg-blue-300";
+          break;
+        case 40:
+          color = "bg-red-300 ";
+          break;
+        case 60:
+          color = "bg-green-300 ";
+          break;
+        case 80:
+          color = "bg-yellow-300 ";
+          break;
+        default:
+          color = "bg-gray-400 ";
+      }
+      return color;
+    },
+    toggletextColor() {
+      let color = "";
+      let selectDownpayment = !this.selectedDownpayment
+        ? null
+        : this.selectedDownpayment.percent;
+      switch (selectDownpayment) {
+        case 20:
+          color = "text-blue-500";
+          break;
+        case 40:
+          color = "text-red-500 ";
+          break;
+        case 60:
+          color = "text-green-500 ";
+          break;
+        case 80:
+          color = "text-yellow-500 ";
+          break;
+        default:
+          color = "text-gray-400 ";
+      }
+      return color;
+    },
+    },
     props:{
         businessTypes:{
             type: Array,
@@ -262,12 +310,6 @@ export default {
         selectedDownpayment:{
             type:null,
             function:true
-        },
-        toggleColor:{
-            type: String
-        },
-        toggletextColor:{
-            type: String
         },
         computedGetCalc:{
             type: Array,

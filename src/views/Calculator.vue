@@ -57,6 +57,9 @@
       </div>
       <div v-if="select_product == true" class="flex space-x-5 mb-10">
         <div v-for="(rpayDuration, index) in repaymentDuration" :key="index">
+         <router-link
+              :to="{ name: 'Result', params: { name: rpayDuration.name } }"
+            >
           <button
             class="
               text-green-800
@@ -68,13 +71,12 @@
               py-3
               bg-white
             "
+            @click="getResultMobile(2, 20)"
           >
-            <router-link
-              :to="{ name: 'Result', params: { name: rpayDuration.name } }"
-            >
+
               {{ rpayDuration.name }}
-            </router-link>
           </button>
+            </router-link>
         </div>
       </div>
 
@@ -291,8 +293,5 @@ export default {
 .alert {
   margin-bottom: 200%;
 }
-.d_buttons {
-  width: 3.7rem;
-  height: 3.7rem;
-}
+
 </style>

@@ -322,6 +322,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.d_buttons {
+  width: 3.7rem;
+  height: 3.7rem;
+}
 </style>

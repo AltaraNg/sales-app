@@ -76,8 +76,8 @@
               >
                 {{
                   user.last_prospect_activity
-                    ? user.last_prospect_activity.text
-                    : "No Activity" | truncate(15)
+                    ? user.last_prospect_activity.text + ` (${user.last_prospect_activity.type})`
+                    : "No Activity" | truncate(35)
                 }}
               </td>
               <td
@@ -85,7 +85,7 @@
               >
                 {{
                   user.last_prospect_activity
-                    ? user.last_prospect_activity.date
+                    ? humanizeDate(user.last_prospect_activity.date)
                     : "N/A"
                 }}
               </td>
@@ -100,18 +100,19 @@
           </h3>
         </div>
         <div :key="index" v-for="(user, index) in prospects">
-          <div v-on:click="selectUser(user)" class="customerTile">
+          <div class="customerTile">
             <div class="flex justify-between text-xs">
-              <div class="flex items-stretch">
+              <div class="flex items-stretch" >
                 <div
+                v-on:click="selectUser(user)"
                   :style="{ background: generateRandomColor() }"
-                  class="avatarCircle"
+                  class="avatarCircle text-xs"
                 >
-                  {{ user.name[0].toUpperCase() || "" }}
+                  {{ returnInitials(user.name) || "" }}
                 </div>
                 <div class="self-center font-medium">
                   <span class="text-sm capitalize">{{ user.name || "" }}</span>
-                  <div class="text-xs">
+                  <div class="text-xs" @click="viewActivityList(user)">
                   {{
                     user.last_prospect_activity
                       ? user.last_prospect_activity.type
@@ -125,7 +126,7 @@
                 <div class="font-bold">
                   {{
                     user.last_prospect_activity
-                      ? user.last_prospect_activity.date
+                      ? humanizeDate(user.last_prospect_activity.date)
                       : "N/A"
                   }}
                 </div>
@@ -146,21 +147,25 @@
       :backgroundClose="false"
       :css="modalOption"
     >
-      <div class="flex text-lg justify-evenly text-center">
-        <h3>S/N</h3>
-        <h3>Activity Type</h3>
-        <h3>Details</h3>
-        <h3>Date</h3>
+      <div class="w-full table text-xs">
+        <div class="table-header-group">
+          <div class="table-row font-bold">
+            <h3 class="table-cell">S/N</h3>
+            <h3 class="table-cell">Activity Type</h3>
+            <h3 class="table-cell">Content</h3>
+            <h3 class="table-cell">Date</h3>
+          </div>
+        </div>
+        <div class="table-row-group">
+           <div v-for="(activity, index) in activityList" class="table-row">
+                     <h5 class="table-cell">{{ index + 1 }}</h5>
+        <h5 class="table-cell">{{ activity.type }}</h5>
+        <h5 class="table-cell">{{ activity.text }}</h5>
+        <h5 class="table-cell">{{ activity.date }}</h5>
       </div>
-      <div
-        v-for="(activity, index) in activityList"
-        class="flex text-xs text-center"
-      >
-        <h5>{{ index + 1 }}</h5>
-        <h5>{{ activity.type }}</h5>
-        <h5>{{ activity.text }}</h5>
-        <h5>{{ activity.date }}</h5>
       </div>
+      </div>
+     
     </vue-tailwind-modal>
     <base-pagination
       :pageParam="pageParams"
@@ -172,6 +177,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { get } from "../../utilities/api.js";
 import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
@@ -236,6 +242,7 @@ export default {
   async mounted() {
     this.getNextList();
     await this.getProspectActivities();
+    this.humanizeDate();
     this.loaded = true;
   },
   methods: {
@@ -378,7 +385,20 @@ export default {
           });
         }
       };
+    },
+    humanizeDate(date){
+      return moment(date).fromNow();
+    },
+    returnInitials(name){
+      var names = name.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    
+      if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+      }
+    return initials; 
     }
+    
   }
 };
 </script>

@@ -3,12 +3,12 @@
     <h1 class="text-2xl mt-3 mb-10 md:ml-4 hidden md:contents">Notifications</h1>
     <div
       v-if="messages.length != 0"
-      class="block w-full md:ml-4"
+      class="block w-full "
     >
       <!-- Projects table -->
 
       <!-- Projects table -->
-      <table class=" md:contents w-full bg-transparent border-collapse hidden">
+      <table class=" md:table w-full bg-transparent border-collapse hidden mt-8 ">
         <thead>
           <tr>
             <th
@@ -75,7 +75,7 @@
         </tbody>
       </table>
 
-      <div class="contents md:hidden">
+      <div class="contents md:hidden overflow-hidden">
         <div class="pt-10">
           <h3 class="text-center text-lg mb-10 font-bold">
             Messages
@@ -99,7 +99,7 @@
                   :style="{ background: generateRandomColor() }"
                   class="avatarCircle"
                 >
-                  {{ message.sender[0].toUpperCase() || "" }}
+                  {{ returnInitials(message.sender) || "" }}
                 </div>
                 <div class="self-center font-medium">
                   <span class="text-sm">{{ message.message | truncate(20) || "" }}</span>
@@ -123,6 +123,9 @@
         :css="modalOptions"
       >
         <div class="my-auto">
+           <h4 class="h4 text-xs ml-4 mb-1 font-bold text-green-500">
+            From: {{ (currentMessage.sender) }}
+          </h4>
           <h4 class="h4 text-xs ml-4 mb-4 font-bold text-green-500">
             Sent: {{ (currentMessage.created_at) }}
           </h4>
@@ -161,8 +164,8 @@ export default {
   data() {
     return {
       modalOptions: {
-        background: "bg-gray-200",
-        modal: "max-h-80 w-1/2",
+        background: "smoke",
+        modal: "max-h-30",
         close: "text-red-500 font-extrabold"
       },
       messages: [],
@@ -242,7 +245,16 @@ export default {
     },
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
-    }
+    },
+    returnInitials(name){
+      var names = name.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    
+      if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+      }
+    return initials; 
+    },
   },
 
   computed: {

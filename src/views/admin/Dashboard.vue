@@ -276,7 +276,7 @@
           You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
           moved stages in a long time!!!          
         </p>
-        <div class="text-center flex mt-4 justify-end">
+        <div class="text-center flex mt-6 justify-end">
           <p class="text-white py-1 block bg-red-500 rounded md:w-1/5 mx-2 cursor-pointer px-2 md:px-0" @click="showModal = false">Close</p>
           <router-link
             class="text-white py-1 block bg-green-500 rounded mx-2 md:w-1/5 px-2 md:px-0"
@@ -627,6 +627,7 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
+    
     async getUserStage() {
       try {
         const fetchUserStage = await customerApi.customerStage();

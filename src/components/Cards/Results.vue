@@ -12,8 +12,8 @@
               rounded-lg
               flex flex-col
               md:px-8
-              py-8
-              px-4
+              py-6
+              px-3
               bg-white
               shadow-2xl
               h-auto
@@ -23,6 +23,7 @@
               mb-10
             "
           >
+          <p class="text-xs mb-3 rounded py-2 text-white altaraBlue pl-3">Please click on a button below to select a downpayment</p>
             <div class="flex justify-center md:space-x-20 justify-evenly mb-4">
               <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
                 <button
@@ -317,7 +318,9 @@ export default {
         }
 
 
-    }
+    },
+
+
 
 }
 </script>

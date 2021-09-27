@@ -97,6 +97,7 @@ const router = new VueRouter({
         path:"/calculator",
         name:"calculator",
         component: Calculator,
+        redirect:"/calculator/three_months",
         meta:{
             NoAuth:true
         },
@@ -106,8 +107,14 @@ const router = new VueRouter({
             name:"Result",
             component: () => import("@/components/Cards/Results.vue"),
             props:true
-             }
+             },
+           
         ]
+    },
+    {
+        path:'/:catchAll(.*)' ,
+        name:'NotFound',
+        component:() => import("@/components/Error/error.vue")
     },
     {
         path: "/admin/userProfile/:id",

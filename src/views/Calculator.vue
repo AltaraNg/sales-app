@@ -1,10 +1,11 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full h-full flex flex-col items-center altaraBlue bg-no-repeat"
+      class="w-full h-full flex flex-col items-center  altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
-      <div class="w-full sm:px-3 md:px-36 lg:px-64 pb-10">
+    
+      <div class="w-full sm:px-3 md:px-36 lg:px-64  pb-10">
         <div
           class="flex relative flex-col items-center justify-center mt-10 px-10"
         >
@@ -55,31 +56,12 @@
           </div>
         </form>
       </div>
-      <div v-if="select_product == true" class="flex space-x-5 mb-10">
-        <div v-for="(rpayDuration, index) in repaymentDuration" :key="index">
-         <router-link
-              :to="{ name: 'Result', params: { name: rpayDuration.name } }"
-            >
-          <button
-            class="
-              text-green-800
-              font-semibold
-              lg:text-lg
-              text-base
-              rounded-lg
-              px-5
-              py-3
-              bg-white
-            "
-            @click="getResultMobile(2, 20)"
-          >
-
-              {{ rpayDuration.name }}
-          </button>
-            </router-link>
-        </div>
+      <div v-if="select_product" class="flex px-4  mb-10 flex-wrap gap-2  justify-center items-center">
+        
+        <div v-for="(rpayDuration, index) in repaymentDuration" :key="index" class=" flex-1" >
+      <Buttons  :getResultMobile="getResultMobile" :rpayDuration="rpayDuration"/>    
+        </div>              
       </div>
-
       <div
         v-if="select_product == false"
         class="
@@ -105,6 +87,7 @@
         </p>
         <ArrowUp />
       </div>
+    
 
       <div class="lg:w-auto w-full" v-else>
         <router-view
@@ -113,7 +96,9 @@
           :getResultMobile="getResultMobile"
           :selectedDownpayment="selectedDownpayment"         
           :computedGetCalc="computedGetCalc"
-        ></router-view>
+        >
+
+        </router-view>
        
       </div>
     </div>
@@ -126,6 +111,7 @@ import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
 import calculate from "../utilities/calculator";
 import { get, post } from "../utilities/api";
 import ArrowUp from "../components/svgs/arrowup.vue";
+import Buttons from "../components/buttons/buttons.vue"
 export default {
   data() {
     return {
@@ -153,13 +139,15 @@ export default {
   components: {
     AutoComplete,
     ArrowUp,
+    Buttons
   },
-  computed: {
+  computed: { 
     computedGetCalc() {
       return this.downpaymentCalc();
-    },
+    },        
    
   },
+
   async mounted() {
     await this.getCalculation();
     await this.getProduct();
@@ -191,9 +179,7 @@ export default {
           this.apiUrls.repaymentDuration
         );
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
-        this.repaymentDuration = this.repaymentDuration.filter((item) => {
-          return !(item.name.includes("nine") || item.name.includes("twelve"));
-        });
+        
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -215,7 +201,7 @@ export default {
             } 
             return false
           })
-          
+        
 
           const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
             this.selectedProduct.price,
@@ -233,7 +219,6 @@ export default {
           });
         });
       });
-      console.log(this.$route.params.name, 'vue')
       this.downpaymentCalculations = downPaymentArr;
       return downPaymentArr;
     },
@@ -293,5 +278,6 @@ export default {
 .alert {
   margin-bottom: 200%;
 }
+
 
 </style>

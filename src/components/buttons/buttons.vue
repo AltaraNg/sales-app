@@ -7,7 +7,7 @@
             <button
                 class="
                 w-full
-                
+                focus:outline-none
                 font-semibold
                 lg:text-lg
                 text-base
@@ -44,7 +44,7 @@ export default {
     styleActiveRoute(){
       let color = '';
       if(this.$route.path == '/calculator/'+ this.rpayDuration.name ){
-        return color = 'bg-red-700 text-white'
+        return color = 'bg-red-700 text-white transform md:-translate-y-3 '
       }
     } 
     }

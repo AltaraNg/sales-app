@@ -18,7 +18,6 @@
             shadow-2xl
             h-auto
             w-11/12
-            md:w-11/12
             mx-auto
             mb-10
           "
@@ -236,9 +235,7 @@ export default {
     },
     toggletextColor() {
       let color = "";
-      let selectDownpayment = !this.selectedDownpayment
-        ? null
-        : this.selectedDownpayment.percent;
+     let selectDownpayment = this.selectedDownpayment?.percent;
       switch (selectDownpayment) {
         case 20:
           color = "text-blue-500";

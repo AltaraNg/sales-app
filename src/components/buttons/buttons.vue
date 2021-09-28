@@ -36,12 +36,10 @@ export default {
   },
   computed: {
     styleActiveRoute() {
-      let color = "";
-      if (this.$route.params.name == this.rpayDuration.name) {
-        return color = "bg-red-700 text-white ";
-      } else {
-        return color = "";
+      if (this.$route.params.name == this.rpayDuration?.name) {
+        return "bg-red-700 text-white ";
       }
+      return "";
     },
   },
 };

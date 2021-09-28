@@ -120,14 +120,14 @@
         @close="showModal = false"
         :showClose="true"
         :backgroundClose="true"
-        :css="modalOptions"
+        :css="modalOption"
       >
         <div class="my-auto">
            <h4 class="h4 text-xs ml-4 mb-1 font-bold text-green-500">
             From: {{ (currentMessage.sender) }}
           </h4>
           <h4 class="h4 text-xs ml-4 mb-4 font-bold text-green-500">
-            Sent: {{ (currentMessage.created_at) }}
+            Sent: {{ formatDate(currentMessage.created_at) }}
           </h4>
           <p class="text-left ml-4">
             <span>{{ currentMessage.message }}</span>
@@ -149,6 +149,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { get, put } from "../../utilities/api";
 import { mapGetters } from "vuex";
 import messageApi from "../../api/messages.js";
@@ -163,9 +164,9 @@ export default {
   },
   data() {
     return {
-      modalOptions: {
+      modalOption: {
         background: "smoke",
-        modal: "max-h-30",
+        modal: "h-56",
         close: "text-red-500 font-extrabold"
       },
       messages: [],
@@ -185,6 +186,9 @@ export default {
     this.$prepareNotifications();
   },
   methods: {
+    formatDate(date){
+        return moment(date).format("DD/MM/YYYY");
+    },
     async fetchMessages() {
       this.$LIPS(true);
       let userId = localStorage.getItem("user_id");

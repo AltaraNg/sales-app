@@ -44,7 +44,7 @@ export default {
     styleActiveRoute(){
       let color = '';
       if(this.$route.path == '/calculator/'+ this.rpayDuration.name ){
-        return color = 'bg-red-700 text-white transform md:-translate-y-3 '
+        return color = 'bg-red-700 text-white '
       }
     } 
     }

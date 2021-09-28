@@ -26,7 +26,7 @@
           <p class="text-xs mb-3 rounded py-2 text-white altaraBlue pl-3">Please click on a button below to select a downpayment</p>
             <div class="flex justify-center md:space-x-20 justify-evenly mb-4">
               <div v-for="dpayments in downPaymentRates" :key="dpayments.id">
-                <button
+             <button
                   class="
                     rounded-full
                     d_buttons
@@ -39,15 +39,7 @@
                     focus:outline-none
                   "
                   @click="getResultMobile(biztype.id, dpayments.percent)"
-                  :class="
-                    dpayments.percent == 20
-                      ? 'bg-blue-500'
-                      : dpayments.percent == 40
-                      ? 'bg-red-500'
-                      : dpayments.percent == 60
-                      ? 'bg-green-500'
-                      : 'bg-yellow-500'
-                  "
+                  :class=" toggleButtonColor(dpayments)"
                 >
                   {{ dpayments.percent }}%
                 </button>
@@ -74,10 +66,7 @@
                 </div>
                 <p class="amount font-bold text-lg text-center">
                   {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.actualDownpayment)
-                      : "₦0.00"
+                    downpaymentResult(biztype, selectedDownpayment.actualDownpayment )
                   }}
                 </p>
               </div>
@@ -98,12 +87,7 @@
                 </div>
                 <p class="amount font-bold text-lg text-center">
                   {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(
-                          selectedDownpayment.biMonthlyRepayment
-                        )
-                      : "₦0.00"
+                    downpaymentResult(biztype, selectedDownpayment.biMonthlyRepayment )
                   }}
                 </p>
               </div>
@@ -126,10 +110,7 @@
                 </div>
                 <p class="amount font-bold text-lg text-center">
                   {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.actualRepayment)
-                      : "₦0.00"
+                    downpaymentResult(biztype, selectedDownpayment.actualRepayment )
                   }}
                 </p>
               </div>
@@ -150,10 +131,7 @@
                 </div>
                 <p class="amount font-bold text-lg text-center">
                   {{
-                    selectedDownpayment !== null &&
-                    biztype.id === selectedDownpayment.bizId
-                      ? $formatCurrency(selectedDownpayment.total)
-                      : "₦0.00"
+                    downpaymentResult(biztype, selectedDownpayment.total )
                   }}
                 </p>
               </div>
@@ -197,13 +175,7 @@
                 "
                 v-if="downpayments.bizId == b_type.id"
                 :class="
-                  downpayments.percent == 20
-                    ? 'bg-blue-100'
-                    : downpayments.percent == 40
-                    ? 'bg-red-100'
-                    : downpayments.percent == 60
-                    ? 'bg-green-100'
-                    : 'bg-yellow-100'
+                toggleTableColor(downpayments)
                 "
               >
                 <td class="font-bold text-lg -mr-6 -ml-10">
@@ -247,7 +219,7 @@ export default {
             id:this.$route.params.name
         }
     },
-    computed:{
+    computed:{      
          toggleColor() {
       let color = "";
       let selectDownpayment = !this.selectedDownpayment
@@ -319,8 +291,58 @@ export default {
 
 
     },
-
-
+    methods:{
+         downpaymentResult(biztype, result){
+          if(this.selectedDownpayment !== null && biztype.id == this.selectedDownpayment.bizId){
+            return '₦'+ result.toFixed(2)
+          }else{
+            return "₦0.00"
+          }
+                        
+      },
+       toggleTableColor(downpayments){
+            let color = "";
+               let selectDownpayment = !downpayments ? null : downpayments.percent;
+         switch (selectDownpayment) {
+        case 20:
+          color = "bg-blue-100";
+          break;
+        case 40:
+          color = "bg-red-100 ";
+          break;
+        case 60:
+          color = "bg-green-100 ";
+          break;
+        case 80:
+          color = "bg-yellow-100 ";
+          break;
+        default:
+          color = "bg-gray-100 ";
+      }
+      return color; 
+        },
+       toggleButtonColor(downpayments){
+               let color = "";
+               let selectDownpayment = !downpayments ? null : downpayments.percent;
+         switch (selectDownpayment) {
+        case 20:
+          color = "bg-blue-500";
+          break;
+        case 40:
+          color = "bg-red-500 ";
+          break;
+        case 60:
+          color = "bg-green-500 ";
+          break;
+        case 80:
+          color = "bg-yellow-500 ";
+          break;
+        default:
+          color = "bg-gray-500 ";
+      }
+      return color;  
+        },
+    }
 
 }
 </script>

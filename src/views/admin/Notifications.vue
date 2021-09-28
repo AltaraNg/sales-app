@@ -166,7 +166,7 @@ export default {
     return {
       modalOption: {
         background: "smoke",
-        modal: "h-56",
+        modal: "max-h-80 h-64",
         close: "text-red-500 font-extrabold"
       },
       messages: [],
@@ -267,4 +267,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.max-h-screen{
+  max-height: 80vh;
+
+}
+</style>

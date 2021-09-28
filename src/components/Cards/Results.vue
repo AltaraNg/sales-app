@@ -39,7 +39,7 @@
                     focus:outline-none
                   "
                   @click="getResultMobile(biztype.id, dpayments.percent)"
-                  :class=" toggleButtonColor(dpayments)"
+                  :class=" toggleDownpaymentColor(dpayments)"
                 >
                   {{ dpayments.percent }}%
                 </button>
@@ -175,7 +175,7 @@
                 "
                 v-if="downpayments.bizId == b_type.id"
                 :class="
-                toggleTableColor(downpayments)
+                toggleDownpaymentColor(downpayments)
                 "
               >
                 <td class="font-bold text-lg -mr-6 -ml-10">
@@ -300,48 +300,28 @@ export default {
           }
                         
       },
-       toggleTableColor(downpayments){
+       toggleDownpaymentColor(downpayments){
             let color = "";
                let selectDownpayment = !downpayments ? null : downpayments.percent;
          switch (selectDownpayment) {
         case 20:
-          color = "bg-blue-100";
+          color = "lg:bg-blue-100 bg-blue-500";
           break;
         case 40:
-          color = "bg-red-100 ";
+          color = "lg:bg-red-100 bg-red-500";
           break;
         case 60:
-          color = "bg-green-100 ";
+          color = "lg:bg-green-100 bg-green-500";
           break;
         case 80:
-          color = "bg-yellow-100 ";
+          color = "lg:bg-yellow-100 bg-yellow-500";
           break;
         default:
-          color = "bg-gray-100 ";
+          color = "lg:bg-gray-100 bg-gray-500";
       }
       return color; 
         },
-       toggleButtonColor(downpayments){
-               let color = "";
-               let selectDownpayment = !downpayments ? null : downpayments.percent;
-         switch (selectDownpayment) {
-        case 20:
-          color = "bg-blue-500";
-          break;
-        case 40:
-          color = "bg-red-500 ";
-          break;
-        case 60:
-          color = "bg-green-500 ";
-          break;
-        case 80:
-          color = "bg-yellow-500 ";
-          break;
-        default:
-          color = "bg-gray-500 ";
-      }
-      return color;  
-        },
+
     }
 
 }

@@ -5,11 +5,11 @@
       :style="`background-image: url('${registerBg2}');`"
     >
     
-      <div class="w-full sm:px-3 md:px-36 lg:px-64  pb-10">
+      <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
         <div
-          class="flex relative flex-col items-center justify-center mt-10 px-10"
+          class="flex  flex-col items-center justify-center mt-10 px-10"
         >
-        <div class="flex items-center justify-between">
+        <div class="flex justify-center absolute top left-0  items-start">
           <button
             class="
               bg-white
@@ -17,13 +17,9 @@
               rounded
               px-8
               py-2
-              absolute
-              left-0
-              lg:-ml-40
               cursor-pointer
               font-semibold
               text-base
-              top-0
               -mt-6
               ml-3
             "
@@ -38,13 +34,9 @@
               rounded
               px-8
               py-2
-              absolute
-              right-0
-              lg:-ml-40
               cursor-pointer
               font-semibold
               text-base
-              top-0
               -mt-6
               ml-3
             "
@@ -62,7 +54,7 @@
               font-black
               text-center
               pb-4
-              mt-10
+              mt-16
             "
           >
             Do The Math, Calculate Your Product/Cash Loans for Six
@@ -300,6 +292,9 @@ export default {
 <style scoped>
 .alert {
   margin-bottom: 200%;
+}
+.top{
+  top:50px;
 }
 
 

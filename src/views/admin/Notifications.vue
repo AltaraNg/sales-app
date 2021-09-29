@@ -1,6 +1,6 @@
 <template>
-  <div class="md:ml-12">
-    <h1 class="text-2xl mt-3 mb-10 md:ml-4 hidden md:contents">Notifications</h1>
+  <div class="md:ml-8">
+    <h1 class="text-2xl mt-3 mb-10 hidden md:contents">Notifications</h1>
     <div
       v-if="messages.length != 0"
       class="block w-full "
@@ -12,23 +12,23 @@
         <thead>
           <tr>
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+              class="px-3 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
             >
               S/N
             </th>
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+              class="px-3 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
             >
               From
             </th>
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+              class="px-3 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
             >
               Message
             </th>
             
             <th
-              class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap  text-center"
+              class="px-3 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap  text-center"
             >
               Date
             </th>
@@ -43,12 +43,12 @@
             :style="[
               index % 2 === 0
                 ? { 'background-color': 'white' }
-                : { 'background-color': 'white' },
+                : { 'background-color': '#F3F4F6' },
               message.read === 1 ? { color: 'gray' } : { color: 'black' }
             ]"
           >
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              class="border-t-0 px-3 border-l-0 border-r-0 text-xs whitespace-no-wrap p-3 text-center"
             >
               <div
                 class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
@@ -57,17 +57,17 @@
               </div>
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left "
+              class="border-t-0 px-3 border-l-0 border-r-0 text-xs whitespace-no-wrap p-3 text-left "
             >
               {{ message.sender || "" }}
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left  "
+              class="border-t-0 px-3 border-l-0 border-r-0 text-xs whitespace-no-wrap p-3 text-left  "
             >
               {{ message.message | truncate(45) || "" }}
             </th>
             <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+              class="border-t-0 px-3 border-l-0 border-r-0 text-xs whitespace-no-wrap p-3 text-center"
             >
               {{ (message.created_at).slice(0, 10) || "" }}
             </th>
@@ -166,7 +166,7 @@ export default {
     return {
       modalOption: {
         background: "smoke",
-        modal: "h-56",
+        modal: "max-h-80 h-64",
         close: "text-red-500 font-extrabold"
       },
       messages: [],
@@ -267,4 +267,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+
+</style>

@@ -3,15 +3,14 @@
     <h1 class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left">Inactive Prospects</h1>
 
     <div class="md:flex md:justify-center">
-      <div id="stats ">
+      <div id="stats " class="chart">
         <pie-chart
           :chart-data="pieData"
           :options="option"
           v-if="loaded"
-          class=""
         ></pie-chart>
       </div>
-      <div class="ml-10 self-center">
+      <div class="ml-8 self-center">
         <ul class="list-disc">
           <li v-for="(item, index) in dataSet" class="list-disc" :style='`color: ${color[index]}`'>
             <span class="text-left text-black">{{labels[index]}}: </span><span class="text-center font-bold text-black">{{item}}</span>
@@ -21,7 +20,7 @@
     </div>
 
     <div v-if="prospects.length > 0">
-      <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
+      <div class="hidden w-full overflow-x-auto mt-2 ml-2 md:contents">
         <table class="items-center w-full bg-transparent border-collapse mt-10">
           <thead>
             <tr>
@@ -147,21 +146,28 @@
       :backgroundClose="false"
       :css="modalOption"
     >
-      <div class="w-full table text-xs">
-        <div class="table-header-group">
-          <div class="table-row font-bold">
-            <h3 class="table-cell">S/N</h3>
-            <h3 class="table-cell">Activity Type</h3>
-            <h3 class="table-cell">Content</h3>
-            <h3 class="table-cell">Date</h3>
+    <div class="mt-0 underline">
+      <h3 class="p-2">Activities</h3>
+    </div>
+      <div class="w-full table  pl-2">
+        <div class="table-header-group altaraBlue text-white p-2 text-sm mb-4">
+          <div class="table-row font-bold p-2 m-2">
+            <h3 class="table-cell p-3">S/N</h3>
+            <h3 class="table-cell p-3">Activity Type</h3>
+            <h3 class="table-cell p-3">Content</h3>
+            <h3 class="table-cell p-3">Date</h3>
           </div>
         </div>
-        <div class="table-row-group">
-           <div v-for="(activity, index) in activityList" class="table-row">
-                     <h5 class="table-cell">{{ index + 1 }}</h5>
-        <h5 class="table-cell">{{ activity.type }}</h5>
-        <h5 class="table-cell">{{ activity.text }}</h5>
-        <h5 class="table-cell">{{ activity.date }}</h5>
+        <div class="table-row-group text-xs font-medium">
+           <div v-for="(activity, index) in activityList" class="table-row" :style="
+                index % 2 === 0
+                  ? { 'background-color': 'white' }
+                  : { 'background-color': '#F3F4F6' }
+              ">
+        <h5 class="table-cell p-2">{{ index + 1 }}</h5>
+        <h5 class="table-cell p-2">{{ activity.type }}</h5>
+        <h5 class="table-cell p-2">{{ activity.text }}</h5>
+        <h5 class="table-cell p-2">{{ activity.date }}</h5>
       </div>
       </div>
       </div>
@@ -205,11 +211,7 @@ export default {
         legend: {
           display: false
         },
-        title: {
-          display: true,
-          position: 'bottom',
-          text: 'Inactive Prospects Chart'
-        }
+        
         
       },
       color: [
@@ -228,6 +230,7 @@ export default {
       showActivityModal: false,
 
       modalOption: {
+        
         background: "smoke",
         modal: "max-h-90",
         close: "text-red"
@@ -419,5 +422,9 @@ export default {
 .custom-hover:hover {
   text-decoration: underline;
   font-weight: bold;
+}
+.chart{
+  width: 50vh;
+  height: 60vh;
 }
 </style>

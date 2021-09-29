@@ -9,6 +9,7 @@
         <div
           class="flex relative flex-col items-center justify-center mt-10 px-10"
         >
+        <div class="flex items-center justify-between">
           <button
             class="
               bg-white
@@ -26,10 +27,32 @@
               -mt-6
               ml-3
             "
+            @click="$router.push('/admin/dashboard')"
+          >
+            Home
+          </button>
+            <button
+            class="
+              bg-white
+              text-black
+              rounded
+              px-8
+              py-2
+              absolute
+              right-0
+              lg:-ml-40
+              cursor-pointer
+              font-semibold
+              text-base
+              top-0
+              -mt-6
+              ml-3
+            "
             @click="hasHistory() ? $router.go(-1) : $router.push('/')"
           >
             Back
           </button>
+        </div>
           <h3
             class="
               text-white
@@ -206,7 +229,7 @@ export default {
           const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
             this.selectedProduct.price,
             paymentRate,
-            filteredBizType[1],
+            filteredBizType[0],
             repayment_duration?.value
           );
           downPaymentArr.push({

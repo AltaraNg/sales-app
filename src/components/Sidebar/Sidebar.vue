@@ -217,7 +217,7 @@
 
 
           <br />
-          <li class="absolute bottom-0 ml-2 ">
+          <li class="items-center ml-2 rounded-lg">
             <div v-on:click="logOut()">
               <a
                 class="text-xs uppercase py-3 font-bold block"

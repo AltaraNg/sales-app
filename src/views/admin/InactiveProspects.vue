@@ -3,15 +3,14 @@
     <h1 class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left">Inactive Prospects</h1>
 
     <div class="md:flex md:justify-center">
-      <div id="stats ">
+      <div id="stats " class="chart">
         <pie-chart
           :chart-data="pieData"
           :options="option"
           v-if="loaded"
-          class=""
         ></pie-chart>
       </div>
-      <div class="ml-10 self-center">
+      <div class="ml-8 self-center">
         <ul class="list-disc">
           <li v-for="(item, index) in dataSet" class="list-disc" :style='`color: ${color[index]}`'>
             <span class="text-left text-black">{{labels[index]}}: </span><span class="text-center font-bold text-black">{{item}}</span>
@@ -21,7 +20,7 @@
     </div>
 
     <div v-if="prospects.length > 0">
-      <div class="hidden w-full overflow-x-auto mt-10 ml-2 md:contents">
+      <div class="hidden w-full overflow-x-auto mt-2 ml-2 md:contents">
         <table class="items-center w-full bg-transparent border-collapse mt-10">
           <thead>
             <tr>
@@ -76,8 +75,8 @@
               >
                 {{
                   user.last_prospect_activity
-                    ? user.last_prospect_activity.text
-                    : "No Activity" | truncate(15)
+                    ? user.last_prospect_activity.text + ` (${user.last_prospect_activity.type})`
+                    : "No Activity" | truncate(35)
                 }}
               </td>
               <td
@@ -85,7 +84,7 @@
               >
                 {{
                   user.last_prospect_activity
-                    ? user.last_prospect_activity.date
+                    ? humanizeDate(user.last_prospect_activity.date)
                     : "N/A"
                 }}
               </td>
@@ -100,18 +99,19 @@
           </h3>
         </div>
         <div :key="index" v-for="(user, index) in prospects">
-          <div v-on:click="selectUser(user)" class="customerTile">
+          <div class="customerTile">
             <div class="flex justify-between text-xs">
-              <div class="flex items-stretch">
+              <div class="flex items-stretch" >
                 <div
+                v-on:click="selectUser(user)"
                   :style="{ background: generateRandomColor() }"
-                  class="avatarCircle"
+                  class="avatarCircle text-xs"
                 >
-                  {{ user.name[0].toUpperCase() || "" }}
+                  {{ returnInitials(user.name) || "" }}
                 </div>
                 <div class="self-center font-medium">
                   <span class="text-sm capitalize">{{ user.name || "" }}</span>
-                  <div class="text-xs">
+                  <div class="text-xs" @click="viewActivityList(user)">
                   {{
                     user.last_prospect_activity
                       ? user.last_prospect_activity.type
@@ -125,7 +125,7 @@
                 <div class="font-bold">
                   {{
                     user.last_prospect_activity
-                      ? user.last_prospect_activity.date
+                      ? humanizeDate(user.last_prospect_activity.date)
                       : "N/A"
                   }}
                 </div>
@@ -146,21 +146,32 @@
       :backgroundClose="false"
       :css="modalOption"
     >
-      <div class="flex text-lg justify-evenly text-center">
-        <h3>S/N</h3>
-        <h3>Activity Type</h3>
-        <h3>Details</h3>
-        <h3>Date</h3>
+    <div class="mt-0 underline">
+      <h3 class="p-2">Activities</h3>
+    </div>
+      <div class="w-full table  pl-2">
+        <div class="table-header-group altaraBlue text-white p-2 text-sm mb-4">
+          <div class="table-row font-bold p-2 m-2">
+            <h3 class="table-cell p-3">S/N</h3>
+            <h3 class="table-cell p-3">Activity Type</h3>
+            <h3 class="table-cell p-3">Content</h3>
+            <h3 class="table-cell p-3">Date</h3>
+          </div>
+        </div>
+        <div class="table-row-group text-xs font-medium">
+           <div v-for="(activity, index) in activityList" class="table-row" :style="
+                index % 2 === 0
+                  ? { 'background-color': 'white' }
+                  : { 'background-color': '#F3F4F6' }
+              ">
+        <h5 class="table-cell p-2">{{ index + 1 }}</h5>
+        <h5 class="table-cell p-2">{{ activity.type }}</h5>
+        <h5 class="table-cell p-2">{{ activity.text }}</h5>
+        <h5 class="table-cell p-2">{{ activity.date }}</h5>
       </div>
-      <div
-        v-for="(activity, index) in activityList"
-        class="flex text-xs text-center"
-      >
-        <h5>{{ index + 1 }}</h5>
-        <h5>{{ activity.type }}</h5>
-        <h5>{{ activity.text }}</h5>
-        <h5>{{ activity.date }}</h5>
       </div>
+      </div>
+     
     </vue-tailwind-modal>
     <base-pagination
       :pageParam="pageParams"
@@ -172,6 +183,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { get } from "../../utilities/api.js";
 import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
@@ -199,11 +211,7 @@ export default {
         legend: {
           display: false
         },
-        title: {
-          display: true,
-          position: 'bottom',
-          text: 'Inactive Prospects Chart'
-        }
+        
         
       },
       color: [
@@ -222,6 +230,7 @@ export default {
       showActivityModal: false,
 
       modalOption: {
+        
         background: "smoke",
         modal: "max-h-90",
         close: "text-red"
@@ -236,6 +245,7 @@ export default {
   async mounted() {
     this.getNextList();
     await this.getProspectActivities();
+    this.humanizeDate();
     this.loaded = true;
   },
   methods: {
@@ -378,7 +388,20 @@ export default {
           });
         }
       };
+    },
+    humanizeDate(date){
+      return moment(date).fromNow();
+    },
+    returnInitials(name){
+      var names = name.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    
+      if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+      }
+    return initials; 
     }
+    
   }
 };
 </script>
@@ -399,5 +422,9 @@ export default {
 .custom-hover:hover {
   text-decoration: underline;
   font-weight: bold;
+}
+.chart{
+  width: 50vh;
+  height: 60vh;
 }
 </style>

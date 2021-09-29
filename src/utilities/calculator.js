@@ -1,6 +1,7 @@
-const calculate = (productPrice, data, params) => {
+const calculate = (productPrice, data, params, repayment_duration) => {
     const count = repaymentCount(
-        180,
+        
+        repayment_duration,
         14
     );
     const marketPrice = Math.floor(productPrice * (1 + params.margin))
@@ -15,14 +16,9 @@ const calculate = (productPrice, data, params) => {
     const downpayment = initDownpayment + (Math.floor(((total - initDownpayment) / count)) * data.plus);
     const actualDownpayment = Math.floor(downpayment / 100) * 100;
     const actualRepayment = total - downpayment;
-    var biMonthlyRepayment = actualRepayment/12
+    var   biMonthlyRepayment = Math.round((actualRepayment/12)/100)*100
     total = Math.ceil(labelPrice / 100) * 100;
-    if(params.business_type_id == 2){
-            biMonthlyRepayment = Math.ceil((actualRepayment/12)/100)*100
-    }
-    if(params.business_type_id == 1){
-        biMonthlyRepayment = Math.round((actualRepayment/12)/100)*100
-    }
+    
     return { total, actualDownpayment, actualRepayment, biMonthlyRepayment };
 
 };

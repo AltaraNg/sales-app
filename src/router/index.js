@@ -111,11 +111,7 @@ const router = new VueRouter({
            
         ]
     },
-    {
-        path:'/:catchAll(.*)' ,
-        name:'NotFound',
-        component:() => import("@/components/Error/error.vue")
-    },
+
     {
         path: "/admin/userProfile/:id",
         name: "userProfile",

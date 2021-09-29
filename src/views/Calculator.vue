@@ -229,7 +229,7 @@ export default {
           const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
             this.selectedProduct.price,
             paymentRate,
-            filteredBizType[0],
+            filteredBizType[1],
             repayment_duration?.value
           );
           downPaymentArr.push({

@@ -268,8 +268,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.max-h-screen{
-  max-height: 80vh;
 
-}
 </style>

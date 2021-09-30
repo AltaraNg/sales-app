@@ -193,7 +193,7 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700" v-if="flag === 'beta'">
+            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700">
           <li class="items-center ml-2 rounded-lg">
            
               <a

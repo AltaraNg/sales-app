@@ -1,133 +1,149 @@
 <template>
   <div class="inactive-prospects overflow-x-auto">
-    <h1 class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left">Inactive Prospects</h1>
-
-    <div class="md:flex md:justify-center">
-      <div id="stats " class="chart">
-        <pie-chart
-          :chart-data="pieData"
-          :options="option"
-          v-if="loaded"
-        ></pie-chart>
-      </div>
-      <div class="ml-8 self-center">
-        <ul class="list-disc">
-          <li v-for="(item, index) in dataSet" class="list-disc" :style='`color: ${color[index]}`'>
-            <span class="text-left text-black">{{labels[index]}}: </span><span class="text-center font-bold text-black">{{item}}</span>
-          </li>
-        </ul>
-        </div>
-    </div>
-
     <div v-if="prospects.length > 0">
-      <div class="hidden w-full overflow-x-auto mt-2 ml-2 md:contents">
-        <table class="items-center w-full bg-transparent border-collapse mt-10">
-          <thead>
-            <tr>
-              <th
-                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
-                v-for="header in headers"
-              >
-                {{ header }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class="pointer"
-              :key="index"
-              v-for="(user, index) in prospects"
-              :style="
-                index % 2 === 0
-                  ? { 'background-color': 'white' }
-                  : { 'background-color': '#F3F4F6' }
-              "
-            >
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
-              >
-                <div
-                  class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
-                >
-                  {{ index + OId || "" }}
-                </div>
-              </td>
+      <h1
+        class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left"
+        style="color: #1F0812"
+      >
+        Inactive Prospects
+      </h1>
 
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center custom-hover"
-                @click="selectUser(user)"
-              >
-                {{ user.name || " " }}
-              </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
-              >
-                {{ user.customer_stage.name || " " | truncate(15) }}
-              </td>
-
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
-                :class="{
-                  'text-red-500': user.last_prospect_activity === null,
-                  'custom-hover': user.last_prospect_activity !== null
-                }"
-                @click="viewActivityList(user)"
-              >
-                {{
-                  user.last_prospect_activity
-                    ? user.last_prospect_activity.text + ` (${user.last_prospect_activity.type})`
-                    : "No Activity" | truncate(35)
-                }}
-              </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
-              >
-                {{
-                  user.last_prospect_activity
-                    ? humanizeDate(user.last_prospect_activity.date)
-                    : "N/A"
-                }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="contents md:hidden">
-        <div class="pt-10">
-          <h3 class="text-center text-lg mb-2 font-bold">
-            List Of Inactive Prospects
-          </h3>
+      <div class="md:flex md:justify-center">
+        <div id="stats " class="chart">
+          <pie-chart
+            :chart-data="pieData"
+            :options="option"
+            v-if="loaded"
+          ></pie-chart>
         </div>
-        <div :key="index" v-for="(user, index) in prospects">
-          <div class="customerTile">
-            <div class="flex justify-between text-xs">
-              <div class="flex items-stretch" >
-                <div
-                v-on:click="selectUser(user)"
-                  :style="{ background: generateRandomColor() }"
-                  class="avatarCircle text-xs"
+        <div class="ml-8 self-center">
+          <ul class="list-disc">
+            <li
+              v-for="(item, index) in dataSet"
+              class="list-disc"
+              :style="`color: ${color[index]}`"
+            >
+              <span class="text-left text-black">{{ labels[index] }}: </span
+              ><span class="text-center font-bold text-black">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="hidden w-full overflow-x-auto mt-2 ml-2 md:contents">
+          <table
+            class="items-center w-full bg-transparent border-collapse mt-10"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
+                  v-for="header in headers"
                 >
-                  {{ returnInitials(user.name) || "" }}
-                </div>
-                <div class="self-center font-medium">
-                  <span class="text-sm capitalize">{{ user.name || "" }}</span>
-                  <div class="text-xs" @click="viewActivityList(user)">
+                  {{ header }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="pointer"
+                :key="index"
+                v-for="(user, index) in prospects"
+                :style="
+                  index % 2 === 0
+                    ? { 'background-color': 'white' }
+                    : { 'background-color': '#F3F4F6' }
+                "
+              >
+                <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+                >
+                  <div
+                    class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+                  >
+                    {{ index + OId || "" }}
+                  </div>
+                </td>
+
+                <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center custom-hover"
+                  @click="selectUser(user)"
+                >
+                  {{ user.name || " " }}
+                </td>
+                <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+                >
+                  {{ user.customer_stage.name || " " | truncate(15) }}
+                </td>
+
+                <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+                  :class="{
+                    'text-red-500': user.last_prospect_activity === null,
+                    'custom-hover': user.last_prospect_activity !== null
+                  }"
+                  @click="viewActivityList(user)"
+                >
                   {{
                     user.last_prospect_activity
-                      ? user.last_prospect_activity.type
-                      : "No Activity"
+                      ? user.last_prospect_activity.text +
+                        ` (${user.last_prospect_activity.type})`
+                      : "No Activity" | truncate(35)
                   }}
-                </div>
-                </div>
-                
-              </div>
-              <div class="flex flex-col my-auto">
-                <div class="font-bold">
+                </td>
+                <td
+                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
+                >
                   {{
                     user.last_prospect_activity
                       ? humanizeDate(user.last_prospect_activity.date)
                       : "N/A"
                   }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="contents md:hidden">
+          <div class="pt-10">
+            <h3 class="text-center text-lg mb-2 font-bold">
+              List Of Inactive Prospects
+            </h3>
+          </div>
+          <div :key="index" v-for="(user, index) in prospects">
+            <div class="customerTile">
+              <div class="flex justify-between text-xs">
+                <div class="flex items-stretch">
+                  <div
+                    v-on:click="selectUser(user)"
+                    :style="{ background: generateRandomColor() }"
+                    class="avatarCircle text-xs"
+                  >
+                    {{ returnInitials(user.name) || "" }}
+                  </div>
+                  <div class="self-center font-medium">
+                    <span class="text-sm capitalize">{{
+                      user.name || ""
+                    }}</span>
+                    <div class="text-xs" @click="viewActivityList(user)">
+                      {{
+                        user.last_prospect_activity
+                          ? user.last_prospect_activity.type
+                          : "No Activity"
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col my-auto">
+                  <div class="font-bold">
+                    {{
+                      user.last_prospect_activity
+                        ? humanizeDate(user.last_prospect_activity.date)
+                        : "N/A"
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,9 +151,11 @@
         </div>
       </div>
     </div>
-    <div v-else class="chatBox mt-4 w-48">
-      You don't have any <b>Inactive Prospect</b>
-    </div>
+
+    <div v-else class="">
+      <h3 class="p-3 text-sm md:text-lg text-red-900">You don't have any inactive prospects</h3>
+     <img src="../../assets/img/undraw_High_five_re_jy71.svg" alt="nice">
+      </div>
 
     <vue-tailwind-modal
       :showing="showActivityModal"
@@ -146,9 +164,9 @@
       :backgroundClose="false"
       :css="modalOption"
     >
-    <div class="mt-0 underline">
-      <h3 class="p-2">Activities</h3>
-    </div>
+      <div class="mt-0 underline">
+        <h3 class="p-2">Activities</h3>
+      </div>
       <div class="w-full table  pl-2">
         <div class="table-header-group altaraBlue text-white p-2 text-sm mb-4">
           <div class="table-row font-bold p-2 m-2">
@@ -159,19 +177,22 @@
           </div>
         </div>
         <div class="table-row-group text-xs font-medium">
-           <div v-for="(activity, index) in activityList" class="table-row" :style="
-                index % 2 === 0
-                  ? { 'background-color': 'white' }
-                  : { 'background-color': '#F3F4F6' }
-              ">
-        <h5 class="table-cell p-2">{{ index + 1 }}</h5>
-        <h5 class="table-cell p-2">{{ activity.type }}</h5>
-        <h5 class="table-cell p-2">{{ activity.text }}</h5>
-        <h5 class="table-cell p-2">{{ activity.date }}</h5>
+          <div
+            v-for="(activity, index) in activityList"
+            class="table-row"
+            :style="
+              index % 2 === 0
+                ? { 'background-color': 'white' }
+                : { 'background-color': '#F3F4F6' }
+            "
+          >
+            <h5 class="table-cell p-2">{{ index + 1 }}</h5>
+            <h5 class="table-cell p-2">{{ activity.type }}</h5>
+            <h5 class="table-cell p-2">{{ activity.text }}</h5>
+            <h5 class="table-cell p-2">{{ activity.date }}</h5>
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-     
     </vue-tailwind-modal>
     <base-pagination
       :pageParam="pageParams"
@@ -183,7 +204,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 import { get } from "../../utilities/api.js";
 import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
@@ -210,19 +231,17 @@ export default {
         maintainAspectRatio: true,
         legend: {
           display: false
-        },
-        
-        
+        }
       },
       color: [
         "#023e8a",
-              "#CC5A71",
-              "#22223b",
-              "#55a630",
-              "#973aa8",
-              "#cb997e",
-              "#ff0a54",
-              "#43010e",
+        "#CC5A71",
+        "#22223b",
+        "#55a630",
+        "#973aa8",
+        "#cb997e",
+        "#ff0a54",
+        "#43010e"
       ],
       OId: 0,
       pieData: {},
@@ -230,7 +249,6 @@ export default {
       showActivityModal: false,
 
       modalOption: {
-        
         background: "smoke",
         modal: "max-h-90",
         close: "text-red"
@@ -389,19 +407,18 @@ export default {
         }
       };
     },
-    humanizeDate(date){
+    humanizeDate(date) {
       return moment(date).fromNow();
     },
-    returnInitials(name){
-      var names = name.split(' '),
+    returnInitials(name) {
+      var names = name.split(" "),
         initials = names[0].substring(0, 1).toUpperCase();
-    
+
       if (names.length > 1) {
         initials += names[names.length - 1].substring(0, 1).toUpperCase();
       }
-    return initials; 
+      return initials;
     }
-    
   }
 };
 </script>
@@ -423,7 +440,7 @@ export default {
   text-decoration: underline;
   font-weight: bold;
 }
-.chart{
+.chart {
   width: 50vh;
   height: 60vh;
 }

@@ -1,4 +1,6 @@
+const {colors} = require('tailwindcss/defaultTheme')
 module.exports = {
+
   purge: {
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
     options: {
@@ -15,7 +17,15 @@ module.exports = {
         smoke: "rgba(0, 0, 0, 0.5)",
         "smoke-400": "rgba(0, 0, 0, 0.4)",
         "smoke-200": "rgba(0, 0, 0, 0.25)",
-        "smoke-100": "rgba(0, 0, 0, 0.1)"
+        "smoke-100": "rgba(0, 0, 0, 0.1)",
+        green: {
+          ...colors.green,
+          550: "#2A9D8F",
+        },
+        "persian-green": "#2A9D8F",
+        "xiketic": "#1F0812",
+        "queen-pink": "#EACBD2",
+        "red-ryb": "#FF1D15"
       },
       keyframes: {
         note: {

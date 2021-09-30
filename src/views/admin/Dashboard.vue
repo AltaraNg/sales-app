@@ -263,9 +263,10 @@
         :showClose="true"
         :backgroundClose="false"
         :css="modalOptions"
+        v-if="getInactiveProspects > 0"
       >
         <!-- Put your modal content here -->
-        <div v-if="getInactiveProspects > 0">
+        <div >
         <h1 class="text-center text-6xl">
           <i class="fas fa-exclamation-circle text-yellow-600"></i>
         </h1>

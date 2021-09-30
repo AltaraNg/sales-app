@@ -1,14 +1,14 @@
 <template>
-  <div class="inactive-prospects overflow-x-auto">
+  <div class="inactive-prospects overflow-x-auto" >
     <div v-if="prospects.length > 0">
       <h1
-        class="text-2xl mt-3 mb-10 ml-4 text-center md:text-left"
+        class="text-2xl mt-3 mb-8 ml-4 text-center"
         style="color: #1F0812"
       >
         Inactive Prospects
       </h1>
 
-      <div class="md:flex md:justify-center">
+      <div class="md:flex md:justify-around">
         <div id="stats " class="chart">
           <pie-chart
             :chart-data="pieData"
@@ -16,11 +16,11 @@
             v-if="loaded"
           ></pie-chart>
         </div>
-        <div class="ml-8 self-center">
+        <div class="chart-label mx-0 ">
           <ul class="list-disc">
             <li
               v-for="(item, index) in dataSet"
-              class="list-disc"
+              class="list-disc md:text-lg"
               :style="`color: ${color[index]}`"
             >
               <span class="text-left text-black">{{ labels[index] }}: </span
@@ -152,9 +152,13 @@
       </div>
     </div>
 
-    <div v-else class="">
-      <h3 class="p-3 text-sm md:text-lg text-red-900">You don't have any inactive prospects</h3>
-     <img src="../../assets/img/undraw_High_five_re_jy71.svg" alt="nice">
+    <div v-else-if="prospects.length === 0 && $isProcessing === false">
+      <zero-state :title="'No Inactive Prospects'" :message="'You currently have no inactive prospects'">
+        <template v-slot:image>
+        <img src="../../assets/img/thumb-up.png" >
+
+        </template>
+      </zero-state>
       </div>
 
     <vue-tailwind-modal
@@ -210,8 +214,9 @@ import PieChart from "../../components/charts/PieChart";
 import VueTailwindModal from "vue-tailwind-modal";
 import BasePagination from "../../components/BasePagination.vue";
 import queryParam from "../../utilities/queryParam.js";
+import ZeroState from "../../components/ZeroState.vue";
 export default {
-  components: { BasePagination, VueTailwindModal, PieChart },
+  components: { BasePagination, VueTailwindModal, PieChart, ZeroState },
   data() {
     return {
       headers: ["S/N", "Name", "Stage", "Last Activity", "Last Activity Date"],
@@ -223,7 +228,7 @@ export default {
       loaded: false,
       labels: [],
       dataSet: [],
-      prospects: "",
+      prospects: [],
       totalInactive: 0,
       totalStages: "",
       option: {
@@ -440,8 +445,9 @@ export default {
   text-decoration: underline;
   font-weight: bold;
 }
-.chart {
-  width: 50vh;
-  height: 60vh;
+.chart, .chart-label {
+  width: 40vh;
+  height: 50vh;
+  margin: auto;
 }
 </style>

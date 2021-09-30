@@ -23,7 +23,7 @@
               -mt-6
               ml-3
             "
-            @click="$router.push('/')"
+            @click="$router.push('/admin/dashboard')"
           >
             Home
           </button>
@@ -204,18 +204,13 @@ export default {
       this.businessTypes.forEach((bizType) => {
         this.downPaymentRates.forEach((paymentRate) => {
 
-          let repayment_duration = this.repaymentDuration.find((item)=>{
-            if(item.name == this.$route.params.name){
-              return true
-            } 
-            return false
-          })
+          let repayment_duration = this.repaymentDuration.find((item)=> item.name == this.$route.params.name )
 
           let filteredBizType = this.calculation.filter((param) => {
             return (
-              bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id &&
-              repayment_duration.id === param.repayment_duration_id
+              bizType.id === param?.business_type_id &&
+              paymentRate.id === param?.down_payment_rate_id &&
+              repayment_duration.id === param?.repayment_duration_id
             );
           });
 

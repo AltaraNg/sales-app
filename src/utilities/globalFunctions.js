@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Flash from './flash';
+import messageApi from "../api/messages.js";
+import { get } from "./api.js"
+import queryParam from "./queryParam";
 import { store } from '../store/store';
 
 /**custom made vue filters
@@ -132,3 +135,64 @@ Vue.prototype.$getColumn = (i) => {
     }
     return column;
 };
+
+Vue.prototype.$setCookie = (cName, cValue) => {
+    let date = new Date();
+      date.setUTCHours(23, 59, 59, 999);
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = cName + "=" + cValue + ";" + expires + "; path=/";
+};
+
+Vue.prototype.$getCookie = (cName) => {
+    var dc = document.cookie;
+    var prefix = cName + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    }
+    else
+    {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+        end = dc.length;
+        }
+    }    
+    return decodeURI(dc.substring(begin + prefix.length, end));
+};
+
+// Original JavaScript code by Chirp Internet: chirpinternet.eu
+  // Please acknowledge use of this code by including this header.
+
+  Vue.prototype.$getCookieValue = (name) =>
+  {
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+  };
+
+  Vue.prototype.$prepareNotifications = () => {
+      let userId = localStorage.getItem("user_id");
+    const query = {        
+        limit: 100,
+        receiver: userId,
+        unread: true
+      };
+
+    messageApi.index(queryParam(query))
+    .then(r => store.dispatch('mutateNotifications', r.data.data.data));
+};
+
+
+Vue.prototype.$prepareInactiveProspects = () => {
+    const query = {        
+        inActiveDays: 30,
+        
+      };        
+    !store.getters.inactiveProspects && get('/api/inactive/prospects' + queryParam(query))
+        .then(r => store.dispatch('mutateInactiveProspects', r.data.data.meta.total));
+};
+
+
+

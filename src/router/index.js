@@ -13,6 +13,8 @@ import Todo from "@/views/admin/Todo.vue";
 import SendMessage from "@/views/admin/SendMessage.vue";
 import Notifications from "@/views/admin/Notifications.vue"
 import Feedback from "@/views/admin/Feedback.vue";
+import Calculator from "@/views/Calculator.vue"
+import InactiveProspects from "@/views/admin/InactiveProspects.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
 import Flash from "@/utilities/flash";
@@ -66,6 +68,11 @@ const router = new VueRouter({
             path: "/admin/feedback",
             component: Feedback,
             name: 'Feedback'
+        },
+        {
+            path: "/admin/inactive-prospects",
+            component: InactiveProspects,
+            name: 'InactiveProspects'
         }
 
 
@@ -86,6 +93,25 @@ const router = new VueRouter({
         name: "landing",
         component: Index,
     },
+    {
+        path:"/calculator",
+        name:"calculator",
+        component: Calculator,
+        redirect:"/calculator/three_months",
+        meta:{
+            NoAuth:true
+        },
+        children:[
+             {
+            path: "/calculator/:name",
+            name:"Result",
+            component: () => import("@/components/Cards/Results.vue"),
+            props:true
+             },
+           
+        ]
+    },
+
     {
         path: "/admin/userProfile/:id",
         name: "userProfile",
@@ -112,13 +138,15 @@ router.beforeEach((to, from, next) => {
         .filter(Boolean)[0]
         .toUpperCase();
     const token = localStorage.getItem("api_token");
-    goingTo != "ADMIN" && token ? reRoute("admin") : next();
-
+    if (goingTo != "ADMIN" && !to.matched.some(route => route.meta.NoAuth)) {
+        token ? reRoute("admin") : next();
+        return
+    }
 
     if (to.matched.some(route => route.meta.requiresAuth)) {
         token ? next() : reRoute("login");
+        return;
     }
-
     next();
 });
 export default router;

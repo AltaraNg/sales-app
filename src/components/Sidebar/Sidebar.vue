@@ -41,7 +41,7 @@
         </div>
 
         <h6
-          class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-0 pb-4 ml-2 no-underline"
         >
           SideMenu
         </h6>
@@ -49,12 +49,12 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
 
-          <router-link to="/admin/superadmin" v-if="canDo(Manager) && canView==='beta'">
+          <router-link to="/admin/superadmin" v-if="canDo(Manager) && canView==='beta'" >
 
           <li class="items-center ml-2">
               <div
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                
               >
                 <i
                   class="fas fa-chart-line mr-2 text-sm"
@@ -65,16 +65,14 @@
           </li>
             </router-link>
 
-            <router-link to="/admin/dashboard">
+            <router-link to="/admin/dashboard" class="hover:bg-gray-400 hover:text-blue-700 py-2"> 
 
           <li class="items-center ml-2">
               <div
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
-                  class="fas fa-chart-line mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  class="fas fa-chart-line mr-2 text-sm"                  
                 ></i>
                 Dashboard
               </div>
@@ -82,17 +80,17 @@
             </router-link>
 
           
-          <router-link to="/admin/register"
+          <router-link to="/admin/register" class="hover:bg-gray-400 hover:text-blue-700 py-2"
           >
           <li class="items-center ml-2">
             
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                
               >
                 <i
                   class="fas fa-user-plus mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Register Customer
               </a>
@@ -100,49 +98,58 @@
             </router-link>
 
 
-           <router-link to="/admin/dsaratings">
+           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
            
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-star-half-alt mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Leaderboard
               </a>
           </li>
             </router-link>
 
+              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700 py-2">
+          <li class="items-center ml-2">
+            
+              <a
+                class="text-xs uppercase py-3 font-bold block"
+              >
+              <i class="fas fa-calculator  mr-2 text-sm"></i>
+                Calculator
+              </a>
+          </li>
+            </router-link>
 
-            <router-link to="/admin/todos">
+
+            <router-link to="/admin/todos" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-clipboard-list mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Todos
               </a>
           </li>
             </router-link>
 
-            <router-link to="/admin/feedback" v-if="canDo(Manager)">
+            <router-link to="/admin/feedback" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
 
           <li class="items-center ml-2 rounded-lg">
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="fas fa-clipboard-list mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Feedbacks
               </a>
@@ -150,41 +157,67 @@
             </router-link>
 
             
-            <router-link to="/admin/send_message" v-if="canDo(Manager)">
+            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2 rounded-lg">
            
               <a
                 class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
               >
                 <i
                   class="far fa-envelope mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
                 Send Message
               </a>
           </li>
             </router-link>
 
-             <router-link to="/admin/notifications" >
-          <li class="items-center ml-2 rounded-lg">
+             <router-link to="/admin/notifications" class="hover:bg-gray-400 hover:text-blue-700">
+          <li class="items-center ml-2 rounded-lg row">
            
               <a
-                class="text-xs uppercase py-3 font-bold block"
-                :class="['text-gray-800 hover:text-gray-600']"
+                class="text-xs flex items-center uppercase py-3 font-bold block col"
               >
                 <i
                   class="fas fa-bell mr-2 text-sm"
-                  :class="['text-gray-400']"
+                  
                 ></i>
-               Notification
+                <div class="flex  w-full justify-between items-center">
+              <p> Notification</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span v-if="getNotifications !== null" class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getNotifications.length > 0 ? 'animate-ping bg-red-500' : ''"></span>
+              <span v-if="getNotifications !== null" class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8" :class="getNotifications.length > 0 ? ' bg-red-600' : 'bg-gray-600'"> {{getNotifications ? getNotifications.length : ""}}</span>
+              </span>
+               </div>
+              </a>
+          </li>
+            </router-link>
+
+            <router-link to="/admin/inactive-prospects" class="hover:bg-gray-400 hover:text-blue-700">
+          <li class="items-center ml-2 rounded-lg">
+           
+              <a
+                class="text-xs flex items-center justify-center uppercase py-3 font-bold block"                
+              >
+                <i
+                  class="fas fa-user-circle mr-2 text-sm"
+                  
+                ></i> 
+              <div class="flex  w-full justify-between items-center ">
+              <p> Inactive Prospects</p>
+              <span class="flex h-8 w-8 relative mr-2">
+              <span v-if="getInactiveProspects !== null" class=" absolute inline-flex h-full w-full rounded-full  opacity-75" :class="getInactiveProspects > 0 ? 'animate-ping bg-yellow-500' : ''"></span>
+              <span v-if="getInactiveProspects !== null" class="relative inline-flex items-center justify-center text-white  rounded-full h-8 w-8 " :class="getInactiveProspects > 0 ? 'bg-yellow-600' : 'bg-gray-600'">{{getInactiveProspects}}</span>
+              </span>
+               </div>
+
               </a>
           </li>
             </router-link>
 
 
           <br />
-          <li class="absolute bottom-0 ml-2 ">
+          <li class="items-center ml-2 rounded-lg">
             <div v-on:click="logOut()">
               <a
                 class="text-xs uppercase py-3 font-bold block"
@@ -207,6 +240,8 @@
 
 
 <script>
+import { mapGetters } from "vuex";
+
 import altaraLogo from "@/assets/img/altaraLogo.png";
 import permissions from '../mixins/permissions';
 
@@ -216,7 +251,8 @@ export default {
     return {
       collapseShow: "hidden",
       altaraLogo,
-      canView: ''
+      canView: '',
+      flag: localStorage.getItem('flag')
     };
   },
   methods: {
@@ -230,14 +266,23 @@ export default {
     },
   },
   components: {},
-  mounted() {
+  async mounted() {
     this.canView = localStorage.getItem('flag');
-}
+    await this.$prepareNotifications();
+    await this.$prepareInactiveProspects();
+
+},
+computed: {
+    ...mapGetters(['getNotifications', 'getInactiveProspects'])
+
+  },
 };
 </script>
 <style>
 .active{
-  background: #094a73;  
+  background: #094a7350;  
+   border-radius: 0.125rem;
+
 }
 .active div{
    border-radius: 0.125rem;
@@ -252,4 +297,5 @@ export default {
 .active i{
   color: #fff;
 }
+
 </style>

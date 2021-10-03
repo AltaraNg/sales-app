@@ -5,132 +5,133 @@
         class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
       >
         <div class="hidden md:contents">
-          <div class="flex-col">
-            <div class="flex justify-between">
-              <div class="w-full lg:w-2/12 xl:w-2/12">
-                <div class="relative w-50 mb-3 p-1">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+          <div class="mb-2">
+            <auto-complete
+              :url="'/api/customer_contact'"
+              :title="'Search User'"
+            />
+          </div>
+          <div class="flex flex-row mb-3 w-full">
+            <div class="flex-1">
+              <div class="p-1">
+                <label
+                  class="block uppercase text-gray-700 text-sm font-bold mb-2 sm:text-xs overflow-auto"
+                  htmlFor="grid-password"
+                >
+                  Employment Status
+                </label>
+                <select
+                  v-model="searchQuery.employmentStatus"
+                  name="employment status"
+                  class="mx-input"
+                >
+                  <option disabled selected="selected">
+                    Select Employment Status
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in employmentStatus"
                   >
-                    Employment Status
-                  </label>
-                  <select
-                    v-model="searchQuery.employmentStatus"
-                    name="employment status"
-                    class="mx-input"
-                  >
-                    <option disabled selected="selected">
-                      Select Employment Status
-                    </option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in employmentStatus"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            </div>
+            <div class="flex-1">
+              <div class="p-1">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Customer Stage
+                </label>
+                <select v-model="searchQuery.stage" class="mx-input">
+                  <option disabled selected="selected">
+                    Select Customer Stage
+                  </option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in customerStage"
                   >
-                    Customer Stage
-                  </label>
-                  <select v-model="searchQuery.stage" class="mx-input">
-                    <option disabled selected="selected">
-                      Select Customer Stage
-                    </option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in customerStage"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div
-                class="w-full lg:w-2/12 xl:w-2/12 p-1"
-                v-if="canDo(Manager) || canDo(Coordinator)"
-              >
-                <div class="relative w-50 mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            <div class="p-1 flex-1" v-if="canDo(Manager) || canDo(Coordinator)">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Branch
+                </label>
+                <select v-model="searchQuery.branch" class="mx-input">
+                  <option disabled selected="selected">Select Branch</option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in branches"
                   >
-                    Branch
-                  </label>
-                  <select v-model="searchQuery.branch" class="mx-input">
-                    <option disabled selected="selected">Select Branch</option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in branches"
-                    >
-                      {{ type.name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1" v-if="!canDo(DSA)">
-                <div class="relative w-50 mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
+            <div class="flex-1 p-1" v-if="!canDo(DSA)">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  DSA
+                </label>
+                <select v-model="searchQuery.dsa" class="mx-input">
+                  <option disabled selected="selected">Select DSA</option>
+                  <option
+                    :value="type.id"
+                    :key="type.id"
+                    v-for="type in agents"
                   >
-                    DSA
-                  </label>
-                  <select v-model="searchQuery.dsa" class="mx-input">
-                    <option disabled selected="selected">Select DSA</option>
-                    <option
-                      :value="type.id"
-                      :key="type.id"
-                      v-for="type in agents"
-                    >
-                      {{ type.full_name || "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ type.full_name || "" }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    From Date
-                  </label>
-                  <div>
-                    <date-picker
-                      valueType="format"
-                      v-model="searchQuery.startDate"
-                    ></date-picker>
-                  </div>
+            <div class="flex-1 p-1">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  From Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.startDate"
+                  ></date-picker>
                 </div>
               </div>
-              <div class="w-full lg:w-2/12 xl:w-2/12 p-1">
-                <div class="relative w-50 mb-3">
-                  <label
-                    class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    To Date
-                  </label>
-                  <div>
-                    <date-picker
-                      valueType="format"
-                      v-model="searchQuery.endDate"
-                    ></date-picker>
-                  </div>
+            </div>
+            <div class="flex-1 p-1">
+              <div class="relative mb-3">
+                <label
+                  class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  To Date
+                </label>
+                <div>
+                  <date-picker
+                    valueType="format"
+                    v-model="searchQuery.endDate"
+                  ></date-picker>
                 </div>
               </div>
             </div>
@@ -141,6 +142,12 @@
           <div class="flex-col">
             <div class="flex flex-wrap">
               <div class="w-full lg:w-2/12 xl:w-3/12">
+                <div class="relative w-50 mb-3">
+                  <auto-complete
+                    :url="'/api/customer_contact'"
+                    :title="'Search User'"
+                  />
+                </div>
                 <div class="relative w-50 mb-3">
                   <label
                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -229,25 +236,61 @@
             v-on:click="searchUsersList()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-          <i class="fas fa-search"></i>
-            Search
+            <i class="fas fa-search"></i>
+            <span class="mx-1 hidden md:contents">Search</span>
           </div>
           <div
             v-on:click="resetSearch()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-            Reset
+            <i class="fas fa-recycle"></i>
+            <span class="mx-1 hidden md:contents">Reset</span>
           </div>
 
-          <div            
+          <div
             v-on:click="exportCsv()"
             class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
           >
-          <i class="fas fa-file-export"></i>
-            Export
+            <i class="fas fa-file-export"></i>
+            <span class="mx-1 hidden md:contents">Export</span>
           </div>
         </div>
       </div>
+
+      <vue-tailwind-modal
+        :showing="showModal"
+        @close="showModal = false"
+        :showClose="true"
+        :backgroundClose="false"
+        :css="modalOptions"
+        v-if="getInactiveProspects > 0"
+      >
+        <!-- Put your modal content here -->
+        <div >
+        <h1 class="text-center text-6xl">
+          <i class="fas fa-exclamation-circle text-yellow-600"></i>
+        </h1>
+        <h2 class="mb-5 text-center text-2xl font-bold">
+          Inactive Prospects Notification
+        </h2>
+        <p class="text-sm text-center">
+          You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
+          moved stages in a long time!!!          
+        </p>
+        <div class="text-center flex mt-6 justify-end">
+          <p class="text-white py-1 block bg-red-500 rounded md:w-1/5 mx-2 cursor-pointer px-2 md:px-0" @click="showModal = false">Close</p>
+          <router-link
+            class="text-white py-1 block bg-green-500 rounded mx-2 md:w-1/5 px-2 md:px-0"
+            to="/admin/inactive-prospects"
+            >View</router-link
+          >
+          
+        </div>
+        </div>
+        <div>
+
+        </div>
+      </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
         <div class="text-center py-2 font-medium px-5">
@@ -256,8 +299,8 @@
         <div v-if="usersList.length > 0">
           <div :key="index" v-for="(user, index) in usersList">
             <div v-on:click="viewUser(user)" class="customerTile">
-              <div class="flex justify-between">
-                <div class="flex items-stretch">
+              <div class="flex justify-between text-xs">
+                <div class="flex items-stretch ">
                   <div
                     :style="{ background: generateRandomColor() }"
                     class="avatarCircle"
@@ -268,7 +311,7 @@
                     {{ user.name || "" }}
                   </div>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col my-auto">
                   <div class="font-bold">{{ user.reg_id || "" }}</div>
                 </div>
               </div>
@@ -343,7 +386,7 @@
                 >
                   Contacted By
                 </th>
-                 <th
+                <th
                   class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
                 >
                   Date Registered
@@ -407,7 +450,7 @@
                 >
                   {{ user.users.full_name || "" }}
                 </td>
-                 <td
+                <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
                   {{ $dateTimeConvert(user.created_at) || "" }}
@@ -416,10 +459,9 @@
             </tbody>
           </table>
         </div>
-        
       </div>
       <div
-        class="hidden md:contents relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+        class="hidden md:hidden relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
       >
         <base-pagination
           :pageParam="pageParams"
@@ -448,7 +490,7 @@
                   :class="[
                     errors.first('feedback') || error.feedback
                       ? 'is-invalid'
-                      : 'border',
+                      : 'border'
                   ]"
                   v-model="customer.feedback"
                 />
@@ -492,6 +534,8 @@
 </template>
 
 <script>
+import AutoComplete from "../../components/AutoCompleteSearch.vue";
+import { mapGetters } from "vuex";
 import { get, post } from "../../utilities/api";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -500,25 +544,38 @@ import { eventBus } from "../../main";
 import permissions from "../../components/mixins/permissions.js";
 import BasePagination from "../../components/BasePagination";
 import customerApi from "../../api/customer.js";
-import router from '../../router';
+import router from "../../router";
+import VueTailwindModal from "vue-tailwind-modal";
+import Vue from "vue";
 
 export default {
   mixins: [permissions],
   components: {
     DatePicker,
     BasePagination,
+    VueTailwindModal,
+    AutoComplete
   },
 
   props: {
     size: {
       type: Number,
       required: false,
-      default: 20,
-    },
+      default: 20
+    }
   },
-  computed: {},
+
+  computed: {
+    ...mapGetters(["getInactiveProspects"])
+  },
+
   data() {
     return {
+      modalOptions: {
+        background: "smoke",
+        modal: "max-h-90",
+        close: "text-red-500 font-extrabold"
+      },
       pageNumber: 1,
       pageParams: {},
       OId: 0,
@@ -531,10 +588,12 @@ export default {
       branches: [],
       agents: [],
       message: "",
+      showModal: false,
       page: 1,
       apiUrls: {
         postComment: `/api/feedback`,
         getDSAs: `/api/get-users?role=18`,
+        customerContact: "/api/customer_contact"
       },
       userMeta: {},
       feedback: "",
@@ -542,16 +601,23 @@ export default {
       feedbackModal: false,
       feedbackPopup: false,
       error: {},
-      canView: ''
+      canView: "",
+      username: localStorage.getItem("user_name")
     };
   },
-  async created() {
-    await this.searchUsersList();
+  beforeMount() {
+    this.searchUsersList();
+  },
+
+  async mounted() {
+    this.showNotification();
     await this.getBranches();
     await this.getAgents();
     await this.getUserStage();
     await this.getEmploymentStatus();
-    this.canView = localStorage.getItem('flag');
+
+    this.canView = localStorage.getItem("flag");
+    this.getNextList();
   },
   methods: {
     async getEmploymentStatus() {
@@ -562,6 +628,7 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
+    
     async getUserStage() {
       try {
         const fetchUserStage = await customerApi.customerStage();
@@ -576,13 +643,13 @@ export default {
         const agents = await get(this.apiUrls.getDSAs);
         this.agents = agents.data.data.data;
         this.agents = this.agents.sort((a, b) => {
-          if(a.full_name > b.full_name){
+          if (a.full_name > b.full_name) {
             return 1;
           }
-          if(a.full_name < b.full_name){
+          if (a.full_name < b.full_name) {
             return -1;
           }
-          return 0
+          return 0;
         });
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -606,22 +673,23 @@ export default {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
 
-    async exportCsv(){
+    async exportCsv() {
       this.$LIPS(true);
       try {
-        const response = await customerApi.exportCustomers(queryParam(this.searchQuery));
+        const response = await customerApi.exportCustomers(
+          queryParam(this.searchQuery)
+        );
         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        let fileLink = document.createElement('a');
+        let fileLink = document.createElement("a");
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'file.csv');
+        fileLink.setAttribute("download", "file.csv");
         document.body.appendChild(fileLink);
         fileLink.click();
       } catch (error) {
         this.$displayErrorMessage(error);
-      }finally{
+      } finally {
         this.$LIPS(false);
       }
-
     },
 
     async searchUsersList() {
@@ -630,8 +698,8 @@ export default {
         const query = {
           ...this.searchQuery,
           page: this.pageParams.page,
-          limit: this.pageParams.limit,
-        };       
+          limit: this.pageParams.limit
+        };
         const fetchusersList = await customerApi.index(queryParam(query));
         let {
           current_page,
@@ -644,7 +712,7 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         } = fetchusersList.data.data[0];
         this.pageParams = Object.assign({}, this.pageParams, {
           current_page,
@@ -656,16 +724,14 @@ export default {
           next_page_url,
           to,
           total,
-          prev_page_url,
+          prev_page_url
         });
 
         this.usersList = data;
         this.userMeta = fetchusersList.data.data.meta;
         eventBus.$emit("userStats", this.userMeta);
+        eventBus.$emit("notification");
         this.OId = from;
-
-        router.replace({path: "/admin/dashboard", query: query})
-
         this.$LIPS(false);
       } catch (err) {
         this.$LIPS(false);
@@ -680,20 +746,20 @@ export default {
     async postFeedbackComment(user) {
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             this.feedbackModal = false;
             this.$LIPS(true);
             this.error = {};
             post(this.apiUrls.postComment + user.id, {
-              feedback: user.feedback,
+              feedback: user.feedback
             })
               .then(({ data }) => {
                 this.$LIPS(false);
                 user.feedback = "";
                 this.$swal({
                   icon: "success",
-                  title: "Feedback Logged Successfully",
+                  title: "Feedback Logged Successfully"
                 });
                 this.searchUsersList();
               })
@@ -706,10 +772,32 @@ export default {
               });
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+    },
+    getNextList() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          document.documentElement.scrollHeight +
+            document.documentElement.scrollTop ===
+          document.documentElement.clientHeight;
+
+        if (bottomOfWindow) {
+          this.pageParams.page += 1;
+          const query = {
+            ...this.searchQuery,
+            page: this.pageParams.page,
+            limit: this.pageParams.limit,
+            inActiveDays: 30
+          };
+
+          get(this.apiUrls.customerContact + queryParam(query)).then(res => {
+            this.usersList = this.usersList.concat(res?.data?.data[0].data);
+          });
+        }
+      };
     },
     openModal(data) {
       this.comments = data.notifications;
@@ -731,11 +819,23 @@ export default {
         name: "userProfile",
         params: {
           customer: data,
-          id: data.id,
-        },
+          id: data.id
+        }
       });
     },
-  },
+
+    showNotification() {
+      let notCookie = this.$getCookie("showNotification");
+      if (notCookie !== null) {
+        if (this.$getCookieValue("showNotification") === "true") {
+          //*show modal
+          this.showModal = true;
+
+          this.$setCookie("showNotification", false);
+        }
+      }
+    }
+  }
 };
 </script>
 

@@ -296,7 +296,7 @@
             >
               <div
                 v-on:click="logFeedbackPopup()"
-                class="absolute altaraBlue text-white bottom-0 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
+                class="absolute altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
               >
                 +
               </div>
@@ -323,7 +323,7 @@
             >
               <div
                 v-on:click="logTodoPopup()"
-                class="absolute altaraBlue text-white bottom-10 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
+                class="absolute altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
               >
                 +
               </div>
@@ -683,7 +683,7 @@
                 >
                   <div
                     v-on:click="logFeedbackPopup()"
-                    class="absolute altaraBlue text-white bottom-10 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
+                    class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                   >
                     +
                   </div>
@@ -728,7 +728,7 @@
               >
                 <div
                   v-on:click="logTodoPopup()"
-                  class="absolute altaraBlue text-white bottom-10 right-5 text-2xl w-14 h-14 rounded-full flex items-center justify-center"
+                  class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
                 >
                   +
                 </div>

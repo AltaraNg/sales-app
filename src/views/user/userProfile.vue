@@ -8,7 +8,7 @@
           <div
             v-if="customer.name"
             :style="{ background: generateRandomColor() }"
-            class="text-center text-white text-7xl rounded-full my-11 h-32 w-32 flex items-center justify-center"
+            class="text-center text-white text-6xl rounded-full my-11 h-32 w-32 flex items-center justify-center"
           >
             {{ customer ? customer.name[0].toUpperCase() : "" }}
           </div>
@@ -366,7 +366,7 @@
               <div
                 v-if="customer.name"
                 :style="{ background: generateRandomColor() }"
-                class="text-center text-white text-7xl rounded-full mt-11 mb-4 h-32 w-32 flex items-center justify-center mx-auto"
+                class="text-center text-white text-6xl rounded-full mt-11 mb-4 h-32 w-32 flex items-center justify-center mx-auto"
               >
                 {{ customer.name[0].toUpperCase() || "" }}
               </div>
@@ -728,7 +728,7 @@
               >
                 <div
                   v-on:click="logTodoPopup()"
-                  class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
+                  class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                 >
                   +
                 </div>

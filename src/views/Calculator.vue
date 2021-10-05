@@ -203,25 +203,21 @@ export default {
       let downPaymentArr = [];
       this.businessTypes.forEach((bizType) => {
         this.downPaymentRates.forEach((paymentRate) => {
+
+          let repayment_duration = this.repaymentDuration.find((item)=> item.name == this.$route.params.name )
+
           let filteredBizType = this.calculation.filter((param) => {
             return (
-              bizType.id === param.business_type_id &&
-              paymentRate.id === param.down_payment_rate_id
+              bizType.id === param?.business_type_id &&
+              paymentRate.id === param?.down_payment_rate_id &&
+              repayment_duration.id === param?.repayment_duration_id
             );
           });
-          
-         let repayment_duration = this.repaymentDuration.find((item)=>{
-            if(item.name == this.$route.params.name){
-              return true
-            } 
-            return false
-          })
-        
 
           const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
             this.selectedProduct.price,
             paymentRate,
-            filteredBizType[1],
+            filteredBizType[0],
             repayment_duration?.value
           );
           downPaymentArr.push({

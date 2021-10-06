@@ -2,7 +2,7 @@
   <div class="inactive-prospects overflow-x-auto" >
     <div v-if="prospects.length > 0">
       <h1
-        class="text-2xl mt-3 mb-8 ml-4 text-center"
+        class="text-2xl mt-3 mb-3 ml-4 text-center"
         style="color: #1F0812"
       >
         Inactive Prospects
@@ -107,7 +107,7 @@
           </table>
         </div>
         <div class="contents md:hidden">
-          <div class="pt-10">
+          <div class="pt-5">
             <h3 class="text-center text-lg mb-2 font-bold">
               List Of Inactive Prospects
             </h3>
@@ -119,7 +119,7 @@
                   <div
                     v-on:click="selectUser(user)"
                     :style="{ background: generateRandomColor() }"
-                    class="avatarCircle text-xs"
+                    class="avatarCircle"
                   >
                     {{ returnInitials(user.name) || "" }}
                   </div>
@@ -421,6 +421,9 @@ export default {
 
       if (names.length > 1) {
         initials += names[names.length - 1].substring(0, 1).toUpperCase();
+      }
+      else{
+        initials += names[0].substring(1,2).toUpperCase();
       }
       return initials;
     }

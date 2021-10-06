@@ -46,7 +46,7 @@
                   </div>
                 </div>
                 <div>
-                  <div class="flex flex-col ...">
+                  <div class="flex flex-col">
                     <div>
                       <br />
                       <br />
@@ -69,7 +69,7 @@
               </div>
 
               <div
-                class="text-center mt-5 mb-10 text-white text-base text-white"
+                class="text-center mt-5 mb-10 text-white text-base"
               >
                 Total Registered : {{totalRegistered}}
               </div>
@@ -80,7 +80,7 @@
 
               
             </div>
-            <div class="w-full lg:w-2/12 xl:w-2/12">
+            <div class="w-full lg:w-2/12 xl:w-2/12 md:w-2/12">
                 <div class="relative w-50 mb-3">
                   <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password">

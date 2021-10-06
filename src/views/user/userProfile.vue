@@ -296,7 +296,7 @@
             >
               <div
                 v-on:click="logFeedbackPopup()"
-                class="absolute altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
+                class="fixed altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
               >
                 +
               </div>
@@ -323,7 +323,7 @@
             >
               <div
                 v-on:click="logTodoPopup()"
-                class="absolute altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
+                class="fixed altaraBlue text-white bottom-0 right-0 mr-3 text-2xl w-10 h-10 rounded-full flex items-center justify-center"
               >
                 +
               </div>
@@ -674,16 +674,17 @@
                   </ul>
                 </div>
               </div>
-              <div class=" ">
+              <div class="">
                 <div
                   v-bind:class="{
                     hidden: openBigTab !== 1,
                     block: openBigTab === 1
                   }"
+                  class=" "
                 >
                   <div
                     v-on:click="logFeedbackPopup()"
-                    class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+                    class="fixed altaraBlue text-white bottom-0 mb-12 mr-12 right-0 font-bold text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                   >
                     +
                   </div>
@@ -728,7 +729,7 @@
               >
                 <div
                   v-on:click="logTodoPopup()"
-                  class="absolute altaraBlue text-white bottom-0 right-0 font-bold mr-16 text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+                  class="fixed altaraBlue text-white bottom-0 mb-12 mr-12 right-0 font-bold text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                 >
                   +
                 </div>
@@ -1078,13 +1079,13 @@ export default {
         const agents = await get(this.apiUrls.getDSAs);
         this.agents = agents.data.data.data;
         this.agents = this.agents.sort((a, b) => {
-          if(a.full_name > b.full_name){
+          if (a.full_name > b.full_name) {
             return 1;
           }
-          if(a.full_name < b.full_name){
+          if (a.full_name < b.full_name) {
             return -1;
           }
-          return 0
+          return 0;
         });
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -1200,12 +1201,13 @@ export default {
             this.closeFeedbackPopup();
             this.$LIPS(true);
             this.error = {};
-            feedbackApi.create({
-              notes: user.notes,
-              reason_id: user.reason,
-              customer_id: this.customer.id,
-              user_id: localStorage.getItem("user_id")
-            })
+            feedbackApi
+              .create({
+                notes: user.notes,
+                reason_id: user.reason,
+                customer_id: this.customer.id,
+                user_id: localStorage.getItem("user_id")
+              })
               .then(result => {
                 this.$LIPS(false);
                 this.$swal({

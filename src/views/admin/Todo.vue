@@ -238,10 +238,7 @@
                   Todo Keyword
                 </label>
                 <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.name"
-                  ></date-picker>
+                  <input type="text" v-model="searchQuery.name" class="mx-input" />
                 </div>
               </div>
             </div>
@@ -254,10 +251,8 @@
                   Customer Name
                 </label>
                 <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.customer"
-                  ></date-picker>
+                                    <input type="text" v-model="searchQuery.customer" class="mx-input" />
+
                 </div>
               </div>
             </div>

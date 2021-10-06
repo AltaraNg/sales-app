@@ -153,7 +153,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
               >
-                {{ feedback.notes || "" }}
+                {{ feedback.notes | truncate(30) || "" }}
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
@@ -234,10 +234,7 @@
                   Todo Keyword
                 </label>
                 <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.name"
-                  ></date-picker>
+                  <input v-model="searchQuery.name" class="mx-input" />
                 </div>
               </div>
             </div>
@@ -250,10 +247,7 @@
                   Customer Name
                 </label>
                 <div>
-                  <date-picker
-                    valueType="format"
-                    v-model="searchQuery.customer"
-                  ></date-picker>
+                  <input type="text" v-model="searchQuery.customer" class="mx-input" />
                 </div>
               </div>
             </div>

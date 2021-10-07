@@ -105,13 +105,13 @@
                 Side notes
               </th>
               <th
-                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
               >
                 DSA
               </th>
 
               <th
-                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-center"
               >
                 Date
               </th>
@@ -146,23 +146,23 @@
                 {{ feedback.customer.name }}
               </th>
               <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4 text-left"
               >
                 {{ feedback.reason.reason || "" }}
               </th>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                class="border-t-0 border-l-0 border-r-0 text-xs p-4 break-words text-left"
               >
-                {{ feedback.notes | truncate(30) || "" }}
+                {{ feedback.notes || "" }}
               </td>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
               >
                 {{ feedback.user.full_name || "Not Available" }}
               </td>
 
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-center"
               >
                 <!-- <input
                   @change="checkTodo(todo)"
@@ -276,7 +276,7 @@
             <div class="customerTile">
               <div class="flex justify-between">
                 <div class="flex items-stretch">
-                  <div class="self-center font-medium">
+                  <div class="self-center font-medium pr-2 break-words">
                     {{ data.notes || "" }}
                   </div>
                 </div>

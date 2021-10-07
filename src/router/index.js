@@ -13,7 +13,7 @@ import Todo from "@/views/admin/Todo.vue";
 import SendMessage from "@/views/admin/SendMessage.vue";
 import Notifications from "@/views/admin/Notifications.vue"
 import Feedback from "@/views/admin/Feedback.vue";
-import Calculator from "@/views/Calculator.vue"
+import Calculator from "@/views/productCalculator.vue"
 import InactiveProspects from "@/views/admin/InactiveProspects.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
@@ -94,8 +94,8 @@ const router = new VueRouter({
         component: Index,
     },
     {
-        path:"/calculator",
-        name:"calculator",
+        path:"/product_calculator",
+        name:"productCalculator",
         component: Calculator,
         redirect:"/calculator/three_months",
         meta:{
@@ -110,6 +110,22 @@ const router = new VueRouter({
              },
            
         ]
+    },
+    {
+        path:"/pricing",
+        name:"pricing",
+        component: () => import("@/views/Pricing.vue"),
+        meta:{
+            NoAuth:true
+        }
+    },
+    {
+        path:"/cash_calculator",
+        name:"cashCalculator",
+        component: () => import("@/views/cashCalculator.vue"),
+        meta:{
+            NoAuth:true
+        }
     },
 
     {

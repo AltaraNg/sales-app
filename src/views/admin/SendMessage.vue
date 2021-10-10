@@ -1,16 +1,16 @@
 <template>
   <div
-    class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0"
+    class="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0"
   >
     <div class="rounded-t bg-white mb-0 px-6 py-6">
       <div class="text-center flex justify-between">
-        <h6 class="text-gray-800 text-xl font-bold">Send Message</h6>
+        <h6 class="text-gray-800 text-xl font-bold md:ml-3 ml-0">Send Message</h6>
       </div>
     </div>
-    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-      <div class="w-1/2 mt-16 ml-5 ">
+    <div class="py-10 pt-0 md:px-8">
+      <div class="mt-10 md:w-2/3">
         <div>
-          <label class="typo__label p-2 font-bold">Select Role</label>
+          <label class="typo__label p-2 font-bold mb-2">Select Role</label>
           <multiselect
             v-model="recepients"
             :options="roles"
@@ -28,8 +28,8 @@
           </multiselect>
         </div>
       </div>
-      <div class="mt-10 ml-5 w-1/2">
-        <label class="typo__label p-2 font-bold">Enter Message</label>
+      <div class="mt-10 md:w-2/3">
+        <label class="typo__label p-2 font-bold mb-2">Enter Message</label>
         <textarea
           rows="8"
           cols="40"
@@ -42,9 +42,9 @@
         </textarea>
       </div>
 
-      <div class="text-left mt-5 ml-5 w-1/2">
+      <div class="text-left mt-5 md:w-1/2">
         <button
-          class="altaraBlue text-white p-2 rounded-md"
+          class="altaraBlue text-white p-2 rounded-md w-full md:w-2/3"
           @click="sendMessage()"
         >
           <i class="far fa-paper-plane mr-2"></i>Send

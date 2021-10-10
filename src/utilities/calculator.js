@@ -43,4 +43,26 @@ const repaymentCount = (days, cycle) => {
     return 3;
 };
 
-export default calculate;
+const cashLoan = (productPrice, data, params, repayment_duration) => {
+    if(!params)return {total: 0, actualDownpayment:0, actualRepayment:0, biMonthlyRepayment:0}
+  const count = repaymentCount(
+    repayment_duration,
+    14            
+  );
+  const actualDownpayment = (data.percent / 100) * productPrice;
+  const residual = productPrice - actualDownpayment;
+  const principal = residual / count;
+  const interest = (params.interest / 100) * residual;
+  const actualRepayment = (principal + interest) * count;
+  let total =  Math.ceil((actualDownpayment + actualRepayment)/100) *100;
+  
+    if(params.business_type_id ==1 ){
+        var   biMonthlyRepayment = Math.floor((actualRepayment/count)/100)*100
+    }else{
+       var   biMonthlyRepayment = Math.round((actualRepayment/count)/100)*100 
+    }
+    
+    return { total, actualDownpayment, actualRepayment, biMonthlyRepayment };
+}
+
+export { calculate, cashLoan };

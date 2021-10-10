@@ -105,7 +105,7 @@ const router = new VueRouter({
              {
             path: "/calculator/:name",
             name:"Result",
-            component: () => import("@/components/Cards/Results.vue"),
+            component: () => import("@/components/Cards/ProductResult.vue"),
             props:true
              },
            
@@ -120,12 +120,21 @@ const router = new VueRouter({
         }
     },
     {
-        path:"/cash_calculator",
-        name:"cashCalculator",
-        component: () => import("@/views/cashCalculator.vue"),
-        meta:{
-            NoAuth:true
-        }
+      path: "/cash_calculator",
+      name: "cashCalculator",
+      component: () => import("@/views/cashCalculator.vue"),
+      redirect: "/cash_calculator/AltaraPayEmployeeCashLoan",
+      meta: {
+        NoAuth: true,
+      },
+      children: [
+        {
+          path: "/cash_calculator/:name",
+          name: "CashResult",
+          component: () => import("@/components/Cards/CashResult.vue"),
+          props: true,
+        },
+      ],
     },
 
     {

@@ -23,6 +23,7 @@
                 Home
               </button>
             </router-link>
+            <router-link to="/pricing" class="-mt-6 ml-3">
             <button
               class="
                 bg-white
@@ -33,13 +34,11 @@
                 cursor-pointer
                 font-semibold
                 text-base
-                -mt-6
-                ml-3
               "
-              @click="hasHistory() ? $router.go(-1) : $router.push('/')"
             >
               Back
             </button>
+            </router-link>
           </div>
           <h3
             class="
@@ -53,7 +52,7 @@
               mt-16
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans for Six
+            Do The Math, Calculate Your Product Loans for Six
             Months/Bi-Monthly Repayment
           </h3>
         </div>
@@ -125,7 +124,7 @@
 <script>
 import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
-import calculate from "../utilities/calculator";
+import {calculate, cashLoan} from "../utilities/calculator";
 import { get, post } from "../utilities/api";
 import ArrowUp from "../components/svgs/arrowup.vue";
 import Buttons from "../components/buttons/buttons.vue";

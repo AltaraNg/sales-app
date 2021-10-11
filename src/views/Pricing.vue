@@ -14,6 +14,7 @@
           md:flex-row
           flex flex-col
           space-y-10
+          lg:space-y-0
           md:px-0
           px-16
           md:py-0
@@ -76,8 +77,6 @@
             transform
             hover:-translate-y-1
             hover:scale-110
-            md:-mt-10
-            mt-0
             flex
             items-center
             flex-col

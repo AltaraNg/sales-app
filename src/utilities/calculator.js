@@ -55,13 +55,7 @@ const cashLoan = (productPrice, data, params, repayment_duration) => {
   const interest = (params.interest / 100) * residual;
   const actualRepayment = (principal + interest) * count;
   let total =  Math.ceil((actualDownpayment + actualRepayment)/100) *100;
-  
-    if(params.business_type_id ==1 ){
-        var   biMonthlyRepayment = Math.floor((actualRepayment/count)/100)*100
-    }else{
-       var   biMonthlyRepayment = Math.round((actualRepayment/count)/100)*100 
-    }
-    
+  var   biMonthlyRepayment = Math.round((actualRepayment/count)/100)*100 ;
     return { total, actualDownpayment, actualRepayment, biMonthlyRepayment };
 }
 

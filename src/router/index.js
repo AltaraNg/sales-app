@@ -97,13 +97,13 @@ const router = new VueRouter({
         path:"/product_calculator",
         name:"productCalculator",
         component: Calculator,
-        redirect:"/calculator/three_months",
+        redirect:"/product_calculator/three_months",
         meta:{
             NoAuth:true
         },
         children:[
              {
-            path: "/calculator/:name",
+            path: "/product_calculator/:name",
             name:"Result",
             component: () => import("@/components/Cards/ProductResult.vue"),
             props:true

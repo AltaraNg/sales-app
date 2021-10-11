@@ -6,9 +6,10 @@
           w-full
           focus:outline-none
           font-semibold
-          lg:text-lg
-          text-base
+          md:text-lg
+          text-xs
           rounded-lg
+          md:px-5
           px-5
           py-3
           bg-white

@@ -123,7 +123,7 @@ const router = new VueRouter({
       path: "/cash_calculator",
       name: "cashCalculator",
       component: () => import("@/views/cashCalculator.vue"),
-      redirect: "/cash_calculator/AltaraPayEmployeeCashLoan",
+      redirect: "/cash_calculator/AltaraPayStarterCashLoan",
       meta: {
         NoAuth: true,
       },

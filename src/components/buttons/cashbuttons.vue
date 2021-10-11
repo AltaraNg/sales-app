@@ -4,12 +4,14 @@
       <button
         class="
           w-full
+          border
           focus:outline-none
           font-semibold
-          lg:text-lg
-          text-base
+          md:text-lg
+          text-xs
           rounded-lg
-          px-5
+          md:px-5
+          px-3
           py-3
           bg-white
           group-focus:text-yellow-300

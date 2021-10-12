@@ -123,7 +123,7 @@
 <script>
 import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
-import calculate from "../utilities/calculator";
+import {calculate} from "../utilities/calculator";
 import { get, post } from "../utilities/api";
 import ArrowUp from "../components/svgs/arrowup.vue";
 import Buttons from "../components/buttons/buttons.vue"

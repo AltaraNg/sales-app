@@ -1,50 +1,45 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full h-full flex flex-col items-center  altaraBlue bg-no-repeat"
+      class="w-full md:h-screen h-full flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
-    
       <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
-        <div
-          class="flex  flex-col items-center justify-center mt-10 px-10"
-        >
-        <div class="flex justify-center absolute top left-0  items-start">
-          <button
-            class="
-              bg-white
-              text-black
-              rounded
-              px-8
-              py-2
-              cursor-pointer
-              font-semibold
-              text-base
-              -mt-6
-              ml-3
-            "
-            @click="$router.push('/admin/dashboard')"
-          >
-            Home
-          </button>
+        <div class="flex flex-col items-center justify-center mt-10 px-10">
+          <div class="flex justify-center absolute top left-0 items-start">
+            <router-link to="/" class="-mt-6 ml-3">
+              <button
+                class="
+                  bg-white
+                  text-black
+                  rounded
+                  px-8
+                  py-2
+                  cursor-pointer
+                  font-semibold
+                  text-base
+                "
+              >
+                Home
+              </button>
+            </router-link>
+            <router-link to="/pricing" class="-mt-6 ml-3">
             <button
-            class="
-              bg-white
-              text-black
-              rounded
-              px-8
-              py-2
-              cursor-pointer
-              font-semibold
-              text-base
-              -mt-6
-              ml-3
-            "
-            @click="hasHistory() ? $router.go(-1) : $router.push('/')"
-          >
-            Back
-          </button>
-        </div>
+              class="
+                bg-white
+                text-black
+                rounded
+                px-8
+                py-2
+                cursor-pointer
+                font-semibold
+                text-base
+              "
+            >
+              Back
+            </button>
+            </router-link>
+          </div>
           <h3
             class="
               text-white
@@ -57,25 +52,36 @@
               mt-16
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans for Six
-            Months/Bi-Monthly Repayment
+            Do The Math, Calculate Your Cash Loans for Bi-Monthly Repayment
           </h3>
         </div>
         <form>
           <div class="flex flex-col item-start mx-3 md:mx-6 lg:mx-0 mt-3">
-            <label class="text-white font-bold text-base">Product Name</label>
-            <AutoComplete
-              v-on:childToParent="selectedItem"
-              :apiUrl="apiUrls.getProduct"
+            <label class="text-white font-bold text-lg">Amount:</label>
+            <input
+                type="text"
+                class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
+                v-model="inputValue"
+                @input="selectedItem"
             />
           </div>
         </form>
       </div>
-      <div v-if="select_product" class="flex px-4  mb-10 flex-wrap gap-2  justify-center items-center">
-        
-        <div v-for="(rpayDuration, index) in repaymentDuration" :key="index" class=" flex-1" >
-      <Buttons  :getResultMobile="getResultMobile" :rpayDuration="rpayDuration"/>    
-        </div>              
+      <div
+        v-if="select_product"
+        class="flex px-4 mb-10 flex-wrap gap-2 justify-center"
+      >
+        <div
+          v-for="(businessType, index) in businessTypes"
+          :key="index"
+          class=" flex-1 lg:flex-none lg:flex-wrap items-stretch  flex justify-evenly"
+        >
+          
+          <Buttons
+            :getResultMobile="getResultMobile"
+            :business_type="businessType"
+          />
+        </div>
       </div>
       <div
         v-if="select_product == false"
@@ -96,25 +102,22 @@
         "
       >
         <p
-          class="text-white text-center font-semibold text-lg md:text-2xl mr-2"
+          class="text-white text-center font-semibold lg:text-lg md:text-2xl mr-2"
         >
-          PLEASE SELECT A PRODUCT
+          PLEASE ENTER ANY AMOUNT
         </p>
         <ArrowUp />
       </div>
-    
 
       <div class="lg:w-auto w-full" v-else>
         <router-view
-          :businessTypes="businessTypes"
+          :repaymentDuration="repaymentDuration"
           :downPaymentRates="downPaymentRates"
           :getResultMobile="getResultMobile"
-          :selectedDownpayment="selectedDownpayment"         
+          :selectedDownpayment="selectedDownpayment"
           :computedGetCalc="computedGetCalc"
         >
-
         </router-view>
-       
       </div>
     </div>
   </div>
@@ -123,10 +126,10 @@
 <script>
 import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
-import {calculate} from "../utilities/calculator";
+import {calculate, cashLoan} from "../utilities/calculator";
 import { get, post } from "../utilities/api";
 import ArrowUp from "../components/svgs/arrowup.vue";
-import Buttons from "../components/buttons/buttons.vue"
+import Buttons from "../components/buttons/cashbuttons.vue";
 export default {
   data() {
     return {
@@ -149,23 +152,23 @@ export default {
       selectedDownpayment: null,
       downpaymentCalculations: [],
       repaymentDuration: [],
+      calculation:[],
+      inputValue:""
     };
   },
   components: {
     AutoComplete,
     ArrowUp,
-    Buttons
+    Buttons,
   },
-  computed: { 
+  computed: {
     computedGetCalc() {
       return this.downpaymentCalc();
-    },        
-   
+    },
   },
 
   async mounted() {
     await this.getCalculation();
-    await this.getProduct();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
     await this.getRepaymentDuration();
@@ -177,13 +180,10 @@ export default {
       this.downpaymentCalc();
       this.getResultMobile(2, 20);
     },
-    hasHistory() {
-      return window.history.length > 2;
-    },
-    getResultMobile(bizId, percent) {
+    getResultMobile(repayduration, percent) {
       this.selectedDownpayment = this.downpaymentCalculations.filter(
         (result) => {
-          return result.bizId == bizId && result.percent == percent;
+          return result.re_duration == repayduration && result.percent == percent;
         }
       )[0];
     },
@@ -194,35 +194,45 @@ export default {
           this.apiUrls.repaymentDuration
         );
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
-        
+        this.repaymentDuration = this.repaymentDuration.filter((item) => {
+          return (
+            item.name?.includes("six_months") ||
+            item.name?.includes("three_months")
+          );
+        }).sort((a,b)=> b.value - a.value) 
       } catch (err) {
         this.$displayErrorMessage(err);
       }
     },
     downpaymentCalc() {
       let downPaymentArr = [];
-      this.businessTypes.forEach((bizType) => {
+      this.repaymentDuration.forEach((repayment_duration) => {
         this.downPaymentRates.forEach((paymentRate) => {
-
-          let repayment_duration = this.repaymentDuration.find((item)=> item.name == this.$route.params.name )
-
+          let business_type = this.businessTypes.find(
+            (item) => item.name?.replace(/\s/g, '') == this.$route.params.name
+          );
           let filteredBizType = this.calculation.filter((param) => {
             return (
-              bizType.id === param?.business_type_id &&
+              business_type.id === param?.business_type_id &&
               paymentRate.id === param?.down_payment_rate_id &&
               repayment_duration.id === param?.repayment_duration_id
             );
           });
-
-          const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
-            this.selectedProduct.price,
+          const {
+            total,
+            actualDownpayment,
+            actualRepayment,
+            biMonthlyRepayment,
+          } = cashLoan(
+            this.inputValue,
             paymentRate,
             filteredBizType[0],
             repayment_duration?.value
           );
           downPaymentArr.push({
-            bizId: bizType.id,
+            re_duration: repayment_duration.id,
             percent: paymentRate["percent"],
+            businessType: business_type.name,
             total,
             actualDownpayment,
             actualRepayment,
@@ -233,29 +243,11 @@ export default {
       this.downpaymentCalculations = downPaymentArr;
       return downPaymentArr;
     },
-    async getProduct() {
-      try {
-        const fetchProduct = await get(this.apiUrls.getProduct + this.product);
-        this.products = fetchProduct?.data?.data?.data;
-        this.products.find((item) => {
-          return item.product_id == this.selectedProduct.product_id;
-        });
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
     async getDownPaymentRates() {
       try {
         const fetchDownPaymentRates = await get(this.apiUrls.downPaymentRates);
         this.downPaymentRates = fetchDownPaymentRates?.data?.data?.data;
-        this.downPaymentRates = this.downPaymentRates.filter((item) => {
-          return !(
-            item.name.includes("plus") ||
-            item.name.includes("zero") ||
-            item.name.includes("ten")
-          );
-        });
-        this.downPaymentRates = this.downPaymentRates.sort((a, b) => {
+        this.downPaymentRates = this.downPaymentRates.filter((item) =>  item.name =="twenty").sort((a, b) => {
           return a.percent - b.percent;
         });
       } catch (err) {
@@ -276,7 +268,12 @@ export default {
         const fetchBusinessTypes = await get(this.apiUrls.businessTypes);
         this.businessTypes = fetchBusinessTypes?.data?.data?.data;
         this.businessTypes = this.businessTypes.filter((item) => {
-          return item.name.includes("Products");
+          return !(
+            item.name.includes("Products") ||
+            item.name.includes("Rentals") ||
+            item.name.includes("Credit") ||
+            item.name.includes("Employee")
+            );
         });
       } catch (err) {
         this.$displayErrorMessage(err);
@@ -289,9 +286,7 @@ export default {
 .alert {
   margin-bottom: 200%;
 }
-.top{
-  top:50px;
+.top {
+  top: 50px;
 }
-
-
 </style>

@@ -13,7 +13,7 @@ import Todo from "@/views/admin/Todo.vue";
 import SendMessage from "@/views/admin/SendMessage.vue";
 import Notifications from "@/views/admin/Notifications.vue"
 import Feedback from "@/views/admin/Feedback.vue";
-import Calculator from "@/views/Calculator.vue"
+import Calculator from "@/views/productCalculator.vue"
 import InactiveProspects from "@/views/admin/InactiveProspects.vue"
 
 import { routerHistory, writeHistory } from "vue-router-back-button";
@@ -94,22 +94,47 @@ const router = new VueRouter({
         component: Index,
     },
     {
-        path:"/calculator",
-        name:"calculator",
+        path:"/product_calculator",
+        name:"productCalculator",
         component: Calculator,
-        redirect:"/calculator/three_months",
+        redirect:"/product_calculator/three_months",
         meta:{
             NoAuth:true
         },
         children:[
              {
-            path: "/calculator/:name",
+            path: "/product_calculator/:name",
             name:"Result",
-            component: () => import("@/components/Cards/Results.vue"),
+            component: () => import("@/components/Cards/ProductResult.vue"),
             props:true
              },
            
         ]
+    },
+    {
+        path:"/pricing",
+        name:"pricing",
+        component: () => import("@/views/Pricing.vue"),
+        meta:{
+            NoAuth:true
+        }
+    },
+    {
+      path: "/cash_calculator",
+      name: "cashCalculator",
+      component: () => import("@/views/cashCalculator.vue"),
+      redirect: "/cash_calculator/AltaraPayStarterCashLoan",
+      meta: {
+        NoAuth: true,
+      },
+      children: [
+        {
+          path: "/cash_calculator/:name",
+          name: "CashResult",
+          component: () => import("@/components/Cards/CashResult.vue"),
+          props: true,
+        },
+      ],
     },
 
     {

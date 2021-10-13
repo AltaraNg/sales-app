@@ -4,6 +4,8 @@
       <button
         class="
           w-full
+          h-full
+          flex-1
           border
           focus:outline-none
           font-semibold
@@ -38,7 +40,7 @@ export default {
   },
   computed: {
     styleActiveRoute() {
-      if (this.$route.params.name == this.business_type?.name.replace(/\s/g, '')) {
+      if (this.$route.params.name == this.business_type?.name?.replace(/\s/g, '')) {
         return "bg-red-700 text-white ";
       }
       return "";

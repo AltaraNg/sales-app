@@ -216,14 +216,10 @@ export default {
   },
   methods: {
     downpaymentResult(biztype, result) {
-      if (
-        this.selectedDownpayment !== null &&
-        biztype.id == this.selectedDownpayment.bizId
-      ) {
+      if ( biztype.id == this.selectedDownpayment?.bizId){
         return "₦" + result.toFixed(2);
-      } else {
+      } 
         return "₦0.00";
-      }
     },
     
   },

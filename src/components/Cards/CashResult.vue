@@ -13,7 +13,7 @@
             flex flex-col
             md:px-8
             py-6
-            px-3
+            px-1
             bg-white
             shadow-2xl
             h-auto
@@ -46,7 +46,7 @@
               </button>
             </div>
           </div>
-          <p class="text-lg font-semibold" :class="toggletextColor">
+          <p class="text-lg font-semibold px-5" :class="toggletextColor">
             {{ repayment_duration.name }}
           </p>
           <div class="flex items-center px-4 justify-between mt-8">
@@ -216,14 +216,11 @@ export default {
   },
   methods: {
     downpaymentResult(repayment_duration, result) {
-      if (
-        this.selectedDownpayment !== null &&
-        repayment_duration.id == this.selectedDownpayment.re_duration
-      ) {
+      if (repayment_duration.id == this.selectedDownpayment?.re_duration){
         return "₦" + result.toFixed(2);
-      } else {
-        return "₦0.00";
-      }
+      } 
+      return "₦0.00";
+
     },
    
   },

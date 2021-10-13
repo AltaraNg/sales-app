@@ -52,13 +52,12 @@
               mt-16
             "
           >
-            Do The Math, Calculate Your Cash Loans for Six
-            Months/Bi-Monthly Repayment
+            Do The Math, Calculate Your Cash Loans for Bi-Monthly Repayment
           </h3>
         </div>
         <form>
           <div class="flex flex-col item-start mx-3 md:mx-6 lg:mx-0 mt-3">
-            <label class="text-white font-bold text-base">Product Name</label>
+            <label class="text-white font-bold text-lg">Amount:</label>
             <input
                 type="text"
                 class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
@@ -70,12 +69,12 @@
       </div>
       <div
         v-if="select_product"
-        class="flex px-4 mb-10 flex-wrap gap-2 justify-center items-center"
+        class="flex px-4 mb-10 flex-wrap gap-2 justify-center"
       >
         <div
           v-for="(businessType, index) in businessTypes"
           :key="index"
-          class=" flex-1 flex-wrap"
+          class=" flex-1 lg:flex-none lg:flex-wrap items-stretch  flex justify-evenly"
         >
           
           <Buttons
@@ -103,9 +102,9 @@
         "
       >
         <p
-          class="text-white text-center font-semibold text-lg md:text-2xl mr-2"
+          class="text-white text-center font-semibold lg:text-lg md:text-2xl mr-2"
         >
-          PLEASE SELECT A PRODUCT
+          PLEASE ENTER ANY AMOUNT
         </p>
         <ArrowUp />
       </div>
@@ -197,9 +196,10 @@ export default {
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
         this.repaymentDuration = this.repaymentDuration.filter((item) => {
           return (
-            item.name.includes("six_months")
+            item.name?.includes("six_months") ||
+            item.name?.includes("three_months")
           );
-        }); 
+        }).sort((a,b)=> b.value - a.value) 
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -209,7 +209,7 @@ export default {
       this.repaymentDuration.forEach((repayment_duration) => {
         this.downPaymentRates.forEach((paymentRate) => {
           let business_type = this.businessTypes.find(
-            (item) => item.name.replace(/\s/g, '') == this.$route.params.name
+            (item) => item.name?.replace(/\s/g, '') == this.$route.params.name
           );
           let filteredBizType = this.calculation.filter((param) => {
             return (
@@ -247,8 +247,7 @@ export default {
       try {
         const fetchDownPaymentRates = await get(this.apiUrls.downPaymentRates);
         this.downPaymentRates = fetchDownPaymentRates?.data?.data?.data;
-        this.downPaymentRates = this.downPaymentRates.filter((item) =>  item.name =="twenty");
-        this.downPaymentRates = this.downPaymentRates.sort((a, b) => {
+        this.downPaymentRates = this.downPaymentRates.filter((item) =>  item.name =="twenty").sort((a, b) => {
           return a.percent - b.percent;
         });
       } catch (err) {

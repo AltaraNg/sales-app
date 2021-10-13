@@ -69,7 +69,7 @@
       </div>
       <div
         v-if="select_product"
-        class="flex lg:px-48  px-0  items-stretch px-4 mb-10 flex-wrap gap-2 justify-evenly"
+        class="flex lg:px-48  px-0  items-stretch px-4 mb-10 flex-wrap lg:flex-nowrap gap-2 justify-evenly"
       >
         <div
           v-for="(businessType, index) in businessTypes"

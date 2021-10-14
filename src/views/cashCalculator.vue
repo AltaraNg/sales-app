@@ -1,7 +1,7 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full md:h-screen h-full flex flex-col items-center altaraBlue bg-no-repeat"
+      class="w-full  h-full flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
       <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
@@ -59,7 +59,7 @@
           <div class="flex flex-col item-start mx-3 md:mx-6 lg:mx-0 mt-3">
             <label class="text-white font-bold text-lg">Amount:</label>
             <input
-                type="text"
+                type="number"
                 class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
                 v-model="inputValue"
                 @input="selectedItem"
@@ -69,12 +69,12 @@
       </div>
       <div
         v-if="select_product"
-        class="flex px-4 mb-10 flex-wrap gap-2 justify-center"
+        class="flex lg:px-48  px-0  items-stretch px-4 mb-10 flex-wrap lg:flex-nowrap gap-2 justify-evenly"
       >
         <div
           v-for="(businessType, index) in businessTypes"
           :key="index"
-          class=" flex-1 lg:flex-none lg:flex-wrap items-stretch  flex justify-evenly"
+          class=" flex-1  items-stretch  flex justify-evenly"
         >
           
           <Buttons

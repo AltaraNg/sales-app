@@ -59,22 +59,32 @@
           <div class="flex flex-col item-start mx-3 md:mx-6 lg:mx-0 mt-3">
             <label class="text-white font-bold text-lg">Amount:</label>
             <input
+                v-if="!starterCashState"
                 type="number"
                 class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
                 v-model="inputValue"
                 @input="selectedItem"
             />
+            <select 
+                  v-else 
+                  v-model="inputValue" 
+                  class="form-control w-full px-5 custom-select bg-white rounded-md py-4 font-semibold text-lg"
+                  @change="selectedItem"
+                  >
+                  <option value="0" disabled selected hidden>Select any amount</option>
+              <option v-for="(starterCashLoan, index) in starterCashLoans" :key="index" >{{starterCashLoan}}</option>
+            </select>
           </div>
         </form>
       </div>
       <div
-        v-if="select_product"
-        class="flex lg:px-48  px-0  items-stretch px-4 mb-10 flex-wrap lg:flex-nowrap gap-2 justify-evenly"
+         v-if="select_product"
+        class=" flex lg:px-24 items-stretch px-4 mb-10 flex-wrap lg:flex-nowrap gap-2"
       >
         <div
           v-for="(businessType, index) in businessTypes"
           :key="index"
-          class=" flex-1  items-stretch  flex justify-evenly"
+          class=" flex-1 justify-center flex "
         >
           
           <Buttons
@@ -153,7 +163,10 @@ export default {
       downpaymentCalculations: [],
       repaymentDuration: [],
       calculation:[],
-      inputValue:""
+      inputValue:"",
+      starterCashState:false,
+      starterCashLoans:[45000, 65000,70000]
+      
     };
   },
   components: {
@@ -172,6 +185,16 @@ export default {
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
     await this.getRepaymentDuration();
+  },
+  watch:{
+    $route(newRoute, oldRoute){
+        if(newRoute.params.name.includes("StarterCash")){
+          this.starterCashState = true
+          this.inputValue =0
+        }else{
+          this.starterCashState = false
+        }
+    }
   },
   methods: {
     selectedItem(value) {

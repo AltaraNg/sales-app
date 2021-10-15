@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link :to="{ name: 'CashResult', params: { name: business_type.name.replace(/\s/g, '') } }">
-      <button
+       <button
         class="
           w-full
           h-full
@@ -9,12 +9,12 @@
           border
           focus:outline-none
           font-semibold
-          md:text-lg
+          lg:text-base
           text-xs
           rounded-lg
-          md:px-5
+          lg:px-5
           px-3
-          py-3
+          py-2
           bg-white
           group-focus:text-yellow-300
         "

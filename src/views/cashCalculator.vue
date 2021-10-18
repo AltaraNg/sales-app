@@ -178,25 +178,31 @@ export default {
     computedGetCalc() {
       return this.downpaymentCalc();
     },
+
   },
 
   async mounted() {
+    this.checkRoute()
     await this.getCalculation();
     await this.getBusinessTypes();
     await this.getDownPaymentRates();
     await this.getRepaymentDuration();
   },
+
   watch:{
-    $route(newRoute, oldRoute){
-        if(newRoute.params.name.includes("StarterCash")){
-          this.starterCashState = true
-          this.inputValue =0
-        }else{
-          this.starterCashState = false
-        }
+      $route(newRoute, oldRoute){  
+          this.checkRoute(newRoute)   
     }
-  },
+  },   
   methods: {
+  checkRoute(){
+      if(this.$route.params.id == 9 || this.$route.params.id == 7){
+            this.starterCashState = true
+            this.inputValue =0
+          }else{
+            this.starterCashState = false
+          }
+      },
     selectedItem(value) {
       this.selectedProduct = value;
       this.select_product = true;
@@ -232,7 +238,7 @@ export default {
       this.repaymentDuration.forEach((repayment_duration) => {
         this.downPaymentRates.forEach((paymentRate) => {
           let business_type = this.businessTypes.find(
-            (item) => item.name?.replace(/\s/g, '') == this.$route.params.name
+            (item) => item.id == this.$route.params.id
           );
           let filteredBizType = this.calculation.filter((param) => {
             return (

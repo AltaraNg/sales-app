@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{ name: 'CashResult', params: { name: business_type.name.replace(/\s/g, '') } }">
+    <router-link :to="{ name: 'CashResult', params: { id: business_type.id } }">
        <button
         class="
           w-full
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     styleActiveRoute() {
-      if (this.$route.params.name == this.business_type?.name?.replace(/\s/g, '')) {
+      if (this.$route.params.id == this.business_type?.id) {
         return "bg-red-700 text-white ";
       }
       return "";

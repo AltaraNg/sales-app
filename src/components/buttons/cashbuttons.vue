@@ -1,24 +1,27 @@
 <template>
   <div>
-    <router-link :to="{ name: 'Result', params: { name: rpayDuration.name } }">
-      <button
+    <router-link :to="{ name: 'CashResult', params: { id: business_type.id } }">
+       <button
         class="
           w-full
+          h-full
+          flex-1
+          border
           focus:outline-none
           font-semibold
-          md:text-lg
+          lg:text-base
           text-xs
           rounded-lg
-          md:px-5
-          px-5
-          py-3
+          lg:px-5
+          px-3
+          py-2
           bg-white
           group-focus:text-yellow-300
         "
         :class="styleActiveRoute"
         @click="getResultMobile(2, 20)"
       >
-        {{ rpayDuration.name }}
+        {{ business_type.name }}
       </button>
     </router-link>
   </div>
@@ -31,13 +34,13 @@ export default {
       type: Function,
       required: true,
     },
-    rpayDuration: {
+    business_type: {
       type: Object,
     },
   },
   computed: {
     styleActiveRoute() {
-      if (this.$route.params.name == this.rpayDuration?.name) {
+      if (this.$route.params.id == this.business_type?.id) {
         return "bg-red-700 text-white ";
       }
       return "";

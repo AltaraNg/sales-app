@@ -4,8 +4,8 @@
     <div>
       <div
         class="md:flex md:flex-col lg:hidden items-center w-full"
-        v-for="biztype in businessTypes"
-        :key="biztype.id"
+        v-for="repayment_duration in repaymentDuration"
+        :key="repayment_duration.id"
       >
         <div
           class="
@@ -13,7 +13,7 @@
             flex flex-col
             md:px-8
             py-6
-            px-3
+            px-1
             bg-white
             shadow-2xl
             h-auto
@@ -39,15 +39,15 @@
                   bg-gray-500
                   focus:outline-none
                 "
-                @click="getResultMobile(biztype.id, dpayments.percent)"
+                @click="getResultMobile(repayment_duration.id, dpayments.percent)"
                 :class="toggleDownpaymentColor(dpayments)"
               >
                 {{ dpayments.percent }}%
               </button>
             </div>
           </div>
-          <p class="text-lg font-semibold" :class="toggletextColor">
-            {{ biztype.name }}
+          <p class="text-lg font-semibold px-5" :class="toggletextColor">
+            {{ repayment_duration.name }}
           </p>
           <div class="flex items-center px-4 justify-between mt-8">
             <div class="flex-col items-center">
@@ -68,7 +68,7 @@
               <p class="amount font-bold text-lg text-center">
                 {{
                   downpaymentResult(
-                    biztype,
+                    repayment_duration,
                     selectedDownpayment.actualDownpayment
                   )
                 }}
@@ -92,7 +92,7 @@
               <p class="amount font-bold text-lg text-center">
                 {{
                   downpaymentResult(
-                    biztype,
+                    repayment_duration,
                     selectedDownpayment.biMonthlyRepayment
                   )
                 }}
@@ -118,7 +118,7 @@
               <p class="amount font-bold text-lg text-center">
                 {{
                   downpaymentResult(
-                    biztype,
+                    repayment_duration,
                     selectedDownpayment.actualRepayment
                   )
                 }}
@@ -140,7 +140,7 @@
                 Total Product Price
               </div>
               <p class="amount font-bold text-lg text-center">
-                {{ downpaymentResult(biztype, selectedDownpayment.total) }}
+                {{ downpaymentResult(repayment_duration, selectedDownpayment.total) }}
               </p>
             </div>
           </div>
@@ -150,12 +150,12 @@
     <!-- desktop view -->
     <div
       class="hidden px-16 py-8 mb-8 bg-white rounded-lg lg:flex flex-col"
-      v-for="(b_type, index) in businessTypes"
+      v-for="(repaymentDuration, index) in repaymentDuration"
       :key="index"
     >
       <div>
         <p class="font-black text-2xl tracking-wid leading-3 mb-4">
-          {{ b_type.name }}
+          {{ repaymentDuration.name }}
         </p>
         <table class="flex flex-col justify-center items-evenly">
           <thead
@@ -170,7 +170,7 @@
           <tbody v-for="(downpayments, index) in computedGetCalc" :key="index">
             <tr
               class="my-2 px-3 py-2 flex justify-evenly items-center space-x-20"
-              v-if="downpayments.bizId == b_type.id"
+              v-if="downpayments.re_duration == repaymentDuration.id"
               :class="toggleDownpaymentColor(downpayments)"
             >
               <td class="font-bold text-lg -mr-6 -ml-10">
@@ -205,110 +205,24 @@
 </template>
 
 <script>
+import Result from '../../Mixins/result.js'
 export default {
-  data() {
-    return {
-      id: this.$route.params.name,
-    };
-  },
-  computed: {
-    toggleColor() {
-      let color = "";
-      let selectDownpayment = this.selectedDownpayment?.percent
-      switch (selectDownpayment) {
-        case 20:
-          color = "bg-blue-300";
-          break;
-        case 40:
-          color = "bg-red-300 ";
-          break;
-        case 60:
-          color = "bg-green-300 ";
-          break;
-        case 80:
-          color = "bg-yellow-300 ";
-          break;
-        default:
-          color = "bg-gray-400 ";
-      }
-      return color;
-    },
-    toggletextColor() {
-      let color = "";
-     let selectDownpayment = this.selectedDownpayment?.percent;
-      switch (selectDownpayment) {
-        case 20:
-          color = "text-blue-500";
-          break;
-        case 40:
-          color = "text-red-500 ";
-          break;
-        case 60:
-          color = "text-green-500 ";
-          break;
-        case 80:
-          color = "text-yellow-500 ";
-          break;
-        default:
-          color = "text-gray-400 ";
-      }
-      return color;
-    },
-  },
+  mixins:[Result],
   props: {
-    businessTypes: {
-      type: Array,
-      required: true,
-    },
-    downPaymentRates: {
-      type: Array,
-      required: true,
-    },
-    getResultMobile: {
-      type: Function,
-      required: true,
-    },
-    selectedDownpayment: {
-      type: null,
-      function: true,
-    },
-    computedGetCalc: {
+    repaymentDuration: {
       type: Array,
       required: true,
     },
   },
   methods: {
-    downpaymentResult(biztype, result) {
-      if (
-        this.selectedDownpayment !== null &&
-        biztype.id == this.selectedDownpayment.bizId
-      ) {
+    downpaymentResult(repayment_duration, result) {
+      if (repayment_duration.id == this.selectedDownpayment?.re_duration){
         return "₦" + result.toFixed(2);
-      } else {
-        return "₦0.00";
-      }
+      } 
+      return "₦0.00";
+
     },
-    toggleDownpaymentColor(downpayments) {
-      let color = "";
-      let selectDownpayment = downpayments?.percent;
-      switch (selectDownpayment) {
-        case 20:
-          color = "lg:bg-blue-100 bg-blue-500";
-          break;
-        case 40:
-          color = "lg:bg-red-100 bg-red-500";
-          break;
-        case 60:
-          color = "lg:bg-green-100 bg-green-500";
-          break;
-        case 80:
-          color = "lg:bg-yellow-100 bg-yellow-500";
-          break;
-        default:
-          color = "lg:bg-gray-100 bg-gray-500";
-      }
-      return color;
-    },
+   
   },
 };
 </script>

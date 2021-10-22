@@ -1,50 +1,45 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full h-full flex flex-col items-center  altaraBlue bg-no-repeat"
+      class="w-full h-full flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
-    
       <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
-        <div
-          class="flex  flex-col items-center justify-center mt-10 px-10"
-        >
-        <div class="flex justify-center absolute top left-0  items-start">
-          <button
-            class="
-              bg-white
-              text-black
-              rounded
-              px-8
-              py-2
-              cursor-pointer
-              font-semibold
-              text-base
-              -mt-6
-              ml-3
-            "
-            @click="$router.push('/admin/dashboard')"
-          >
-            Home
-          </button>
+        <div class="flex flex-col items-center justify-center mt-10 px-10">
+          <div class="flex justify-center absolute top left-0 items-start">
+            <router-link to="/" class="-mt-6 ml-3">
+              <button
+                class="
+                  bg-white
+                  text-black
+                  rounded
+                  px-8
+                  py-2
+                  cursor-pointer
+                  font-semibold
+                  text-base
+                "
+              >
+                Home
+              </button>
+            </router-link>
+            <router-link to="/pricing" class="-mt-6 ml-3">
             <button
-            class="
-              bg-white
-              text-black
-              rounded
-              px-8
-              py-2
-              cursor-pointer
-              font-semibold
-              text-base
-              -mt-6
-              ml-3
-            "
-            @click="hasHistory() ? $router.go(-1) : $router.push('/')"
-          >
-            Back
-          </button>
-        </div>
+              class="
+                bg-white
+                text-black
+                rounded
+                px-8
+                py-2
+                cursor-pointer
+                font-semibold
+                text-base
+              "
+            >
+              Back
+            </button>
+            </router-link>
+          </div>
           <h3
             class="
               text-white
@@ -57,7 +52,7 @@
               mt-16
             "
           >
-            Do The Math, Calculate Your Product/Cash Loans for Six
+            Do The Math, Calculate Your Product Loans for Six
             Months/Bi-Monthly Repayment
           </h3>
         </div>
@@ -71,11 +66,20 @@
           </div>
         </form>
       </div>
-      <div v-if="select_product" class="flex px-4  mb-10 flex-wrap gap-2  justify-center items-center">
-        
-        <div v-for="(rpayDuration, index) in repaymentDuration" :key="index" class=" flex-1" >
-      <Buttons  :getResultMobile="getResultMobile" :rpayDuration="rpayDuration"/>    
-        </div>              
+      <div
+        v-if="select_product"
+        class="flex px-4 mb-10 flex-wrap gap-2 justify-center items-center"
+      >
+        <div
+          v-for="(rpayDuration, index) in repaymentDuration"
+          :key="index"
+          class="flex-1"
+        >
+          <Buttons
+            :getResultMobile="getResultMobile"
+            :rpayDuration="rpayDuration"
+          />
+        </div>
       </div>
       <div
         v-if="select_product == false"
@@ -102,19 +106,16 @@
         </p>
         <ArrowUp />
       </div>
-    
 
       <div class="lg:w-auto w-full" v-else>
         <router-view
           :businessTypes="businessTypes"
           :downPaymentRates="downPaymentRates"
           :getResultMobile="getResultMobile"
-          :selectedDownpayment="selectedDownpayment"         
+          :selectedDownpayment="selectedDownpayment"
           :computedGetCalc="computedGetCalc"
         >
-
         </router-view>
-       
       </div>
     </div>
   </div>
@@ -123,10 +124,10 @@
 <script>
 import registerBg2 from "@/assets/img/register_bg_2.png";
 import AutoComplete from "@/components/Autocomplete/AutocompleteSearch.vue";
-import {calculate} from "../utilities/calculator";
+import {calculate, cashLoan} from "../utilities/calculator";
 import { get, post } from "../utilities/api";
 import ArrowUp from "../components/svgs/arrowup.vue";
-import Buttons from "../components/buttons/buttons.vue"
+import Buttons from "../components/buttons/buttons.vue";
 export default {
   data() {
     return {
@@ -154,13 +155,12 @@ export default {
   components: {
     AutoComplete,
     ArrowUp,
-    Buttons
+    Buttons,
   },
-  computed: { 
+  computed: {
     computedGetCalc() {
       return this.downpaymentCalc();
-    },        
-   
+    },
   },
 
   async mounted() {
@@ -194,7 +194,6 @@ export default {
           this.apiUrls.repaymentDuration
         );
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
-        
       } catch (err) {
         this.$displayErrorMessage(err);
       }
@@ -203,8 +202,9 @@ export default {
       let downPaymentArr = [];
       this.businessTypes.forEach((bizType) => {
         this.downPaymentRates.forEach((paymentRate) => {
-
-          let repayment_duration = this.repaymentDuration.find((item)=> item.name == this.$route.params.name )
+          let repayment_duration = this.repaymentDuration.find(
+            (item) => item.name == this.$route.params.name
+          );
 
           let filteredBizType = this.calculation.filter((param) => {
             return (
@@ -214,7 +214,12 @@ export default {
             );
           });
 
-          const {total, actualDownpayment, actualRepayment, biMonthlyRepayment,  } = calculate(
+          const {
+            total,
+            actualDownpayment,
+            actualRepayment,
+            biMonthlyRepayment,
+          } = calculate(
             this.selectedProduct.price,
             paymentRate,
             filteredBizType[0],
@@ -289,9 +294,7 @@ export default {
 .alert {
   margin-bottom: 200%;
 }
-.top{
-  top:50px;
+.top {
+  top: 50px;
 }
-
-
 </style>

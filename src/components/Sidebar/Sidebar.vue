@@ -113,14 +113,14 @@
           </li>
             </router-link>
 
-              <router-link to="/calculator" class="hover:bg-gray-400 hover:text-blue-700 py-2">
+              <router-link to="/pricing" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
             
               <a
                 class="text-xs uppercase py-3 font-bold block"
               >
               <i class="fas fa-calculator  mr-2 text-sm"></i>
-                Calculator
+                Pricing
               </a>
           </li>
             </router-link>

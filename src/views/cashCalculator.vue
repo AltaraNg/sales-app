@@ -1,7 +1,7 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full  h-full flex flex-col items-center altaraBlue bg-no-repeat"
+      class="w-full  h-screen flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
       <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
@@ -225,8 +225,7 @@ export default {
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
         this.repaymentDuration = this.repaymentDuration.filter((item) => {
           return (
-            item.name?.includes("six_months") ||
-            item.name?.includes("three_months")
+            item.name?.includes("six_months")
           );
         }).sort((a,b)=> b.value - a.value) 
       } catch (err) {

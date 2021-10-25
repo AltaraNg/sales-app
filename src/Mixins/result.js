@@ -9,6 +9,9 @@ export default{
       let color = "";
       let selectDownpayment = this.selectedDownpayment?.percent
       switch (selectDownpayment) {
+        case 10:
+          color = "bg-yellow-300";
+          break;
         case 20:
           color = "bg-blue-300";
           break;
@@ -22,7 +25,7 @@ export default{
           color = "bg-yellow-300 ";
           break;
         default:
-          color = "bg-gray-400 ";
+          color = "bg-gray-300 ";
       }
       return color;
     },
@@ -30,6 +33,9 @@ export default{
       let color = "";
      let selectDownpayment = this.selectedDownpayment?.percent;
       switch (selectDownpayment) {
+        case 10:
+          color = "text-yellow-500"
+          break;
         case 20:
           color = "text-blue-500";
           break;
@@ -73,6 +79,9 @@ export default{
       let color = "";
       let selectDownpayment = downpayments?.percent;
       switch (selectDownpayment) {
+        case 10:
+          color= "lg:bg-yellow-100 bg-yellow-500"
+          break;
         case 20:
           color = "lg:bg-blue-100 bg-blue-500";
           break;

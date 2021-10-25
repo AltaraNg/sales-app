@@ -34,9 +34,11 @@ const repaymentCount = (days, cycle) => {
     const result = days / cycle;
     if (result >= 24) {
         return 24;
-    } else if (result >= 12) {
+    } else if (result >= 18) {
+        return 18;
+    }else if (result >= 12) {
         return 12;
-    }
+    } 
     if (result >= 6) {
         return 6;
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="altaraBlue h-full">
     <div
-      class="w-full  h-screen flex flex-col items-center altaraBlue bg-no-repeat"
+      class="w-full  h-full flex flex-col items-center altaraBlue bg-no-repeat"
       :style="`background-image: url('${registerBg2}');`"
     >
       <div class="w-full sm:px-3 md:px-36 lg:px-64 relative pb-10">
@@ -84,7 +84,7 @@
         <div
           v-for="(businessType, index) in businessTypes"
           :key="index"
-          class=" flex-1 justify-center flex "
+          class=" flex-1 justify-center flex flex-wrap"
         >
           
           <Buttons
@@ -121,11 +121,13 @@
 
       <div class="lg:w-auto w-full" v-else>
         <router-view
+          :businessTypes = "businessTypes"
           :repaymentDuration="repaymentDuration"
           :downPaymentRates="downPaymentRates"
           :getResultMobile="getResultMobile"
           :selectedDownpayment="selectedDownpayment"
           :computedGetCalc="computedGetCalc"
+          :downpaymentCalculations="downpaymentCalculations"
         >
         </router-view>
       </div>
@@ -165,9 +167,8 @@ export default {
       calculation:[],
       inputValue:"",
       starterCashState:false,
-      starterCashLoans:[45000, 65000,70000]
-      
-    };
+      starterCashLoans:[45000, 65000,70000],
+    }
   },
   components: {
     AutoComplete,
@@ -191,8 +192,9 @@ export default {
 
   watch:{
       $route(newRoute, oldRoute){  
-          this.checkRoute(newRoute)   
-    }
+          this.checkRoute(newRoute)  
+    },
+    
   },   
   methods: {
   checkRoute(){
@@ -207,10 +209,10 @@ export default {
       this.selectedProduct = value;
       this.select_product = true;
       this.downpaymentCalc();
-      this.getResultMobile(2, 20);
+      this.getResultMobile(2, 20) ;
     },
     getResultMobile(repayduration, percent) {
-      this.selectedDownpayment = this.downpaymentCalculations.filter(
+       this.selectedDownpayment = this.downpaymentCalculations.filter(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
         }
@@ -225,7 +227,8 @@ export default {
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
         this.repaymentDuration = this.repaymentDuration.filter((item) => {
           return (
-            item.name?.includes("six_months")
+            item.name?.includes("six_months") ||
+            item.name?.includes("nine_months")
           );
         }).sort((a,b)=> b.value - a.value) 
       } catch (err) {
@@ -275,7 +278,7 @@ export default {
       try {
         const fetchDownPaymentRates = await get(this.apiUrls.downPaymentRates);
         this.downPaymentRates = fetchDownPaymentRates?.data?.data?.data;
-        this.downPaymentRates = this.downPaymentRates.filter((item) =>  item.name =="twenty").sort((a, b) => {
+        this.downPaymentRates = this.downPaymentRates.filter((item) =>  item.name =="twenty" || item.name == "ten" || item.name == "forty").sort((a, b) => {
           return a.percent - b.percent;
         });
       } catch (err) {
@@ -297,16 +300,17 @@ export default {
         this.businessTypes = fetchBusinessTypes?.data?.data?.data;
         this.businessTypes = this.businessTypes.filter((item) => {
           return !(
+            item.status == 0 ||
             item.name.includes("Products") ||
-            item.name.includes("Rentals") ||
-            item.name.includes("Credit") ||
-            item.name.includes("Employee")
+            item.name.includes("Credit") 
             );
         });
       } catch (err) {
         this.$displayErrorMessage(err);
       }
     },
+    
+
   },
 };
 </script>

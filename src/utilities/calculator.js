@@ -17,11 +17,7 @@ const calculate = (productPrice, data, params, repayment_duration) => {
     const downpayment = initDownpayment + (Math.floor(((total - initDownpayment) / count)) * data.plus);
     const actualDownpayment = Math.floor(downpayment / 100) * 100;
     const tempActualRepayment = total - downpayment;
-    if(params.business_type_id ==1 ){
-        var   biMonthlyRepayment = Math.floor((tempActualRepayment/count)/100)*100
-    }else{
-       var   biMonthlyRepayment = Math.round((tempActualRepayment/count)/100)*100 
-    }
+    var   biMonthlyRepayment = Math.round((tempActualRepayment/count)/100)*100 
     const actualRepayment = biMonthlyRepayment * count;
     total = actualRepayment + actualDownpayment ;
     
@@ -34,9 +30,11 @@ const repaymentCount = (days, cycle) => {
     const result = days / cycle;
     if (result >= 24) {
         return 24;
-    } else if (result >= 12) {
+    } else if (result >= 18) {
+        return 18;
+    }else if (result >= 12) {
         return 12;
-    }
+    } 
     if (result >= 6) {
         return 6;
     }

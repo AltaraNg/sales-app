@@ -66,24 +66,37 @@ export default {
 
   methods: {
     next(firstPage = null) {
-      if (this.pageParam.next_page_url) {
-        this.pageParam.page = firstPage
-          ? firstPage
-          : parseInt(this.pageParam.page) + 1;
-        this.fetchData();
-      }
-    },
-    prev(lastPage = null) {
-      if (this.pageParam.prev_page_url) {
-        this.pageParam.page = lastPage
-          ? lastPage
-          : parseInt(this.pageParam.page) - 1;
-        this.fetchData();
-      }
-    },
-    fetchData(data) {
-      this.$emit("fetchData", data);
-    },
+        if (this.pageParam.next_page_url) {
+          this.pageParam.page = firstPage
+            ? firstPage
+            : parseInt(this.pageParam.page) + 1;
+          this.$router.push({
+            path: this.$route.path,
+            query: {
+              ...this.$route.query,
+              page: this.pageParam.page,
+            },
+          });
+          this.$emit('fetchData');
+        }
+      },
+      prev(lastPage = null) {
+        if (this.pageParam.prev_page_url) {
+          this.pageParam.page = lastPage
+            ? lastPage
+            : parseInt(this.pageParam.page) - 1;
+          this.$router.push({
+            path: this.$route.path,
+            query: {
+              ...this.$route.query,
+              page: this.pageParam.page,
+            },
+          });
+          this.$emit('fetchData');
+        }
+      },
+     
+
   },
 
   created() {

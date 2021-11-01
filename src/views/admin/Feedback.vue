@@ -323,7 +323,11 @@ export default {
       canView: ""
     };
   },
-  async created() {
+  async created(){
+    let query = this.$route.query;
+    if(query.page){
+      this.pageParams.page = query.page 
+    }
     this.getTodos();
     this.canView = localStorage.getItem("flag");
   },

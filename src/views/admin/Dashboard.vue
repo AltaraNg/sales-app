@@ -461,7 +461,7 @@
         </div>
       </div>
       <div
-        class="hidden md:hidden relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+        class="hidden md:block relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
       >
         <base-pagination
           :pageParam="pageParams"
@@ -555,6 +555,12 @@ export default {
     BasePagination,
     VueTailwindModal,
     AutoComplete
+  },
+  created(){
+   let query = this.$route.query;
+    if(query.page){
+      this.pageParams.page = query.page
+    }
   },
 
   props: {

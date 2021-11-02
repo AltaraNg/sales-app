@@ -101,7 +101,7 @@ export default {
 
   created() {
     this.pageParam.page = this.pageParam.page ? this.pageParam.page : 1;
-			this.pageParam.limit = this.pageParam.per_page ? this.pageParam.limit : 10;
+			this.pageParam.limit = this.pageParam.per_page ? this.pageParam.limit : 15;
 
   },
 };

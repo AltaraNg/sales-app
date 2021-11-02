@@ -988,10 +988,12 @@ export default {
 
     resetSearch() {
       this.searchQuery = {};
+      this.pageParams.page = 1;
       this.searchUsersList();
       this.$router.push({
         path: this.$route.path,
-        query: {}
+        query: {
+                  }
       });
     },
     generateRandomColor() {

@@ -2,7 +2,18 @@
   <div>
     <div>
       <div
-        class="relative min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded px-4 py-3"
+        class="
+          relative
+          min-w-0
+          break-words
+          bg-white
+          w-full
+          mb-6
+          shadow-lg
+          rounded
+          px-4
+          py-3
+        "
       >
         <div class="hidden md:contents">
           <div class="mb-2">
@@ -15,7 +26,15 @@
             <div class="flex-1">
               <div class="p-1">
                 <label
-                  class="block uppercase text-gray-700 text-sm font-bold mb-2 sm:text-xs overflow-auto"
+                  class="
+                    block
+                    uppercase
+                    text-gray-700 text-sm
+                    font-bold
+                    mb-2
+                    sm:text-xs
+                    overflow-auto
+                  "
                   htmlFor="grid-password"
                 >
                   Employment Status
@@ -233,15 +252,31 @@
 
         <div class="flex justify-between">
           <div
-            v-on:click="searchUsersList()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
+            v-on:click="searchFiltQuery()"
+            class="
+              w-1/6
+              py-2
+              altaraBlue
+              rounded
+              h-10
+              text-white text-center
+              cursor-pointer
+            "
           >
             <i class="fas fa-search"></i>
             <span class="mx-1 hidden md:contents">Search</span>
           </div>
           <div
             v-on:click="resetSearch()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
+            class="
+              w-1/6
+              py-2
+              altaraBlue
+              rounded
+              h-10
+              text-white text-center
+              cursor-pointer
+            "
           >
             <i class="fas fa-recycle"></i>
             <span class="mx-1 hidden md:contents">Reset</span>
@@ -249,7 +284,15 @@
 
           <div
             v-on:click="exportCsv()"
-            class="w-1/6 py-2 altaraBlue rounded h-10 text-white text-center cursor-pointer"
+            class="
+              w-1/6
+              py-2
+              altaraBlue
+              rounded
+              h-10
+              text-white text-center
+              cursor-pointer
+            "
           >
             <i class="fas fa-file-export"></i>
             <span class="mx-1 hidden md:contents">Export</span>
@@ -266,30 +309,54 @@
         v-if="getInactiveProspects > 0"
       >
         <!-- Put your modal content here -->
-        <div >
-        <h1 class="text-center text-6xl">
-          <i class="fas fa-exclamation-circle text-yellow-600"></i>
-        </h1>
-        <h2 class="mb-5 text-center text-2xl font-bold">
-          Inactive Prospects Notification
-        </h2>
-        <p class="text-sm text-center">
-          You have <span class="font-extrabold">{{ getInactiveProspects }}</span> inactive customers who have not
-          moved stages in a long time!!!          
-        </p>
-        <div class="text-center flex mt-6 justify-end">
-          <p class="text-white py-1 block bg-red-500 rounded md:w-1/5 mx-2 cursor-pointer px-2 md:px-0" @click="showModal = false">Close</p>
-          <router-link
-            class="text-white py-1 block bg-green-500 rounded mx-2 md:w-1/5 px-2 md:px-0"
-            to="/admin/inactive-prospects"
-            >View</router-link
-          >
-          
-        </div>
-        </div>
         <div>
-
+          <h1 class="text-center text-6xl">
+            <i class="fas fa-exclamation-circle text-yellow-600"></i>
+          </h1>
+          <h2 class="mb-5 text-center text-2xl font-bold">
+            Inactive Prospects Notification
+          </h2>
+          <p class="text-sm text-center">
+            You have
+            <span class="font-extrabold">{{ getInactiveProspects }}</span>
+            inactive customers who have not moved stages in a long time!!!
+          </p>
+          <div class="text-center flex mt-6 justify-end">
+            <p
+              class="
+                text-white
+                py-1
+                block
+                bg-red-500
+                rounded
+                md:w-1/5
+                mx-2
+                cursor-pointer
+                px-2
+                md:px-0
+              "
+              @click="showModal = false"
+            >
+              Close
+            </p>
+            <router-link
+              class="
+                text-white
+                py-1
+                block
+                bg-green-500
+                rounded
+                mx-2
+                md:w-1/5
+                px-2
+                md:px-0
+              "
+              to="/admin/inactive-prospects"
+              >View</router-link
+            >
+          </div>
         </div>
+        <div></div>
       </vue-tailwind-modal>
 
       <div class="contents md:hidden relative">
@@ -300,7 +367,7 @@
           <div :key="index" v-for="(user, index) in usersList">
             <div v-on:click="viewUser(user)" class="customerTile">
               <div class="flex justify-between text-xs">
-                <div class="flex items-stretch ">
+                <div class="flex items-stretch">
                   <div
                     :style="{ background: generateRandomColor() }"
                     class="avatarCircle"
@@ -320,7 +387,19 @@
         </div>
       </div>
       <div
-        class="hidden md:contents relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+        class="
+          hidden
+          md:contents
+          relative
+          flex flex-col
+          min-w-0
+          break-words
+          bg-white
+          w-full
+          mb-6
+          shadow-lg
+          rounded
+        "
       >
         <div class="rounded-t mb-0 px-4 py-3 border-0">
           <div class="flex flex-wrap items-center">
@@ -334,7 +413,14 @@
               </h3>
             </div>
             <div
-              class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
+              class="
+                relative
+                w-full
+                px-4
+                max-w-full
+                flex-grow flex-1
+                text-right
+              "
             ></div>
           </div>
         </div>
@@ -346,48 +432,165 @@
             <thead>
               <tr>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   S/N
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Name
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Reg ID
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   phone
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   email
                 </th>
 
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Employment Status
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Customer Stage
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Contacted By
                 </th>
                 <th
-                  class="px-6 altaraBlue text-white align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                  class="
+                    px-6
+                    altaraBlue
+                    text-white
+                    align-middle
+                    border border-solid border-gray-200
+                    py-3
+                    text-xs
+                    uppercase
+                    border-l-0 border-r-0
+                    whitespace-no-wrap
+                    font-semibold
+                    text-left
+                  "
                 >
                   Date Registered
                 </th>
@@ -406,52 +609,135 @@
                 "
               >
                 <th
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                    text-left
+                  "
                 >
                   <div
-                    class="altaraBlue rounded-full text-center pt-1 h-6 w-6 text-white"
+                    class="
+                      altaraBlue
+                      rounded-full
+                      text-center
+                      pt-1
+                      h-6
+                      w-6
+                      text-white
+                    "
                   >
                     {{ index + OId || "" }}
                   </div>
                 </th>
                 <th
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                    text-left
+                  "
                 >
                   {{ user.name || "" }}
                 </th>
                 <th
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                    text-left
+                  "
                 >
                   {{ user.reg_id || "" }}
                 </th>
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ user.phone || "" }}
                 </td>
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ user.email || "" }}
                 </td>
 
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ user.employment_status.name || "" }}
                 </td>
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ user.customer_stage.name || "" }}
                 </td>
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ user.users.full_name || "" }}
                 </td>
                 <td
-                  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
+                  class="
+                    border-t-0
+                    px-6
+                    align-middle
+                    border-l-0 border-r-0
+                    text-xs
+                    whitespace-no-wrap
+                    p-4
+                  "
                 >
                   {{ $dateTimeConvert(user.created_at) || "" }}
                 </td>
@@ -461,7 +747,17 @@
         </div>
       </div>
       <div
-        class="hidden md:block relative min-w-0 bg-white w-full mb-6 shadow-lg rounded"
+        class="
+          hidden
+          md:block
+          relative
+          min-w-0
+          bg-white
+          w-full
+          mb-6
+          shadow-lg
+          rounded
+        "
       >
         <base-pagination
           :pageParam="pageParams"
@@ -556,10 +852,29 @@ export default {
     VueTailwindModal,
     AutoComplete
   },
-  created(){
-   let query = this.$route.query;
-    if(query.page){
-      this.pageParams.page = query.page
+  created() {
+    let query = this.$route.query;
+    if (query.page) {
+      this.pageParams.page = query.page;
+    }
+    if (query.employmentStatus) {
+      this.searchQuery.employmentStatus = query.employmentStatus;
+    }
+    if (query.stage) {
+      this.searchQuery.stage = query.stage;
+    }
+
+    if (query.branch) {
+      this.searchQuery.branch = parseInt(query.branch);
+    }
+    if (query.dsa) {
+      this.searchQuery.dsa = query.dsa;
+    }
+    if (query.startDate) {
+      this.searchQuery.startDate = query.startDate;
+    }
+    if (query.endDate) {
+      this.searchQuery.endDate = query.endDate;
     }
   },
 
@@ -634,7 +949,7 @@ export default {
         this.$displayErrorMessage(err);
       }
     },
-    
+
     async getUserStage() {
       try {
         const fetchUserStage = await customerApi.customerStage();
@@ -674,6 +989,10 @@ export default {
     resetSearch() {
       this.searchQuery = {};
       this.searchUsersList();
+      this.$router.push({
+        path: this.$route.path,
+        query: {}
+      });
     },
     generateRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -744,6 +1063,17 @@ export default {
 
         this.$displayErrorMessage(err);
       }
+    },
+
+    searchFiltQuery() {
+      console.log(this.searchQuery);
+      this.searchUsersList();
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.searchQuery
+        }
+      });
     },
     customFormatter(date) {
       return moment(date).format("MMMM Do YYYY, h:mm:ss a");

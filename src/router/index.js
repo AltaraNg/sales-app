@@ -123,13 +123,13 @@ const router = new VueRouter({
       path: "/cash_calculator",
       name: "cashCalculator",
       component: () => import("@/views/cashCalculator.vue"),
-      redirect: "/cash_calculator/10",
+      redirect: "/cash_calculator/ap_rentals",
       meta: {
         NoAuth: true,
       },
       children: [
         {
-          path: "/cash_calculator/:id",
+          path: "/cash_calculator/:slug",
           name: "CashResult",
           component: () => import("@/components/Cards/CashResult.vue"),
           props: true,

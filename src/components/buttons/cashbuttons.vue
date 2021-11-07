@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1">
-    <router-link :to="{ name: 'CashResult', params: { id: business_type.id } }">
+    <router-link :to="{ name: 'CashResult', params: { slug: business_type.slug } }">
        <button
         class="
           w-full
@@ -19,7 +19,7 @@
         :class="styleActiveRoute"
         @click="getResultMobile(2, 20)"
       >
-        {{ business_names[business_type.slug]|| business_type.name }}
+        {{ business_type.name }}
       </button>
     </router-link>
   </div>
@@ -27,19 +27,6 @@
 
 <script>
 export default {
-  data(){
-    return{
-        business_names:{
-        business5: "Renewal (Collateral)",
-        business10:"Renewal (No Collateral)",
-        business7:"Starter (Collateral)",
-        business9: "Starter (No Collateral)",
-        business6: "Employee",
-        business8:"Rent"
-      
-    }
-  }
-  },
   props: {
     getResultMobile: {
       type: Function,
@@ -51,7 +38,7 @@ export default {
   },
   computed: {
     styleActiveRoute() {
-      if (this.$route.params.id == this.business_type?.id) {
+      if (this.$route.params.slug == this.business_type?.slug) {
         return "bg-red-700 text-white ";
       }
       return "";

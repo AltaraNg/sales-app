@@ -281,7 +281,7 @@ export default {
         const fetchBusinessTypes = await get(this.apiUrls.businessTypes);
         this.businessTypes = fetchBusinessTypes?.data?.data?.data;
         this.businessTypes = this.businessTypes.filter((item) => {
-          return item.name.includes("Products");
+          return item.slug.includes("products");
         });
       } catch (err) {
         this.$displayErrorMessage(err);

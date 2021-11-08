@@ -198,7 +198,7 @@ export default {
   },   
   methods: {
   checkRoute(){
-      if(this.$route.params.id == 9 || this.$route.params.id == 7){
+      if(this.$route.params.slug.includes("no_collateral")){
             this.starterCashState = true
             this.inputValue =0
           }else{
@@ -240,7 +240,7 @@ export default {
       this.repaymentDuration.forEach((repayment_duration) => {
         this.downPaymentRates.forEach((paymentRate) => {
           let business_type = this.businessTypes.find(
-            (item) => item.id == this.$route.params.id
+            (item) => item.slug == this.$route.params.slug
           );
           let filteredBizType = this.calculation.filter((param) => {
             return (
@@ -301,8 +301,8 @@ export default {
         this.businessTypes = this.businessTypes.filter((item) => {
           return !(
             item.status == 0 ||
-            item.name.includes("Products") ||
-            item.name.includes("Credit") 
+            item.slug.includes("ac") ||
+            item.slug.includes("ap_products") 
             );
         });
       } catch (err) {

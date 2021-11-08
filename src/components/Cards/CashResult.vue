@@ -252,7 +252,7 @@ export default {
     },
     isRent() {
       return (
-        this.businessTypes.find((item) => item.slug == "business8")?.id == this.$route.params.id
+        this.businessTypes.find((item) => item.slug == "ap_rentals")?.slug == this.$route.params.slug
       );
     },
     showMobileButton(repayduration, percent){

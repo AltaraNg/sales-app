@@ -198,7 +198,7 @@ export default {
   },   
   methods: {
   checkRoute(){
-      if(this.$route.params.slug.includes("no_collateral")){
+      if(this.$route.params.slug.includes("starter")){
             this.starterCashState = true
             this.inputValue =0
           }else{

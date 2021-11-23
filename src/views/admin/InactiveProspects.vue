@@ -1,10 +1,7 @@
 <template>
-  <div class="inactive-prospects overflow-x-auto" >
+  <div class="inactive-prospects overflow-x-auto">
     <div v-if="prospects.length > 0">
-      <h1
-        class="text-2xl mt-3 mb-3 ml-4 text-center"
-        style="color: #1F0812"
-      >
+      <h1 class="text-2xl mt-3 mb-3 ml-4 text-center" style="color: #1F0812">
         Inactive Prospects
       </h1>
 
@@ -153,13 +150,15 @@
     </div>
 
     <div v-else-if="prospects.length === 0 && $isProcessing === false">
-      <zero-state :title="'No Inactive Prospects'" :message="'You currently have no inactive prospects'">
+      <zero-state
+        :title="'No Inactive Prospects'"
+        :message="'You currently have no inactive prospects'"
+      >
         <template v-slot:image>
-        <img src="../../assets/img/thumb-up.png" >
-
+          <img src="../../assets/img/thumb-up.png" />
         </template>
       </zero-state>
-      </div>
+    </div>
 
     <vue-tailwind-modal
       :showing="showActivityModal"
@@ -390,27 +389,31 @@ export default {
       }
     },
     getNextList() {
-      window.onscroll = () => {
-        let bottomOfWindow =
-          document.documentElement.scrollHeight -
-            document.documentElement.scrollTop ===
-          document.documentElement.clientHeight;
-        if (bottomOfWindow) {
-          this.pageParams.page += 1;
-          const query = {
-            ...this.searchQuery,
-            page: this.pageParams.page,
-            limit: this.pageParams.limit,
-            inActiveDays: 30
-          };
+      if (this.$mobileCheck()) {
+        window.onscroll = () => {
+          let bottomOfWindow =
+            document.documentElement.scrollHeight -
+              document.documentElement.scrollTop ===
+            document.documentElement.clientHeight;
+          if (bottomOfWindow) {
+            this.pageParams.page += 1;
+            const query = {
+              ...this.searchQuery,
+              page: this.pageParams.page,
+              limit: this.pageParams.limit,
+              inActiveDays: 30
+            };
 
-          get(this.apiUrls.inactive_prospects + queryParam(query)).then(res => {
-            this.prospects = this.prospects.concat(
-              res?.data?.data?.prospects.data
+            get(this.apiUrls.inactive_prospects + queryParam(query)).then(
+              res => {
+                this.prospects = this.prospects.concat(
+                  res?.data?.data?.prospects.data
+                );
+              }
             );
-          });
-        }
-      };
+          }
+        };
+      }
     },
     humanizeDate(date) {
       return moment(date).fromNow();
@@ -421,9 +424,8 @@ export default {
 
       if (names.length > 1) {
         initials += names[names.length - 1].substring(0, 1).toUpperCase();
-      }
-      else{
-        initials += names[0].substring(1,2).toUpperCase();
+      } else {
+        initials += names[0].substring(1, 2).toUpperCase();
       }
       return initials;
     }
@@ -448,7 +450,8 @@ export default {
   text-decoration: underline;
   font-weight: bold;
 }
-.chart, .chart-label {
+.chart,
+.chart-label {
   width: 40vh;
   height: 50vh;
   margin: auto;

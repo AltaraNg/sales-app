@@ -228,7 +228,8 @@ export default {
         this.repaymentDuration = this.repaymentDuration.filter((item) => {
           return (
             item.name?.includes("six_months") ||
-            item.name?.includes("nine_months")
+            item.name?.includes("nine_months") ||
+            item.name?.includes("twelve_months")
           );
         }).sort((a,b)=> b.value - a.value) 
       } catch (err) {

@@ -5,11 +5,18 @@
       <template v-for="(repayment_duration, index) in repaymentDuration">
         <div
           class="md:flex md:flex-col lg:hidden items-center w-full"
-          v-if="
-            (repayment_duration.name == 'nine_months' && isRent()) ||
-            !(repayment_duration.name == 'nine_months' || isRent())
-          "
-          :key="index"
+         v-if="
+          (repayment_duration.name == 'nine_months' && isRent()) ||
+            !(repayment_duration.name == 'nine_months' || isRent())||
+            ( isSuperLoan() && repaymentDuration.name == 'six_months'
+            ||!(isSuperLoan() || repaymentDuration.name == 'six_months'))
+        //  (repayment_duration.name == 'nine_months' && isRent() ||
+        //   !repayment_duration.name == 'nine_months' || isRent()||
+        //   isSuperLoan() && repaymentDuration.name == 'six_months' ||
+        //   !isSuperLoan() || repaymentDuration.name == 'six_months')
+       
+        "
+        :key="index"
         >
           <div
             class="
@@ -164,7 +171,9 @@
         class="hidden px-16 py-8 mb-8 bg-white rounded-lg lg:flex flex-col"
         v-if="
           (repaymentDuration.name == 'nine_months' && isRent()) ||
-          !(repaymentDuration.name == 'nine_months' || isRent())
+          !(repaymentDuration.name == 'nine_months' || isRent() || 
+          (isSuperLoan() && repaymentDuration.name == 'six_months') ||
+          !(isSuperLoan() || repaymentDuration.name == 'six_months') )
         "
         :key="index"
       >
@@ -254,6 +263,12 @@ export default {
       return (
         this.businessTypes.find((item) => item.slug == "ap_rentals")?.slug == this.$route.params.slug
       );
+    },
+
+    isSuperLoan(){
+      return (
+       this.$route.params.slug.includes('ap_super')     
+      )
     },
     showMobileButton(repayduration, percent){
       return this.downpaymentCalculations?.find(

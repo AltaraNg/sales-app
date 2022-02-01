@@ -261,7 +261,7 @@ export default {
     },
     isRent() {
       return (
-        this.businessTypes.find((item) => item.slug == "ap_rentals")?.slug == this.$route.params.slug
+        this.businessTypes.find((item) => item.slug == "ap_rentals")?.slug == this.$route.params.slug || this.$route.params.slug.includes("ap_starter_cash_nine_months")
       );
     },
 

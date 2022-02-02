@@ -198,7 +198,7 @@ export default {
   },   
   methods: {
   checkRoute(){
-      if(this.$route.params.slug.includes("starter")){
+      if(this.$route.params.slug.includes("ap_starter_cash_loan") ){
             this.starterCashState = true
             this.inputValue =0
           }else{
@@ -305,6 +305,7 @@ export default {
             item.slug.includes("ac") ||
             item.slug.includes("ap_products") 
             );
+            
         });
       } catch (err) {
         this.$displayErrorMessage(err);

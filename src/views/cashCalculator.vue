@@ -167,7 +167,7 @@ export default {
       calculation:[],
       inputValue:"",
       starterCashState:false,
-      starterCashLoans:[45000, 65000,70000, 75000, 80000, 85000, 90000,95000,100000],
+      starterCashLoans:[70000, 75000, 80000, 85000, 90000,95000,100000, 105000, 110000, 115000,120000],
     }
   },
   components: {

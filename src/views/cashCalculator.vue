@@ -167,7 +167,7 @@ export default {
       calculation:[],
       inputValue:"",
       starterCashState:false,
-      starterCashLoans:[70000, 75000, 80000, 85000, 90000,95000,100000, 105000, 110000, 115000,120000],
+      starterCashLoans:[],
     }
   },
   components: {
@@ -183,6 +183,7 @@ export default {
   },
 
   async mounted() {
+    this.multiples(5000, 80000,170000)
     this.checkRoute()
     await this.getCalculation();
     await this.getBusinessTypes();
@@ -197,6 +198,11 @@ export default {
     
   },   
   methods: {
+      multiples(range,from, to){
+        for (let i = from;  i <=to; i += range) {
+      this.starterCashLoans.push(i);
+  }
+    },
   checkRoute(){
       if(this.$route.params.slug.includes("ap_starter_cash_loan") ){
             this.starterCashState = true

@@ -309,6 +309,7 @@ export default {
           return !(
             item.status == 0 ||
             item.slug.includes("ac") ||
+            item.slug.includes("ap_cash_n_carry") ||
             item.slug.includes("ap_products") 
             );
             

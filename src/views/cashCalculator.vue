@@ -183,7 +183,7 @@ export default {
   },
 
   async mounted() {
-    this.multiples(5000, 80000,170000)
+    this.multiples(5000, 70000,170000)
     this.checkRoute()
     await this.getCalculation();
     await this.getBusinessTypes();

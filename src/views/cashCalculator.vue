@@ -149,7 +149,7 @@ export default {
       apiUrls: {
         getProduct: `/api/inventory`,
         getCalculation: `/api/price_calculator`,
-        businessTypes: `/api/business_type`,
+        businessTypes: `/api/business_type?limit=30`,
         downPaymentRates: `/api/down_payment_rate`,
         repaymentDuration: `/api/repayment_duration`,
       },
@@ -310,7 +310,8 @@ export default {
             item.status == 0 ||
             item.slug.includes("ac") ||
             item.slug.includes("ap_cash_n_carry") ||
-            item.slug.includes("ap_products") 
+            item.slug.includes("ap_products") ||
+            item.slug.includes("ap_no_bs_product")
             );
             
         });

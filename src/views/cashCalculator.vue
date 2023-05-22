@@ -119,7 +119,7 @@
         <ArrowUp />
       </div>
 
-      <div class="lg:w-auto w-full" v-else>
+      <div class="lg:w-11/12 w-full" v-else>
         <router-view
           :businessTypes = "businessTypes"
           :repaymentDuration="repaymentDuration"
@@ -215,14 +215,14 @@ export default {
       this.selectedProduct = value;
       this.select_product = true;
       this.downpaymentCalc();
-      this.getResultMobile(2, 20) ;
+      this.getResultMobile(0, 0 ) ;
     },
     getResultMobile(repayduration, percent) {
-       this.selectedDownpayment = this.downpaymentCalculations.filter(
+       this.selectedDownpayment = this.downpaymentCalculations.find(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
         }
-      )[0];
+      ) || 0;
     },
 
     async getRepaymentDuration() {
@@ -270,8 +270,10 @@ export default {
           downPaymentArr.push({
             re_duration: repayment_duration.id,
             percent: paymentRate["percent"],
-            businessType: business_type.name,
+            down_payment_rate_id:paymentRate.id,
+            businessType: business_type.id,
             total,
+            FixedRepayment:true,
             actualDownpayment,
             actualRepayment,
             biMonthlyRepayment,

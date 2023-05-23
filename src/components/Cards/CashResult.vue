@@ -258,10 +258,10 @@
                                 <p class="text-lg mb-1 font-semibold mt-2 text-gray-800 capitalize"> Repayments:</p>
                                 <TableVue class="hidden pr-4 mb-8 lg:block w-full overflow-hidden">
                                     <template #columns>
-                                        <th scope="col" class="px-5 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                                        <th scope="col" class="px-5 py-4 text-left text-sm font-semibold text-gray-900">Date</th>
                                         <th
                                             scope="col"
-                                            class="px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                            class="px-4 py-4 text-left text-sm font-semibold text-gray-900"
                                             v-for="(amortization, index) in Ammortization"
                                             :key="index+'date'"
                                         >
@@ -270,9 +270,9 @@
                                     </template>
                                     <template #default>
                                         <tr>
-                                            <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-500">Amount</td>
+                                            <td class="whitespace-nowrap font-semibold px-5 py-4 text-sm text-gray-900">Amount</td>
                                             <td
-                                                class="whitespace-nowrap px-2 py-4 text-sm text-gray-500"
+                                                class="whitespace-nowrap font-semibold px-4 py-4 text-sm text-gray-900"
                                                 v-for="(amortization, index) in Ammortization"
                                                  :key="index+'amount'"
                                             >
@@ -309,7 +309,7 @@ export default {
     return {
       modalOptions: {
         background: "bg-smoke-200",
-        modal: "lg:max-w-6xl lg:max-h-10/12 max-h-11/12  overflow-hidden",
+        modal: "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 bg-white  overflow-hidden",
         close: "text-red-500 font-extrabold"
       },
       showModal: false,

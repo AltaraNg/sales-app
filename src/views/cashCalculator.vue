@@ -216,9 +216,12 @@ export default {
       this.selectedProduct = value;
       this.select_product = true;
       this.downpaymentCalc();
-      this.getResultMobile(0, 0 ) ;
+      this.firstResult =  this.downpaymentCalculations.filter((result)=>{
+        return result.actualDownpayment > 0;
+      })[0]
+      this.getResult(this.firstResult?.re_duration, this.firstResult?.percent ) ;
     },
-    SelectedBusinessType(repayduration, percent){
+    SelectedBusinessType(repayduration = this.firstResult?.re_duration, percent = this.firstResult?.percent){
        this.selectedDownpayment = this.downpaymentCalculations.find(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
@@ -228,6 +231,9 @@ export default {
     getResultMobile(repayduration, percent) {
       this.SelectedBusinessType(repayduration, percent)
        this.selectedDownpayment && percent ? this.$refs?.Result?.PreviewAmmortizationMobile(): '';
+    },
+     getResult(repayduration, percent) {
+      this.SelectedBusinessType(repayduration, percent)
     },
 
     async getRepaymentDuration() {

@@ -2,20 +2,10 @@
   <div>
     <!-- mobile view -->
     <div>
-      <template v-for="(repayment_duration, index) in repaymentDuration">
+      <template v-for="(repayment_duration, index) in AvailableDuration">
         <div
           class="md:flex md:flex-col lg:hidden items-center w-full"
-          v-if="
-            (repayment_duration.name == 'nine_months' && isRent()) ||
-              !(repayment_duration.name == 'nine_months' || isRent()) ||
-              (isSuperLoan() && repaymentDuration.name == 'six_months') ||
-              !(isSuperLoan() || repaymentDuration.name == 'six_months')
-            //  (repayment_duration.name == 'nine_months' && isRent() ||
-            //   !repayment_duration.name == 'nine_months' || isRent()||
-            //   isSuperLoan() && repaymentDuration.name == 'six_months' ||
-            //   !isSuperLoan() || repaymentDuration.name == 'six_months')
-          "
-          :key="index"
+       
         >
           <div
             class="
@@ -31,6 +21,7 @@
               mx-auto
               mb-10
             "
+           
           >
             <p class="text-xs mb-3 rounded py-2 text-white altaraBlue pl-3">
               Please click on a button below to select a downpayment
@@ -371,11 +362,12 @@ export default {
   },
   data() {
     return {
+      AvailableDuration:[],
       modalOptions: {
         background: "bg-smoke-200",
         modal:
           "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 bg-white  overflow-hidden",
-        close: "text-red-500 font-extrabold",
+        close: "text-red-500 text-4xl  font-bold",
       },
       showModal: false,
       apiUrls: {
@@ -432,18 +424,25 @@ export default {
       console.log(downpayments);
     },
     async PreviewAmmortizationDesktop(downpayments) {
-      await this.PreviewAmmortization(downpayments, downpayments.FixedRepayment );
+      await this.PreviewAmmortization(
+        downpayments,
+        downpayments.FixedRepayment
+      );
     },
     async PreviewAmmortizationMobile() {
-       if (this.selectedDownpayment) {
-      await this.PreviewAmmortization(this.selectedDownpayment, this.mobileFixedRepayment );
-       }
+      if (this.selectedDownpayment) {
+        await this.PreviewAmmortization(
+          this.selectedDownpayment,
+          this.mobileFixedRepayment
+        );
+      }
     },
     ToggleFixedRepayment(downpayment) {
       downpayment.FixedRepayment = !downpayment.FixedRepayment;
     },
     ToggleFixedRepaymentMobile() {
       this.mobileFixedRepayment = !this.mobileFixedRepayment;
+      this.PreviewAmmortizationMobile();
     },
     downpaymentResult(repayment_duration, result) {
       if (repayment_duration.id == this.selectedDownpayment?.re_duration) {
@@ -471,8 +470,21 @@ export default {
         })?.total > 0
       );
     },
+    showAvailableDuration() {
+   this.AvailableDuration =  this.repaymentDuration.filter((obj1) =>
+        this.downpaymentCalculations.some(
+          (obj2) => obj1.id == obj2?.re_duration && obj2?.actualDownpayment > 0
+        )
+      );
+    },
+   
   },
-};
+   watch:{
+      downpaymentCalculations(){  
+        this.showAvailableDuration()
+    },
+  },
+}
 </script>
 
 <style scoped>

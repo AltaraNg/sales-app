@@ -61,9 +61,23 @@
                 </button>
               </div>
             </div>
-            <p class="text-lg font-semibold px-5" :class="toggletextColor">
-              {{ repayment_duration.name }}
-            </p>
+            <div class="flex items-center justify-between">
+              <p class="text-lg font-semibold px-5" :class="toggletextColor">
+                {{ repayment_duration.name }}
+              </p>
+              <div class="flex w-1/5 " @click="ToggleFixedRepaymentMobile">
+                <div
+                  class="w-10 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out"
+                  :class="{ 'bg-green-600': mobileFixedRepayment }"
+                >
+                  <div
+                    class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out"
+                    :class="{ 'translate-x-4': mobileFixedRepayment }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
             <div class="flex items-center px-4 justify-between mt-8">
               <div class="flex-col items-center">
                 <div
@@ -165,6 +179,38 @@
               </div>
             </div>
           </div>
+          <vue-tailwind-modal
+            :showing="showModal"
+            @close="showModal = false"
+            :showClose="true"
+            :backgroundClose="true"
+            :css="modalOptions"
+          >
+            <div class="flex flex-wrap lg:hidden w-11/12 space-y-2">
+              <div
+                v-for="(amortization, index) in Ammortization"
+                :key="index + 'mobile'"
+                class="rounded-lg bg-white p-3 flex w-1/2 md:w-1/3 flex items-center shadow-lg"
+              >
+                <div
+                  class="items-center flex flex-col justify-center w-full text-center text-gray-800"
+                >
+                  <p>
+                    {{
+                      new Date(
+                        amortization.expected_payment_date
+                      ).toLocaleDateString()
+                    }}
+                  </p>
+                  <p class="font-bold">
+                    {{ $formatCurrency(amortization.expected_amount) }}
+                  </p>
+                </div>
+
+                <!-- <SideModal v-if="sidebarOpen" @close="sidebarOpen = false" class=" lg:hidden"> hello </SideModal> -->
+              </div>
+            </div>
+          </vue-tailwind-modal>
         </div>
       </template>
     </div>
@@ -206,9 +252,9 @@
                   py-2
                   flex 
                   items-center
-                  
+                  cursor-pointer
                 "
-                @click="PreviewAmmortization(downpayments)"
+                @click="PreviewAmmortizationDesktop(downpayments)"
                 v-if="
                   downpayments.re_duration == repaymentDuration.id &&
                     downpayments.actualDownpayment > 0
@@ -254,37 +300,54 @@
                   :backgroundClose="true"
                   :css="modalOptions"
                 >
-                <div class="block  space-y-10">
-                                <p class="text-lg mb-1 font-semibold mt-2 text-gray-800 capitalize"> Repayments:</p>
-                                <TableVue class="hidden pr-4 mb-8 lg:block w-full overflow-hidden">
-                                    <template #columns>
-                                        <th scope="col" class="px-5 py-4 text-left text-sm font-semibold text-gray-900">Date</th>
-                                        <th
-                                            scope="col"
-                                            class="px-4 py-4 text-left text-sm font-semibold text-gray-900"
-                                            v-for="(amortization, index) in Ammortization"
-                                            :key="index+'date'"
-                                        >
-                                            {{ new Date(amortization.expected_payment_date).toLocaleDateString() }}
-                                        </th>
-                                    </template>
-                                    <template #default>
-                                        <tr>
-                                            <td class="whitespace-nowrap font-semibold px-5 py-4 text-sm text-gray-900">Amount</td>
-                                            <td
-                                                class="whitespace-nowrap font-semibold px-4 py-4 text-sm text-gray-900"
-                                                v-for="(amortization, index) in Ammortization"
-                                                 :key="index+'amount'"
-                                            >
-                                                {{ $formatCurrency(amortization.expected_amount) }}
-                                            </td>
-                                        </tr>
-                                    </template>
-                                </TableVue>
-                              
-                            </div>
+                  <div class="block  space-y-10">
+                    <p
+                      class="text-lg mb-1 font-semibold mt-2 text-gray-800 capitalize"
+                    >
+                      Repayments:
+                    </p>
+                    <TableVue
+                      class="hidden pr-4 mb-8 lg:block w-full overflow-hidden"
+                    >
+                      <template #columns>
+                        <th
+                          scope="col"
+                          class="px-5 py-4 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-4 text-left text-sm font-semibold text-gray-900"
+                          v-for="(amortization, index) in Ammortization"
+                          :key="index + 'date'"
+                        >
+                          {{
+                            new Date(
+                              amortization.expected_payment_date
+                            ).toLocaleDateString()
+                          }}
+                        </th>
+                      </template>
+                      <template #default>
+                        <tr>
+                          <td
+                            class="whitespace-nowrap font-semibold px-5 py-4 text-sm text-gray-900"
+                          >
+                            Amount
+                          </td>
+                          <td
+                            class="whitespace-nowrap font-semibold px-4 py-4 text-sm text-gray-900"
+                            v-for="(amortization, index) in Ammortization"
+                            :key="index + 'amount'"
+                          >
+                            {{ $formatCurrency(amortization.expected_amount) }}
+                          </td>
+                        </tr>
+                      </template>
+                    </TableVue>
+                  </div>
                   <!-- Put your modal content here -->
-                   
                 </vue-tailwind-modal>
               </div>
             </tbody>
@@ -303,20 +366,23 @@ import TableVue from "../Table.vue";
 export default {
   mixins: [Result],
   components: {
-    VueTailwindModal,TableVue
+    VueTailwindModal,
+    TableVue,
   },
   data() {
     return {
       modalOptions: {
         background: "bg-smoke-200",
-        modal: "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 bg-white  overflow-hidden",
-        close: "text-red-500 font-extrabold"
+        modal:
+          "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 bg-white  overflow-hidden",
+        close: "text-red-500 font-extrabold",
       },
       showModal: false,
       apiUrls: {
         preview: `api/amortization/preview`,
       },
-      Ammortization:[],
+      Ammortization: [],
+      mobileFixedRepayment: true,
     };
   },
 
@@ -331,11 +397,10 @@ export default {
     downpaymentCalculations: {
       type: Array,
     },
+    selectedDownpayment: {},
   },
   methods: {
-    async PreviewAmmortization(downpayments) {
-      console.log(downpayments)
-      this.showModal = true;
+    async PreviewAmmortization(downpayments, fixed_repayment) {
       try {
         const previewAmmortization = await post(this.apiUrls.preview, {
           bank_id: 1,
@@ -347,7 +412,7 @@ export default {
           down_payment: downpayments.actualDownpayment,
           down_payment_rate_id: downpayments.down_payment_rate_id,
           financed_by: "altara",
-          fixed_repayment: downpayments.FixedRepayment,
+          fixed_repayment: fixed_repayment,
           inventory_id: 53259,
           owner_id: 601,
           payment_method_id: 1,
@@ -358,16 +423,27 @@ export default {
           repayment_duration_id: downpayments.re_duration,
           sales_category_id: 1,
         });
-        this.Ammortization = previewAmmortization.data.data
-        console.log(this.Ammortization);
+        this.Ammortization = previewAmmortization.data.data;
+        this.showModal = true;
       } catch (err) {
         this.$displayErrorMessage(err);
       }
 
       console.log(downpayments);
     },
+    async PreviewAmmortizationDesktop(downpayments) {
+      await this.PreviewAmmortization(downpayments, downpayments.FixedRepayment );
+    },
+    async PreviewAmmortizationMobile() {
+       if (this.selectedDownpayment) {
+      await this.PreviewAmmortization(this.selectedDownpayment, this.mobileFixedRepayment );
+       }
+    },
     ToggleFixedRepayment(downpayment) {
       downpayment.FixedRepayment = !downpayment.FixedRepayment;
+    },
+    ToggleFixedRepaymentMobile() {
+      this.mobileFixedRepayment = !this.mobileFixedRepayment;
     },
     downpaymentResult(repayment_duration, result) {
       if (repayment_duration.id == this.selectedDownpayment?.re_duration) {

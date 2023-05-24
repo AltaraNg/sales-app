@@ -88,7 +88,7 @@
         >
           
           <Buttons
-            :getResultMobile="getResultMobile"
+            :getResultMobile="SelectedBusinessType"
             :business_type="businessType"
           />
         </div>
@@ -121,6 +121,7 @@
 
       <div class="lg:w-11/12 w-full" v-else>
         <router-view
+        ref="Result"
           :businessTypes = "businessTypes"
           :repaymentDuration="repaymentDuration"
           :downPaymentRates="downPaymentRates"
@@ -217,12 +218,16 @@ export default {
       this.downpaymentCalc();
       this.getResultMobile(0, 0 ) ;
     },
-    getResultMobile(repayduration, percent) {
+    SelectedBusinessType(repayduration, percent){
        this.selectedDownpayment = this.downpaymentCalculations.find(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
         }
       ) || 0;
+    },
+    getResultMobile(repayduration, percent) {
+      this.SelectedBusinessType(repayduration, percent)
+       this.selectedDownpayment && percent ? this.$refs?.Result?.PreviewAmmortizationMobile(): '';
     },
 
     async getRepaymentDuration() {

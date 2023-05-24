@@ -125,7 +125,7 @@
           :businessTypes = "businessTypes"
           :repaymentDuration="repaymentDuration"
           :downPaymentRates="downPaymentRates"
-          :getResultMobile="getResultMobile"
+          :getResultMobile="ResultMobile"
           :selectedDownpayment="selectedDownpayment"
           :computedGetCalc="computedGetCalc"
           :downpaymentCalculations="downpaymentCalculations"
@@ -146,6 +146,7 @@ import Buttons from "../components/buttons/cashbuttons.vue";
 export default {
   data() {
     return {
+      firstResult:{},
       registerBg2,
       apiUrls: {
         getProduct: `/api/inventory`,
@@ -219,7 +220,8 @@ export default {
       this.firstResult =  this.downpaymentCalculations.filter((result)=>{
         return result.actualDownpayment > 0;
       })[0]
-      this.getResult(this.firstResult?.re_duration, this.firstResult?.percent ) ;
+      
+      this.SelectedBusinessType(this.firstResult?.re_duration, this.firstResult?.percent ) ;
     },
     SelectedBusinessType(repayduration = this.firstResult?.re_duration, percent = this.firstResult?.percent){
        this.selectedDownpayment = this.downpaymentCalculations.find(
@@ -227,13 +229,12 @@ export default {
           return result.re_duration == repayduration && result.percent == percent;
         }
       ) || 0;
+      console.log(this.selectedDownpayment, 'selectedDownpayment');
+      console.log(this.firstResult, 'firstResult')
     },
-    getResultMobile(repayduration, percent) {
+    ResultMobile(repayduration, percent) {
       this.SelectedBusinessType(repayduration, percent)
        this.selectedDownpayment && percent ? this.$refs?.Result?.PreviewAmmortizationMobile(): '';
-    },
-     getResult(repayduration, percent) {
-      this.SelectedBusinessType(repayduration, percent)
     },
 
     async getRepaymentDuration() {

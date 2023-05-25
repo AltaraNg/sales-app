@@ -233,8 +233,6 @@ export default {
           return result.re_duration == repayduration && result.percent == percent;
         }
       ) ;
-      console.log(this.selectedDownpayment, 'selectedDownpayment');
-      console.log(this.firstResult, 'firstResult')
     },
     ResultMobile(repayduration, percent) {
       this.SelectedBusinessType(repayduration, percent)

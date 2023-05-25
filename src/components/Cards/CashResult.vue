@@ -197,8 +197,6 @@
                     {{ $formatCurrency(amortization.expected_amount) }}
                   </p>
                 </div>
-
-                <!-- <SideModal v-if="sidebarOpen" @close="sidebarOpen = false" class=" lg:hidden"> hello </SideModal> -->
               </div>
             </div>
           </vue-tailwind-modal>
@@ -415,13 +413,11 @@ export default {
           repayment_duration_id: downpayments.re_duration,
           sales_category_id: 1,
         });
-        this.Ammortization = previewAmmortization.data.data;
+        this.Ammortization = previewAmmortization?.data?.data;
         this.Ammortization[0].expected_amount > 0 ? this.showModal = true : '';
       } catch (err) {
         this.$displayErrorMessage(err);
       }
-
-      console.log(downpayments);
     },
     async PreviewAmmortizationDesktop(downpayments) {
       await this.PreviewAmmortization(

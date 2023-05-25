@@ -88,7 +88,7 @@
         >
           
           <Buttons
-            :getResultMobile="getResultMobile"
+            :getResultMobile="SelectedBusinessType"
             :business_type="businessType"
           />
         </div>
@@ -119,12 +119,13 @@
         <ArrowUp />
       </div>
 
-      <div class="lg:w-auto w-full" v-else>
+      <div class="lg:w-11/12 w-full" v-else>
         <router-view
+        ref="Result"
           :businessTypes = "businessTypes"
           :repaymentDuration="repaymentDuration"
           :downPaymentRates="downPaymentRates"
-          :getResultMobile="getResultMobile"
+          :getResultMobile="ResultMobile"
           :selectedDownpayment="selectedDownpayment"
           :computedGetCalc="computedGetCalc"
           :downpaymentCalculations="downpaymentCalculations"
@@ -145,6 +146,7 @@ import Buttons from "../components/buttons/cashbuttons.vue";
 export default {
   data() {
     return {
+      firstResult:{},
       registerBg2,
       apiUrls: {
         getProduct: `/api/inventory`,
@@ -211,18 +213,30 @@ export default {
             this.starterCashState = false
           }
       },
+    getFirstResult(){
+        this.firstResult =  this.downpaymentCalculations.filter((result)=>{
+        return result.actualDownpayment > 0;
+      })[0]
+    },
     selectedItem(value) {
       this.selectedProduct = value;
       this.select_product = true;
       this.downpaymentCalc();
-      this.getResultMobile(2, 20) ;
+      this.getFirstResult()
+      
+      this.SelectedBusinessType(this.firstResult?.re_duration, this.firstResult?.percent ) ;
     },
-    getResultMobile(repayduration, percent) {
-       this.selectedDownpayment = this.downpaymentCalculations.filter(
+    SelectedBusinessType(repayduration = this.firstResult?.re_duration, percent = this.firstResult?.percent){
+      this.getFirstResult();
+       this.selectedDownpayment = this.downpaymentCalculations.find(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
         }
-      )[0];
+      ) ;
+    },
+    ResultMobile(repayduration, percent) {
+      this.SelectedBusinessType(repayduration, percent)
+       this.selectedDownpayment && percent ? this.$refs?.Result?.PreviewAmmortizationMobile(): '';
     },
 
     async getRepaymentDuration() {
@@ -270,8 +284,10 @@ export default {
           downPaymentArr.push({
             re_duration: repayment_duration.id,
             percent: paymentRate["percent"],
-            businessType: business_type.name,
+            down_payment_rate_id:paymentRate.id,
+            businessType: business_type.id,
             total,
+            FixedRepayment:true,
             actualDownpayment,
             actualRepayment,
             biMonthlyRepayment,

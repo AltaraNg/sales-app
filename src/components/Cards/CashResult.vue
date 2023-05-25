@@ -416,7 +416,7 @@ export default {
           sales_category_id: 1,
         });
         this.Ammortization = previewAmmortization.data.data;
-        this.showModal = true;
+        this.Ammortization[0].expected_amount > 0 ? this.showModal = true : '';
       } catch (err) {
         this.$displayErrorMessage(err);
       }

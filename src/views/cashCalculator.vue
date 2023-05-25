@@ -213,22 +213,26 @@ export default {
             this.starterCashState = false
           }
       },
+    getFirstResult(){
+        this.firstResult =  this.downpaymentCalculations.filter((result)=>{
+        return result.actualDownpayment > 0;
+      })[0]
+    },
     selectedItem(value) {
       this.selectedProduct = value;
       this.select_product = true;
       this.downpaymentCalc();
-      this.firstResult =  this.downpaymentCalculations.filter((result)=>{
-        return result.actualDownpayment > 0;
-      })[0]
+      this.getFirstResult()
       
       this.SelectedBusinessType(this.firstResult?.re_duration, this.firstResult?.percent ) ;
     },
     SelectedBusinessType(repayduration = this.firstResult?.re_duration, percent = this.firstResult?.percent){
+      this.getFirstResult();
        this.selectedDownpayment = this.downpaymentCalculations.find(
         (result) => {
           return result.re_duration == repayduration && result.percent == percent;
         }
-      ) || 0;
+      ) ;
       console.log(this.selectedDownpayment, 'selectedDownpayment');
       console.log(this.firstResult, 'firstResult')
     },

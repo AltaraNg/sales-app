@@ -177,7 +177,7 @@
             :backgroundClose="true"
             :css="modalOptions"
           >
-            <div class="flex flex-wrap lg:hidden w-11/12 space-y-2">
+            <div class="flex flex-wrap lg:hidden  w-11/12 space-y-2 overflow-y-scroll">
               <div
                 v-for="(amortization, index) in Ammortization"
                 :key="index + 'mobile'"
@@ -223,7 +223,7 @@
             {{ repaymentDuration.name }}
           </p>
           <table class="flex flex-col justify-center items-evenly">
-            <thead class="my-2  pt-4 flex  items-center space-x-1">
+            <thead class="my-2  pt-4 flex  items-center space-x-5">
               <td class="w-1/12"></td>
               <td class="font-bold text-lg w-1/6">Initial Payment</td>
               <td class="font-bold text-lg w-1/5">Bi-Monthly Repayment</td>
@@ -242,6 +242,7 @@
                   flex 
                   items-center
                   cursor-pointer
+                  space-x-5
                 "
                 @click="PreviewAmmortizationDesktop(downpayments)"
                 v-if="
@@ -364,7 +365,7 @@ export default {
       modalOptions: {
         background: "bg-smoke-200",
         modal:
-          "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 bg-white  overflow-hidden",
+          "lg:max-w-6xl lg:max-h-10/12 max-h-11/12 w-10/11 max-w-11/12 bg-white  overflow-y-scroll",
         close: "text-red-500 text-4xl  font-bold",
       },
       showModal: false,

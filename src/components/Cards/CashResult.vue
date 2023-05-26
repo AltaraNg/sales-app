@@ -204,19 +204,11 @@
       </template>
     </div>
     <!-- desktop view -->
-    <template v-for="(repaymentDuration, index) in repaymentDuration">
+    <div v-for="(repaymentDuration, index) in AvailableDuration" :key="index">
       <div
         class="hidden px-12 py-8  mb-8 bg-white rounded-lg lg:flex flex-col"
-        v-if="
-          (repaymentDuration.name == 'nine_months' && isRent()) ||
-            !(
-              repaymentDuration.name == 'nine_months' ||
-              isRent() ||
-              (isSuperLoan() && repaymentDuration.name == 'six_months') ||
-              !(isSuperLoan() || repaymentDuration.name == 'six_months')
-            )
-        "
-        :key="index"
+     
+        
       >
         <div>
           <p class="font-black text-2xl tracking-wide leading-3 mb-4">
@@ -344,7 +336,7 @@
           </table>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 

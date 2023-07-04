@@ -397,6 +397,7 @@ export default {
           financed_by: "altara",
           fixed_repayment: fixed_repayment,
           inventory_id: 2,
+          cost_price:this.downpaymentCalculations[0].cost_price,
           owner_id: 601,
           payment_method_id: 1,
           payment_type_id: 2,

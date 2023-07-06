@@ -282,6 +282,7 @@ export default {
             repayment_duration?.value
           );
           downPaymentArr.push({
+            cost_price: this.inputValue,
             re_duration: repayment_duration.id,
             percent: paymentRate["percent"],
             down_payment_rate_id:paymentRate.id,

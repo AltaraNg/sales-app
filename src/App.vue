@@ -43,6 +43,7 @@
   .altaraBlueText {
     color: #094a73;
   }
+
   .pointer {
     cursor: pointer;
   }
@@ -56,6 +57,7 @@
     border-color: #c81618 !important;
     border-width: 1px;
   }
+
   small.text-muted,
   form small:not(.error-control) {
     font-size: 1.1rem;
@@ -63,6 +65,7 @@
     float: left;
     width: 100%;
   }
+
   textarea {
     width: 100%;
   }

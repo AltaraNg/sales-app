@@ -1,5 +1,8 @@
 <template>
-  <div class="container mx-auto text-xs divide-y my-1 py-2" v-if="pageParam.total / pageParam.per_page > 1">
+  <div
+    class="container mx-auto text-xs divide-y my-1 py-2"
+    v-if="pageParam.total / pageParam.per_page > 1"
+  >
     <div class="clearfix"></div>
     <div class="flex justify-between flex-row pt-2">
       <div class="">
@@ -10,25 +13,24 @@
       </div>
 
       <div class="flex flex-row divide-x">
-        <div class="px-2">
-         
-        </div>
-        <div class="px-2">
-         
-        </div>
+        <div class="px-2"></div>
+        <div class="px-2"></div>
       </div>
 
       <nav class="content-start">
         <ul class="flex flex-row divide-x">
           <!---->
-          <li
-            :class="{ disabled: !pageParam.first_page_url }"
-            class="px-1"
-          >
-            <a href="javascript:" @click="prev(1)" class="page-link">First</a>
+          <li class="px-1">
+            <a
+              href="javascript:"
+              @click="prev(1)"
+              :class="{ 'cursor-text': !pageParam.first_page_url }"
+              class="page-link"
+              >First</a
+            >
           </li>
-          <li :class="{ disabled: !pageParam.prev_page_url }" class="px-1">
-                      <a href="javascript:" @click="prev()" class="page-link">Prev</a>
+          <li :class="{ 'cursor-text': !pageParam.prev_page_url }" class="px-1">
+            <a href="javascript:" @click="prev()" class="page-link">Prev</a>
           </li>
           <!---->
           <li class="px-1">
@@ -54,56 +56,25 @@
     </div>
   </div>
 </template>
-        <script>
-export default {
-  components: {},
-  props: {
-    pageParam: {
-      type: Object,
-      required: true,
+<script>
+  export default {
+    components: {},
+    props: {
+      pageParam: {
+        type: Object,
+        required: true,
+      },
     },
-  },
 
-  methods: {
-    next(firstPage = null) {
-        if (this.pageParam.next_page_url) {
-          this.pageParam.page = firstPage
-            ? firstPage
-            : parseInt(this.pageParam.page) + 1;
-          this.$router.push({
-            path: this.$route.path,
-            query: {
-              ...this.$route.query,
-              page: this.pageParam.page,
-            },
-          });
-          this.$emit('fetchData');
-        }
+    methods: {
+      next(firstPage = null) {
+        this.$emit("next", firstPage);
       },
       prev(lastPage = null) {
-        if (this.pageParam.prev_page_url) {
-          this.pageParam.page = lastPage
-            ? lastPage
-            : parseInt(this.pageParam.page) - 1;
-          this.$router.push({
-            path: this.$route.path,
-            query: {
-              ...this.$route.query,
-              page: this.pageParam.page,
-            },
-          });
-          this.$emit('fetchData');
-        }
+        this.$emit("previous", lastPage);
       },
-     
+    },
 
-  },
-
-  created() {
-    this.pageParam.page = this.pageParam.page ? this.pageParam.page : 1;
-			this.pageParam.limit = this.pageParam.per_page ? this.pageParam.limit : 15;
-
-  },
-};
+    mounted() {},
+  };
 </script>
-<

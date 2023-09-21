@@ -777,12 +777,12 @@
         if (this.pageParams.next_page_url) {
           this.pageParams.page = firstPage
             ? firstPage
-            : parseInt(this.pageParams.page) + 1;
+            : parseInt(this.pageParams.current_page) + 1;
           this.$router.push({
             path: this.$route.path,
             query: {
               ...this.$route.query,
-              page: this.pageParams.page,
+              page: this.pageParams.current_page + 1,
             },
           });
           this.searchUsersList();
@@ -793,12 +793,12 @@
         if (this.pageParams.prev_page_url) {
           this.pageParams.page = lastPage
             ? lastPage
-            : parseInt(this.pageParams.page) - 1;
+            : parseInt(this.pageParams.current_page) - 1;
           this.$router.push({
             path: this.$route.path,
             query: {
               ...this.$route.query,
-              page: this.pageParams.page,
+              page: this.pageParams.current_page - 1,
             },
           });
           this.searchUsersList();

@@ -25,7 +25,7 @@
                   v-on:click="toggleTabs(1)"
                   v-bind:class="{
                     'text-white': openTab !== 1,
-                    'bg-white': openTab === 1
+                    'bg-white': openTab === 1,
                   }"
                 >
                   Basic Info
@@ -37,7 +37,7 @@
                   v-on:click="toggleTabs(2)"
                   v-bind:class="{
                     'text-white': openTab !== 2,
-                    'bg-white': openTab === 2
+                    'bg-white': openTab === 2,
                   }"
                 >
                   Customer Feedbacks
@@ -49,7 +49,7 @@
                   v-on:click="toggleTabs(3)"
                   v-bind:class="{
                     'text-white': openTab !== 3,
-                    ' bg-white': openTab === 3
+                    ' bg-white': openTab === 3,
                   }"
                 >
                   Todo
@@ -65,7 +65,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 1,
-                block: openTab === 1
+                block: openTab === 1,
               }"
             >
               <div
@@ -122,7 +122,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -156,7 +156,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -202,7 +202,7 @@
                           errors.first('customer stage') ||
                           error.customer_stage_id
                             ? 'is-invalid'
-                            : ''
+                            : '',
                         ]"
                         class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                       >
@@ -290,7 +290,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 2,
-                block: openTab === 2
+                block: openTab === 2,
               }"
               class="px-5"
             >
@@ -318,7 +318,7 @@
             <div
               v-bind:class="{
                 hidden: openTab !== 3,
-                block: openTab === 3
+                block: openTab === 3,
               }"
             >
               <div
@@ -428,7 +428,7 @@
                           :class="[
                             errors.first('phone') || error.phone
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         />
@@ -462,7 +462,7 @@
                             errors.first('employment status') ||
                             error.employment_status_id
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -507,7 +507,7 @@
                           :class="[
                             errors.first('agent') || error.user_id
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -551,7 +551,7 @@
                             errors.first('customer stage') ||
                             error.customer_stage_id
                               ? 'is-invalid'
-                              : ''
+                              : '',
                           ]"
                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         >
@@ -653,7 +653,7 @@
                         v-on:click="toggleBigTabs(1)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 1,
-                          'altaraBlue text-white': openBigTab === 1
+                          'altaraBlue text-white': openBigTab === 1,
                         }"
                       >
                         Customer Feedbacks
@@ -665,7 +665,7 @@
                         v-on:click="toggleBigTabs(2)"
                         v-bind:class="{
                           altaraBlueText: openBigTab !== 2,
-                          'altaraBlue text-white': openBigTab === 2
+                          'altaraBlue text-white': openBigTab === 2,
                         }"
                       >
                         Todo
@@ -678,7 +678,7 @@
                 <div
                   v-bind:class="{
                     hidden: openBigTab !== 1,
-                    block: openBigTab === 1
+                    block: openBigTab === 1,
                   }"
                   class=" "
                 >
@@ -724,7 +724,7 @@
               <div
                 v-bind:class="{
                   hidden: openBigTab !== 2,
-                  block: openBigTab === 2
+                  block: openBigTab === 2,
                 }"
               >
                 <div
@@ -842,7 +842,7 @@
               :class="[
                 errors.first('feedback') || error.feedback
                   ? 'is-invalid'
-                  : 'border'
+                  : 'border',
               ]"
               v-model="customer.notes"
             />
@@ -911,7 +911,7 @@
                       name="type"
                       v-model="customer.type"
                       :class="[
-                        errors.first('type') || error.type ? 'is-invalid' : ''
+                        errors.first('type') || error.type ? 'is-invalid' : '',
                       ]"
                       class="mx-input"
                     />
@@ -928,7 +928,7 @@
               placeholder="Enter todo..."
               v-validate="'required'"
               :class="[
-                errors.first('todo') || error.todo ? 'is-invalid' : 'border'
+                errors.first('todo') || error.todo ? 'is-invalid' : 'border',
               ]"
               v-model="customer.todo"
             />
@@ -953,385 +953,396 @@
   </div>
 </template>
 <script>
-import Sidebar from "@/components/Sidebar/Sidebar.vue";
-import HeaderStats from "@/components/Headers/HeaderStats.vue";
-import avatar from "@/assets/img/avatar.png";
-import { get, post, put } from "@/utilities/api";
-import DatePicker from "vue2-datepicker";
-import queryParam from "../../utilities/queryParam";
-import permissions from "../../components/mixins/permissions.js";
-import customerApi from "../../api/customer.js";
-import feedbackApi from "../../api/feedback.js";
+  import Sidebar from "@/components/Sidebar/Sidebar.vue";
+  import avatar from "@/assets/img/avatar.png";
+  import { get, post, put } from "@/utilities/api";
+  import DatePicker from "vue2-datepicker";
+  import queryParam from "../../utilities/queryParam";
+  import permissions from "../../components/mixins/permissions.js";
+  import customerApi from "../../api/customer.js";
+  import feedbackApi from "../../api/feedback.js";
 
-export default {
-  name: "UserProfile",
-  mixins: [permissions],
+  export default {
+    name: "UserProfile",
+    mixins: [permissions],
 
-  components: {
-    Sidebar,
-    HeaderStats,
-    DatePicker
-  },
-  data() {
-    return {
-      avatar,
-      pageNumber: 1,
-      searchQuery: {},
-      searchFilter: {},
-      usersList: [],
-      agents: [],
-      employmentStatus: "",
-      customerStage: "",
-      comments: [],
-      message: "",
-      prev_page_url: "",
-      next_page_url: "",
-      apiUrls: {
-        getEmploymentStatus: `/api/employment_status`,
-        getusersList: `/api/customer_contact`,
-        getStage: `/api/customer_stage`,
-        postComment: `/api/feedback`,
-        postTodo: `/api/todo`,
-        updateUser: `/api/customer_contact/`,
-        reasons: `/api/reason`,
-        getDSAs: `/api/get-users?role=18`
-      },
-      feedback: "",
-      openTab: 1,
-      customer: {},
-      openBigTab: 1,
-      feedbackModal: false,
-      feedbackPopup: false,
-      logFeedbackPopupValue: false,
-      logTodoPopupValue: false,
-      error: {},
-      editMode: false,
-      employmentStatusList: [],
-      todos: [],
-      reasons: [],
-      customerStages: [],
-      todo: {}
-    };
-  },
-  async created() {
-    // if (!this.customer) {
-    //   return this.$router.push({
-    //     name: "admin",
-    //   });
-    // }
-    await this.searchUsersList(this.$route.params.id);
-    await this.getAgents();
-    await this.getEmploymentStatus();
-    await this.getUserStage();
-    await this.getTodos();
-
-    await this.getReasons();
-  },
-  methods: {
-    checkTodo(data) {
-      this.$LIPS(true);
-      put(this.apiUrls.postTodo + "/" + data.id, {
-        status: data.status === "done" ? "not done" : "done"
-      })
-        .then(() => {
-          this.$LIPS(false);
-          this.$swal({
-            icon: "success",
-            title: "Todo Updated Successfully"
-          });
-          this.getTodos();
-        })
-
-        .catch(({ response: { data } }) => {
-          const errData = data.data.errors;
-          this.error = errData ? errData : data;
-
-          this.$LIPS(false);
-        });
+    components: {
+      Sidebar,
+      DatePicker,
     },
-    nextPage() {
-      this.pageNumber++;
-      this.searchUsersList();
-    },
-    prevPage() {
-      this.pageNumber--;
-      this.searchUsersList();
-    },
-    async getEmploymentStatus() {
-      try {
-        const fetchEmploymentStatus = await customerApi.getEmploymentStatus();
-        this.employmentStatusList = fetchEmploymentStatus.data.data;
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
-    async getReasons() {
-      try {
-        const fetchReasons = await get(this.apiUrls.reasons);
-        this.reasons = fetchReasons.data.reasons;
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
-
-    async getAgents() {
-      try {
-        const agents = await get(this.apiUrls.getDSAs);
-        this.agents = agents.data.data.data;
-        this.agents = this.agents.sort((a, b) => {
-          if (a.full_name > b.full_name) {
-            return 1;
-          }
-          if (a.full_name < b.full_name) {
-            return -1;
-          }
-          return 0;
-        });
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
-
-    async getTodos() {
-      try {
-        const query = {
-          customerId: this.customer.id,
-          user: localStorage.getItem("user_id")
-        };
-
-        const fetchTodos = await get(this.apiUrls.postTodo + queryParam(query));
-        this.todos = fetchTodos.data.data.data;
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
-    async getUserStage() {
-      try {
-        const fetchUserStage = await get(this.apiUrls.getStage);
-        this.customerStages = fetchUserStage.data.data;
-      } catch (err) {
-        this.$displayErrorMessage(err);
-      }
-    },
-    async editSwitch(data) {
-      this.editMode = data;
-    },
-    async updateUser(customer) {
-      const userInfo = {
-        phone: customer.phone,
-        employment_status_id: customer.employment_status_id,
-        email: customer.email,
-        customer_stage_id: customer.customer_stage_id,
-        user_id: customer.user_id
+    data() {
+      return {
+        avatar,
+        pageNumber: 1,
+        searchQuery: {},
+        searchFilter: {},
+        usersList: [],
+        agents: [],
+        employmentStatus: "",
+        customerStage: "",
+        comments: [],
+        message: "",
+        prev_page_url: "",
+        next_page_url: "",
+        apiUrls: {
+          getEmploymentStatus: `/api/employment_status`,
+          getusersList: `/api/customer_contact`,
+          getStage: `/api/customer_stage`,
+          postComment: `/api/feedback`,
+          postTodo: `/api/todo`,
+          updateUser: `/api/customer_contact/`,
+          reasons: `/api/reason`,
+          getDSAs: `/api/get-users?role=18`,
+        },
+        feedback: "",
+        openTab: 1,
+        customer: {},
+        openBigTab: 1,
+        feedbackModal: false,
+        feedbackPopup: false,
+        logFeedbackPopupValue: false,
+        logTodoPopupValue: false,
+        error: {},
+        editMode: false,
+        employmentStatusList: [],
+        todos: [],
+        reasons: [],
+        customerStages: [],
+        todo: {},
       };
-      this.$validator
-        .validateAll()
-        .then(result => {
-          if (result) {
-            this.$LIPS(true);
-            this.error = {};
-            customerApi
-              .update(userInfo, this.customer.id)
-              .then(response => {
-                this.$LIPS(false);
-                this.$swal({
-                  icon: "success",
-                  title: "User Updated Successfully"
-                });
-                this.editMode = false;
-                this.customer = response.data.data;
-              })
+    },
+    async created() {
+      // if (!this.customer) {
+      //   return this.$router.push({
+      //     name: "admin",
+      //   });
+      // }
+      await this.searchUsersList(this.$route.params.id);
+      await this.getAgents();
+      await this.getEmploymentStatus();
+      await this.getUserStage();
+      await this.getTodos();
 
-              .catch(({ response: { data } }) => {
-                const errData = data.data.errors;
-                this.error = errData ? errData : data;
-
-                this.$LIPS(false);
-              });
-          }
+      await this.getReasons();
+    },
+    methods: {
+      checkTodo(data) {
+        this.$LIPS(true);
+        put(this.apiUrls.postTodo + "/" + data.id, {
+          status: data.status === "done" ? "not done" : "done",
         })
-        .catch(e => {});
-    },
-    async getUsersList() {
-      this.$LIPS(true);
+          .then(() => {
+            this.$LIPS(false);
+            this.$swal({
+              icon: "success",
+              title: "Todo Updated Successfully",
+            });
+            this.getTodos();
+          })
 
-      try {
-        const fetchusersList = await customerApi.index();
-        this.usersList = fetchusersList.data.data.data;
-        this.$LIPS(false);
-      } catch (err) {
-        this.$LIPS(false);
+          .catch(({ response: { data } }) => {
+            const errData = data.data.errors;
+            this.error = errData ? errData : data;
 
-        this.$displayErrorMessage(err);
-      }
-    },
-    resetSearch() {
-      this.searchQuery = {};
-    },
-    async searchUsersList(data) {
-      this.$LIPS(true);
-
-      try {
-        // const query = { id: data };
-        const fetchusersList = await get(
-          this.apiUrls.getusersList + "/" + data
-        );
-        this.customer = fetchusersList.data.data;
-        this.$LIPS(false);
-      } catch (err) {
-        this.$LIPS(false);
-
-        this.$displayErrorMessage(err);
-        return this.$router.push({
-          name: "admin"
-        });
-      }
-    },
-    customFormatter(date) {
-      return moment(date).format("MMMM Do YYYY, h:mm:ss a");
-    },
-    generateRandomColor() {
-      return "#" + Math.floor(Math.random() * 16777215).toString(16);
-    },
-    async postFeedbackComment(user) {
-      this.$validator
-        .validateAll()
-        .then(result => {
-          if (result) {
-            this.closeFeedbackPopup();
-            this.$LIPS(true);
-            this.error = {};
-            feedbackApi
-              .create({
-                notes: user.notes,
-                reason_id: user.reason,
-                customer_id: this.customer.id,
-                user_id: localStorage.getItem("user_id")
-              })
-              .then(result => {
-                this.$LIPS(false);
-                this.$swal({
-                  icon: "success",
-                  title: "Feedback Logged Successfully"
-                });
-                // this.searchUsersList();
-                this.customer.feedback.unshift(result.data.data);
-              })
-
-              .catch(({ response: { data } }) => {
-                const errData = data.data.errors;
-                this.error = errData ? errData : data;
-
-                this.$LIPS(false);
-              });
-          }
-        })
-        .catch(e => {});
-    },
-    async postTodoComment(user) {
-      this.$validator
-        .validateAll()
-        .then(result => {
-          if (result) {
-            this.closeTodoPopup();
-            this.$LIPS(true);
-            this.error = {};
-            post(this.apiUrls.postTodo, {
-              todo: user.todo,
-              due_date: user.due_date,
-              type: user.type,
-              // status: user.status,
-              customer_id: this.customer.id,
-              user_id: localStorage.getItem("user_id")
-            })
-              .then(() => {
-                this.$LIPS(false);
-                this.$swal({
-                  icon: "success",
-                  title: "Todo Logged Successfully"
-                });
-                user.todo = "";
-                user.due_date = "";
-                user.type = "";
-                // user.status = "";
-                this.getTodos();
-              })
-
-              .catch(({ response: { data } }) => {
-                const errData = data.data.errors;
-                this.error = errData ? errData : data;
-
-                this.$LIPS(false);
-              });
-          }
-        })
-        .catch(e => {});
-    },
-    customFormatter(date) {
-      return moment(date).format("MMMM Do YYYY, h:mm:ss a");
-    },
-    openModal(data) {
-      this.comments = data.feedback;
-      this.customer = data;
-      data.feedback.length === 0 ? "" : (this.feedbackModal = true);
-    },
-    closeModal() {
-      this.feedbackModal = false;
-    },
-    openPopup(data) {
-      this.message = data;
-      this.feedbackPopup = true;
-    },
-    logFeedbackPopup() {
-      this.logFeedbackPopupValue = true;
-    },
-
-    closeFeedbackPopup() {
-      this.logFeedbackPopupValue = false;
-    },
-    logTodoPopup() {
-      this.logTodoPopupValue = true;
-    },
-    closeTodoPopup() {
-      this.logTodoPopupValue = false;
-    },
-    closePopup() {
-      this.feedbackPopup = false;
-    },
-    viewUser(data) {
-      this.$router.push({
-        name: "userProfile",
-        params: {
-          customer: data
+            this.$LIPS(false);
+          });
+      },
+      nextPage() {
+        this.pageNumber++;
+        this.searchUsersList();
+      },
+      prevPage() {
+        this.pageNumber--;
+        this.searchUsersList();
+      },
+      async getEmploymentStatus() {
+        try {
+          const fetchEmploymentStatus = await customerApi.employmentStatus();
+          this.employmentStatusList = fetchEmploymentStatus.data.data;
+        } catch (err) {
+          this.$displayErrorMessage(err);
         }
-      });
+      },
+      async getReasons() {
+        try {
+          const fetchReasons = await get(this.apiUrls.reasons);
+          this.reasons = fetchReasons.data.reasons;
+        } catch (err) {
+          this.$displayErrorMessage(err);
+        }
+      },
+
+      async getAgents() {
+        try {
+          const agents = await get(this.apiUrls.getDSAs);
+          this.agents = agents.data.data.data;
+          this.agents = this.agents.sort((a, b) => {
+            if (a.full_name > b.full_name) {
+              return 1;
+            }
+            if (a.full_name < b.full_name) {
+              return -1;
+            }
+            return 0;
+          });
+        } catch (err) {
+          this.$displayErrorMessage(err);
+        }
+      },
+
+      async getTodos() {
+        try {
+          const query = {
+            customerId: this.customer.id,
+            user: localStorage.getItem("user_id"),
+          };
+
+          const fetchTodos = await get(
+            this.apiUrls.postTodo + queryParam(query)
+          );
+          this.todos = fetchTodos.data.data.data;
+        } catch (err) {
+          this.$displayErrorMessage(err);
+        }
+      },
+      async getUserStage() {
+        try {
+          const fetchUserStage = await get(this.apiUrls.getStage);
+          this.customerStages = fetchUserStage.data.data;
+        } catch (err) {
+          this.$displayErrorMessage(err);
+        }
+      },
+      async editSwitch(data) {
+        this.editMode = data;
+      },
+      async updateUser(customer) {
+        const userInfo = {
+          phone: customer.phone,
+          employment_status_id: customer.employment_status_id,
+          email: customer.email,
+          customer_stage_id: customer.customer_stage_id,
+          user_id: customer.user_id,
+        };
+        this.$validator
+          .validateAll()
+          .then((result) => {
+            if (result) {
+              this.$LIPS(true);
+              this.error = {};
+              customerApi
+                .update(userInfo, this.customer.id)
+                .then((response) => {
+                  this.$LIPS(false);
+                  this.$swal({
+                    icon: "success",
+                    title: "User Updated Successfully",
+                  });
+                  this.editMode = false;
+                  this.customer = response.data.data;
+                })
+
+                .catch(({ response: { data } }) => {
+                  const errData = data.data.errors;
+                  this.error = errData ? errData : data;
+
+                  this.$LIPS(false);
+                });
+            }
+          })
+          .catch((e) => {
+            this.$swal({
+              icon: "error",
+              title: e.response?.message,
+            });
+          });
+      },
+      async getUsersList() {
+        this.$LIPS(true);
+
+        try {
+          const fetchusersList = await customerApi.index();
+          this.usersList = fetchusersList.data.data.data;
+          this.$LIPS(false);
+        } catch (err) {
+          this.$LIPS(false);
+
+          this.$displayErrorMessage(err);
+        }
+      },
+      resetSearch() {
+        this.searchQuery = {};
+      },
+      async searchUsersList(data) {
+        this.$LIPS(true);
+
+        try {
+          // const query = { id: data };
+          const fetchusersList = await get(
+            this.apiUrls.getusersList + "/" + data
+          );
+          this.customer = fetchusersList.data.data;
+          this.$LIPS(false);
+        } catch (err) {
+          this.$LIPS(false);
+
+          this.$displayErrorMessage(err);
+          return this.$router.push({
+            name: "admin",
+          });
+        }
+      },
+
+      generateRandomColor() {
+        return "#" + Math.floor(Math.random() * 16777215).toString(16);
+      },
+      async postFeedbackComment(user) {
+        this.$validator
+          .validateAll()
+          .then((result) => {
+            if (result) {
+              this.closeFeedbackPopup();
+              this.$LIPS(true);
+              this.error = {};
+              feedbackApi
+                .create({
+                  notes: user.notes,
+                  reason_id: user.reason,
+                  customer_id: this.customer.id,
+                  user_id: localStorage.getItem("user_id"),
+                })
+                .then((result) => {
+                  this.$LIPS(false);
+                  this.$swal({
+                    icon: "success",
+                    title: "Feedback Logged Successfully",
+                  });
+                  // this.searchUsersList();
+                  this.customer.feedback.unshift(result.data.data);
+                })
+
+                .catch(({ response: { data } }) => {
+                  const errData = data.data.errors;
+                  this.error = errData ? errData : data;
+
+                  this.$LIPS(false);
+                });
+            }
+          })
+          .catch((e) => {
+            this.$swal({
+              icon: "error",
+              title: e.response?.message,
+            });
+          });
+      },
+      async postTodoComment(user) {
+        this.$validator
+          .validateAll()
+          .then((result) => {
+            if (result) {
+              this.closeTodoPopup();
+              this.$LIPS(true);
+              this.error = {};
+              post(this.apiUrls.postTodo, {
+                todo: user.todo,
+                due_date: user.due_date,
+                type: user.type,
+                // status: user.status,
+                customer_id: this.customer.id,
+                user_id: localStorage.getItem("user_id"),
+              })
+                .then(() => {
+                  this.$LIPS(false);
+                  this.$swal({
+                    icon: "success",
+                    title: "Todo Logged Successfully",
+                  });
+                  user.todo = "";
+                  user.due_date = "";
+                  user.type = "";
+                  // user.status = "";
+                  this.getTodos();
+                })
+
+                .catch(({ response: { data } }) => {
+                  const errData = data.data.errors;
+                  this.error = errData ? errData : data;
+
+                  this.$LIPS(false);
+                });
+            }
+          })
+          .catch((e) => {
+            this.$swal({
+              icon: "error",
+              title: e.response?.message,
+            });
+          });
+      },
+
+      openModal(data) {
+        this.comments = data.feedback;
+        this.customer = data;
+        data.feedback.length === 0 ? "" : (this.feedbackModal = true);
+      },
+      closeModal() {
+        this.feedbackModal = false;
+      },
+      openPopup(data) {
+        this.message = data;
+        this.feedbackPopup = true;
+      },
+      logFeedbackPopup() {
+        this.logFeedbackPopupValue = true;
+      },
+
+      closeFeedbackPopup() {
+        this.logFeedbackPopupValue = false;
+      },
+      logTodoPopup() {
+        this.logTodoPopupValue = true;
+      },
+      closeTodoPopup() {
+        this.logTodoPopupValue = false;
+      },
+      closePopup() {
+        this.feedbackPopup = false;
+      },
+      viewUser(data) {
+        this.$router.push({
+          name: "userProfile",
+          params: {
+            customer: data,
+          },
+        });
+      },
+      toggleTabs: function (tabNumber) {
+        this.openTab = tabNumber;
+      },
+      toggleBigTabs: function (tabNumber) {
+        this.openBigTab = tabNumber;
+      },
     },
-    toggleTabs: function(tabNumber) {
-      this.openTab = tabNumber;
-    },
-    toggleBigTabs: function(tabNumber) {
-      this.openBigTab = tabNumber;
-    }
-  }
-};
+  };
 </script>
 
 <style>
-.chatBox {
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
-  border-radius: 0px 10px 10px 10px;
-  padding: 15px 10px;
-  margin-bottom: 15px;
-  width: 100%;
-}
-.space0 {
-  height: 45px;
-  /* background: #00e396; */
-}
-.overflowTest {
-  overflow: scroll;
-}
+  .chatBox {
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 0px 10px 10px 10px;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  .space0 {
+    height: 45px;
+    /* background: #00e396; */
+  }
+  .overflowTest {
+    overflow: scroll;
+  }
 </style>

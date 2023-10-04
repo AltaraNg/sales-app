@@ -80,32 +80,11 @@ export default {
   async created() {},
   methods: {
     async login() {
-      if (this.$network()) {
+      if (this.$network()) { 
         this.$LIPS(true);
+        const data = this.form
         this.error = {};
-        await post("/api/login", this.form)
-          .then(({ data }) => {
-            if (data.auth) {
-              Auth.set(data);
-            }
-            this.$LIPS(false);
-            let notCookie = this.$getCookie('showNotification');
-            if(notCookie == null){
-              this.$setCookie('showNotification', true);
-            }
-            this.$router.push("/admin");
-          })
-          .catch(({ response: { data } }) => {
-            this.error = data.errors ? data.errors : data;
-            this.$LIPS(false);
-
-            
-
-            this.$swal({
-              icon: "error",
-              title: "Incorrect Login Details",
-            });
-          });
+        this.$store.dispatch("saveUser", { data , vueInstance: this } );
       } else this.$networkErr();
     },
 

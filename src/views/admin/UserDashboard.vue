@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <div class="p-1 flex-1" v-if="canDo(Manager) || canDo(Coordinator)">
+            <div class="p-1 flex-1" v-if="(canDo(Manager) || canDo(Coordinator))&& inHouse">
               <div class="relative mb-3">
                 <label
                   class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -88,7 +88,7 @@
                   class="block uppercase text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  DSA
+                  {{inHouse ? 'DSA' :'Agents'}}
                 </label>
                 <select v-model="searchQuery.dsa" class="mx-input">
                   <option disabled selected="selected">Select DSA</option>
@@ -599,6 +599,7 @@
 
     data() {
       return {
+         inHouse: null,
         modalOptions: {
           background: "smoke",
           modal: "max-h-90",
@@ -638,6 +639,7 @@
     },
 
     async mounted() {
+      this.inHouse = this.$store.state.employee.in_house
       this.showNotification();
       await this.getBranches();
       await this.getAgents();

@@ -36,6 +36,12 @@
     },
     beforeCreate() {
       Auth.initialize();
+     const userData = JSON.parse(localStorage.getItem('employee'))
+     const employee = this.$store.state.employee
+     if( this.$route.path.includes('admin') && !employee ){
+      this.$store.dispatch("saveUser", { userData, vueInstance: this });
+     }
+      
     },
   };
 </script>

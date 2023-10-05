@@ -9,11 +9,12 @@ export const store = new Vuex.Store({
            notifications: null,
            inactiveProspects: null,
            error: null,
-           employee: {},
+           employee: null,
          },
          getters: {
            getNotifications: (state) => state.notifications,
            getInactiveProspects: (state) => state.inactiveProspects,
+           getEmployee:(state)=> state.employee
          },
          mutations: {
            TOGGLE_LOADER: (state, data) => Vue.set(state, "loader", data),
@@ -31,17 +32,20 @@ export const store = new Vuex.Store({
            },
            mutateInactiveProspects: ({ commit }, inactiveProspects) =>
              commit("mutateInactiveProspects", inactiveProspects),
-           saveUser: async ({ commit, rootGetters }, { data, vueInstance }) => {
-             await post("/api/login", data)
+           saveUser: async ({ commit, context }, { userData, vueInstance }) => {
+             await post("/api/login", userData)
                .then(({ data }) => {
                  if (data.auth) {
+                   localStorage.setItem("employee", JSON.stringify(userData));
                    Auth.set(data);
                    commit("SAVEUSER", data);
+                   console.log(data.in_house, 'from store')
                  }
                  let notCookie = vueInstance.$getCookie("showNotification");
                  if (notCookie == null) {
                    vueInstance.$setCookie("showNotification", true);
                  }
+                 //console.log(context.state.employee, 'state in action')
                  commit("TOGGLE_LOADER", false);
                  vueInstance.$router.push("/admin");
                })

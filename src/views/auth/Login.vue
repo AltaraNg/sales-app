@@ -82,9 +82,9 @@ export default {
     async login() {
       if (this.$network()) { 
         this.$LIPS(true);
-        const data = this.form
+        const userData = this.form
         this.error = {};
-        this.$store.dispatch("saveUser", { data , vueInstance: this } );
+        this.$store.dispatch("saveUser", { userData , vueInstance: this } );
       } else this.$networkErr();
     },
 

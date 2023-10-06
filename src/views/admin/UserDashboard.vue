@@ -451,7 +451,7 @@
                 <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
                 >
-                  {{ user.users.full_name || "" }}
+                  {{ contactedBy(user.users) }}
                 </td>
                 <td
                   class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4"
@@ -595,11 +595,13 @@
 
     computed: {
       ...mapGetters(["getInactiveProspects"]),
+      inHouse() {
+      return this.$store.state.employee?.in_house
+    },
     },
 
     data() {
       return {
-         inHouse: null,
         modalOptions: {
           background: "smoke",
           modal: "max-h-90",
@@ -639,7 +641,6 @@
     },
 
     async mounted() {
-      this.inHouse = this.$store.state.employee.in_house
       this.showNotification();
       await this.getBranches();
       await this.getAgents();
@@ -650,6 +651,13 @@
       this.getNextList();
     },
     methods: {
+       contactedBy(user) {
+        if(user?.full_name == null ){
+          return 'N/A'
+        }else{
+          return user.full_name
+        }
+    },
       async getEmploymentStatus() {
         try {
           const fetchEmploymentStatus = await customerApi.employmentStatus();
@@ -673,10 +681,10 @@
           const agents = await get(this.apiUrls.getDSAs);
           this.agents = agents.data.data.data;
           this.agents = this.agents.sort((a, b) => {
-            if (a.full_name > b.full_name) {
+            if (a?.full_name > b?.full_name) {
               return 1;
             }
-            if (a.full_name < b.full_name) {
+            if (a?.full_name < b?.full_name) {
               return -1;
             }
             return 0;
@@ -763,6 +771,7 @@
           });
 
           this.usersList = data;
+          console.log(data, 'userLists')
           this.userMeta = fetchusersList.data.data.meta;
           eventBus.$emit("userStats", this.userMeta);
           eventBus.$emit("notification");

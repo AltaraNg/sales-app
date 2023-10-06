@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { post } from "../utilities/api";
+import { post, get } from "../utilities/api";
 import Auth from "../utilities/auth";
 Vue.use(Vuex);
 export const store = new Vuex.Store({
@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
          getters: {
            getNotifications: (state) => state.notifications,
            getInactiveProspects: (state) => state.inactiveProspects,
-           getEmployee:(state)=> state.employee
+           getEmployee: (state) => state.employee,
          },
          mutations: {
            TOGGLE_LOADER: (state, data) => Vue.set(state, "loader", data),
@@ -39,7 +39,7 @@ export const store = new Vuex.Store({
                    localStorage.setItem("employee", JSON.stringify(userData));
                    Auth.set(data);
                    commit("SAVEUSER", data);
-                   console.log(data.in_house, 'from store')
+                   console.log(data.in_house, "from store");
                  }
                  let notCookie = vueInstance.$getCookie("showNotification");
                  if (notCookie == null) {
@@ -60,6 +60,16 @@ export const store = new Vuex.Store({
                  });
                  commit("TOGGLE_LOADER", false);
                });
+           },
+           refreshUser: async ({ commit, context }, ) => {
+             await get("/api/auth/user")
+               .then(({ data }) => {
+                 if (data.data) {
+                   commit("SAVEUSER", data.data["user "]);
+                 }
+                 commit("TOGGLE_LOADER", false);
+               })
+              
            },
          },
        });

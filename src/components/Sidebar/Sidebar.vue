@@ -252,7 +252,6 @@ export default {
       collapseShow: "hidden",
       altaraLogo,
       canView: '',
-      inHouse: null,
       flag: localStorage.getItem('flag')
     };
   },
@@ -269,13 +268,15 @@ export default {
   components: {},
   async mounted() {
     this.canView = localStorage.getItem('flag');
-    this.inHouse= this.$store.state.employee.in_house
     await this.$prepareNotifications();
     await this.$prepareInactiveProspects();
     
 },
 computed: {
-    ...mapGetters(['getNotifications', 'getInactiveProspects'])
+    ...mapGetters(['getNotifications', 'getInactiveProspects']),
+    inHouse(){
+      return this.$store.state.employee?.in_house
+    }
 
   },
 };

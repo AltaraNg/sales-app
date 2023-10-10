@@ -39,13 +39,11 @@ export const store = new Vuex.Store({
                    localStorage.setItem("employee", JSON.stringify(userData));
                    Auth.set(data);
                    commit("SAVEUSER", data);
-                   console.log(data.in_house, "from store");
                  }
                  let notCookie = vueInstance.$getCookie("showNotification");
                  if (notCookie == null) {
                    vueInstance.$setCookie("showNotification", true);
                  }
-                 //console.log(context.state.employee, 'state in action')
                  commit("TOGGLE_LOADER", false);
                  vueInstance.$router.push("/admin");
                })

@@ -771,7 +771,6 @@
           });
 
           this.usersList = data;
-          console.log(data, 'userLists')
           this.userMeta = fetchusersList.data.data.meta;
           eventBus.$emit("userStats", this.userMeta);
           eventBus.$emit("notification");
@@ -817,7 +816,6 @@
       },
 
       searchFiltQuery() {
-        console.log(this.searchQuery);
         this.searchUsersList();
         this.$router.push({
           path: this.$route.path,

@@ -34,8 +34,13 @@
         this.$router.push("/auth/login");
       },
     },
-    beforeCreate() {
+    async beforeCreate() {
       Auth.initialize();
+     const employee = this.$store.state.employee
+     if( this.$route.path.includes('admin') && !employee ){
+      await  this.$store.dispatch("refreshUser");
+     }
+      
     },
   };
 </script>

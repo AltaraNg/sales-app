@@ -98,7 +98,7 @@
             </router-link>
 
 
-           <router-link to="/admin/dsaratings" class="hover:bg-gray-400 hover:text-blue-700 py-2">
+           <router-link to="/admin/dsaratings" v-if="inHouse" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2">
            
               <a
@@ -157,7 +157,7 @@
             </router-link>
 
             
-            <router-link to="/admin/send_message" v-if="canDo(Manager)" class="hover:bg-gray-400 hover:text-blue-700 py-2">
+            <router-link to="/admin/send_message" v-if="canDo(Manager) && inHouse" class="hover:bg-gray-400 hover:text-blue-700 py-2">
           <li class="items-center ml-2 rounded-lg">
            
               <a
@@ -270,10 +270,13 @@ export default {
     this.canView = localStorage.getItem('flag');
     await this.$prepareNotifications();
     await this.$prepareInactiveProspects();
-
+    
 },
 computed: {
-    ...mapGetters(['getNotifications', 'getInactiveProspects'])
+    ...mapGetters(['getNotifications', 'getInactiveProspects']),
+    inHouse(){
+      return this.$store.state.employee?.in_house
+    }
 
   },
 };

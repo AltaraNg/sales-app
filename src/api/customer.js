@@ -6,23 +6,22 @@ export default {
   },
 
   exportCustomers(params = "") {
-    return get(`/api/contact-customer/export${params}`, {      
-      responseType: "blob"
+    return get(`/api/contact-customer/export${params}`, {
+      responseType: "blob",
     });
   },
-  customerStage(){
-      return get("/api/customer_stage");
+  customerStage() {
+    return get("/api/customer_stage");
   },
 
-  employmentStatus(){
-      return get("/api/employment_status");
+  employmentStatus() {
+    return get("/api/employment_status");
   },
 
-  create(data){
-      return post("/api/customer_contact", data);
+  create(data) {
+    return post("/api/customer_contact", data);
   },
-  update(data, id){
+  update(data, id) {
     return put(`/api/customer_contact/${id}`, data);
-  }  
-  
+  },
 };

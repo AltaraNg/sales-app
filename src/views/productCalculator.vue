@@ -135,7 +135,7 @@ export default {
       apiUrls: {
         getProduct: `/api/inventory`,
         getCalculation: `/api/price_calculator`,
-        businessTypes: `/api/business_type`,
+        businessTypes: `/api/business_type?limit=30`,
         downPaymentRates: `/api/down_payment_rate`,
         repaymentDuration: `/api/repayment_duration`,
       },
@@ -189,13 +189,16 @@ export default {
     },
 
     async getRepaymentDuration() {
+      this.$store.dispatch("toggleLoader", true);
       try {
         const fetchRepaymentDuration = await get(
           this.apiUrls.repaymentDuration
         );
         this.repaymentDuration = fetchRepaymentDuration?.data?.data?.data;
+         this.$store.dispatch("toggleLoader", false);
       } catch (err) {
         this.$displayErrorMessage(err);
+         this.$store.dispatch("toggleLoader", false);
       }
     },
     downpaymentCalc() {
@@ -239,14 +242,17 @@ export default {
       return downPaymentArr;
     },
     async getProduct() {
+       this.$store.dispatch("toggleLoader", true);
       try {
         const fetchProduct = await get(this.apiUrls.getProduct + this.product);
         this.products = fetchProduct?.data?.data?.data;
         this.products.find((item) => {
           return item.product_id == this.selectedProduct.product_id;
         });
+         this.$store.dispatch("toggleLoader", false);
       } catch (err) {
         this.$displayErrorMessage(err);
+         this.$store.dispatch("toggleLoader", false);
       }
     },
     async getDownPaymentRates() {
@@ -268,23 +274,29 @@ export default {
       }
     },
     async getCalculation() {
+       this.$store.dispatch("toggleLoader", true);
       try {
         const fetchGetCalclations = await get(this.apiUrls.getCalculation);
         const unwrapped = fetchGetCalclations?.data?.data;
         this.calculation = unwrapped;
+         this.$store.dispatch("toggleLoader", false);
       } catch (err) {
         this.$displayErrorMessage(err);
+         this.$store.dispatch("toggleLoader", false);
       }
     },
     async getBusinessTypes() {
+       this.$store.dispatch("toggleLoader", true);
       try {
         const fetchBusinessTypes = await get(this.apiUrls.businessTypes);
         this.businessTypes = fetchBusinessTypes?.data?.data?.data;
         this.businessTypes = this.businessTypes.filter((item) => {
           return item.slug.includes("products");
         });
+         this.$store.dispatch("toggleLoader", false);
       } catch (err) {
         this.$displayErrorMessage(err);
+         this.$store.dispatch("toggleLoader", false);
       }
     },
   },

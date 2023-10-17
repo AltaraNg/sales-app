@@ -135,7 +135,7 @@ export default {
       apiUrls: {
         getProduct: `/api/inventory`,
         getCalculation: `/api/price_calculator`,
-        businessTypes: `/api/business_type`,
+        businessTypes: `/api/business_type?limit=30`,
         downPaymentRates: `/api/down_payment_rate`,
         repaymentDuration: `/api/repayment_duration`,
       },
